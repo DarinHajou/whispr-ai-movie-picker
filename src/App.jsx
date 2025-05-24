@@ -1,12 +1,13 @@
-// App.jsx
 import { useState } from "react";
 import MoodSelector from "./components/moodSelector";
 import IntentSelector from "./components/intentSelector";
+import EnergySelector from "./components/energySelector";
 
 function App() {
   const [step, setStep] = useState(1);
   const [mood, setMood] = useState(null);
   const [intent, setIntent] = useState(null);
+  const [energy, setEnergy] = useState(null);
 
   return (
     <div className="min-h-screen bg-[#121212] text-white flex flex-col items-center justify-center px-4 py-8">
@@ -26,6 +27,7 @@ function App() {
         )}
 
         {step === 2 && (
+          <>
           <IntentSelector
             mood={mood}
             setIntent={(selected) => {
@@ -33,13 +35,66 @@ function App() {
               setStep(3);
             }}
           />
-        )}
+          <div className="text-center mt-4">
+          <button
+            onClick={() => setStep(1)}
+            className="text-sm text-gray-400 hover:text-white underline"
+          >
+            ← Go back
+          </button>
+        </div>
+      </>
+    )}
 
         {step === 3 && (
-          <p className="text-center text-green-400">
-              Mood: <strong>{mood}</strong>, Intent: <strong>{intent}</strong><br />
-            (Next: EnergySelector)
-          </p>
+          <>
+          <EnergySelector
+            setEnergy={(energyLevel) => {
+              setEnergy(energyLevel);
+              setStep(4);
+            }}
+          />
+          <div className="text-center mt-4">
+          <button
+            onClick={() => setStep(1)}
+            className="text-sm text-gray-400 hover:text-white underline"
+          >
+            ← Go back
+          </button>
+        </div>
+      </>
+    )}
+
+        {step === 4 && (
+          <>
+            <p className="text-center text-green-400">
+              Mood: <strong>{mood}</strong><br />
+              Intent: <strong>{intent}</strong><br />
+              Energy: <strong>{energy}</strong><br />
+              ✅ Ready to build prompt!
+            </p>
+
+            <div className="text-center mt-4 space-y-2">
+              <button
+                onClick={() => setStep(3)}
+                className="block text-sm text-gray-400 hover:text-white underline"
+              >
+                ← Go back
+              </button>
+
+              <button
+                onClick={() => {
+                  setMood(null);
+                  setIntent(null);
+                  setEnergy(null);
+                  setStep(1);
+                }}
+                className="block text-sm text-gray-400 hover:text-white underline"
+              >
+                ↻ Start over
+              </button>
+            </div>
+          </>
         )}
 
         <footer className="text-center text-xs text-gray-600 mt-10">
