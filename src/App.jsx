@@ -1,7 +1,7 @@
 // App.jsx
 import { useState } from "react";
-import MoodSelector from "./components/MoodSelector";
-import IntentSelector from "./components/IntentSelector";
+import MoodSelector from "./components/moodSelector";
+import IntentSelector from "./components/intentSelector";
 
 function App() {
   const [step, setStep] = useState(1);
@@ -18,8 +18,8 @@ function App() {
 
         {step === 1 && (
           <MoodSelector
-            setMood={(mood) => {
-              setMood(mood);
+            setMood={(selected) => {
+              setMood(selected);
               setStep(2);
             }}
           />
@@ -28,8 +28,8 @@ function App() {
         {step === 2 && (
           <IntentSelector
             mood={mood}
-            setIntent={(intent) => {
-              setIntent(intent);
+            setIntent={(selected) => {
+              setIntent(selected);
               setStep(3);
             }}
           />
@@ -37,7 +37,7 @@ function App() {
 
         {step === 3 && (
           <p className="text-center text-green-400">
-            ✅ Mood: <strong>{mood}</strong>, Intent: <strong>{intent}</strong><br />
+              Mood: <strong>{mood}</strong>, Intent: <strong>{intent}</strong><br />
             (Next: EnergySelector)
           </p>
         )}
