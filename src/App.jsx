@@ -4,10 +4,13 @@ import IntentSelector from "./components/intentSelector";
 import EnergySelector from "./components/energySelector";
 import { callOpenAI } from "./lib/callOpenAI";
 import buildPrompt from "./lib/buildPrompt";
+import MovieResultCard from "./components/movieResultCard";
+import { parseGptResult } from "./lib/parseGptresult";
 
 export default function App() {
   const [step, setStep] = useState(1);
-  const [mood, setMood] = useState("guided");
+  const [mood, setMood] = useState(null);
+  const [mode, setMode] = useState("guided");
   const [intent, setIntent] = useState(null);
   const [energy, setEnergy] = useState(null);
   const [gptResult, setGptResult] = useState("");
@@ -15,12 +18,11 @@ export default function App() {
   const [error, setError] = useState("");
   const abortRef = useRef(null);
   const [hasFetched, setHasFetched] = useState(false);
-  const [mode, setMode] = useState("guided");
   const [followup, setFollowup] = useState("");
 
   useEffect(() => {
-    console.log("🔍 Current state", { step, mood, intent, energy, gptResult, hasFetched });
-  }, [step, mood, intent, energy, gptResult, hasFetched]);
+    console.log("🧪 gptResult:", gptResult);
+  }, [gptResult]);  
   
   useEffect(() => {
     let controller = null;
@@ -78,13 +80,16 @@ export default function App() {
         controller.abort();
       }
     };
-  }, [step, mood, intent, energy, hasFetched]);  
+  }, [step, mood, intent, energy, hasFetched]);
+
+  const parsedMovies = parseGptResult(gptResult) || [];
+  const hasMovies = parsedMovies.length > 0;
   
   return (
-    <div className="min-h-screen bg-[#121212] text-white flex flex-col items-center justify-center px-4 py-8">
+    <div className="min-h-screen flex flex-col items-center justify-center px-4 py-8">
       <main className="w-full max-w-xl space-y-6">
         <header className="text-center">
-          <h1 className="text-3xl font-bold tracking-tight">SibylAI</h1>
+          <h1 className="text-3xl font-bold tracking-tight">Movie Oracle</h1>
           <p className="text-sm text-gray-400 mt-1">How do you feel today?</p>
         </header>
 
@@ -140,9 +145,29 @@ export default function App() {
           <>
             {mode === "guided" && (
               <>
-                <pre className="bg-gray-900 text-left p-4 rounded text-sm whitespace-pre-wrap">
-                  {gptResult !== "" ? gptResult : "🟥 No GPT result received yet."}
+             {gptResult !== "" ? (
+              hasMovies ? (
+                <div className="space-y-4">
+                  {parsedMovies.map((movie, i) => (
+                    <MovieResultCard
+                      key={i}
+                      title={movie.title}
+                      explanation={movie.explanation}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <pre className="text-sm text-red-400 whitespace-pre-wrap">
+                  ⚠️ Could not parse GPT result. Here’s the raw text:
+                  {"\n\n" + gptResult}
                 </pre>
+              )
+            ) : (
+              <pre className="bg-gray-900 text-left p-4 rounded text-sm whitespace-pre-wrap">
+                🟥 No GPT result received yet.
+              </pre>
+            )}
+
 
                 {gptResult && (
                   <div className="mt-6 text-center border-t border-gray-700 pt-4">
@@ -227,19 +252,27 @@ export default function App() {
               </div>
             )}
 
-            {gptResult && (
-              <pre className="bg-gray-900 text-left p-4 rounded text-sm whitespace-pre-wrap">
-                {gptResult}
-              </pre>
-            )}
-
             <div className="text-center mt-4 space-y-2">
-              <button
-                onClick={() => setStep(3)}
-                className="block text-sm text-gray-400 hover:text-white underline"
-              >
-                ← Go back
-              </button>
+              {mode === "chat" ? (
+                <button
+                  onClick={() => {
+                    setMode("guided"); // Go back to results, not guided step 3
+                  }}
+                  className="block text-sm text-gray-400 hover:text-white underline"
+                >
+                  ← Back to results
+                </button>
+              ) : (
+                <button
+                  onClick={() => {
+                    setStep(3); // Go back to energy selector
+                  }}
+                  className="block text-sm text-gray-400 hover:text-white underline"
+                >
+                  ← Go back
+                </button>
+              )}
+
               <button
                 onClick={() => {
                   setMood(null);
@@ -249,6 +282,7 @@ export default function App() {
                   setGptResult("");
                   setError("");
                   setHasFetched(false);
+                  setMode("guided");
                 }}
                 className="block text-sm text-gray-400 hover:text-white underline"
               >
@@ -258,8 +292,8 @@ export default function App() {
           </>
         )}
 
-        <footer className="text-center text-xs text-gray-600 mt-10">
-          Built with ❤️ by you
+          <footer style={{ color: 'white' }} className="text-center text-xs mt-10"> 
+          Built with ❤️ by Darin
         </footer>
       </main>
     </div>
