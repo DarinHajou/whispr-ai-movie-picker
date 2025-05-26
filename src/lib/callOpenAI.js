@@ -19,7 +19,7 @@ export async function callOpenAI(prompt, { signal } = {}) {
         },
         body: JSON.stringify({
           model: "gpt-3.5-turbo",
-          max_tokens: 100,
+          max_tokens: 400,
           messages: [
             {
               role: "system",
