@@ -1,16 +1,31 @@
 export function parseGptResult(text) {
-  const lines = text.split("\n").filter(Boolean);
+  const lines = text.split("\n").map(line => line.trim()).filter(Boolean);
   const results = [];
 
   let current = null;
 
   lines.forEach((line) => {
-    const titleMatch = line.match(/^\d+\.\s\*\*"?(.+?)"?\*\*/);
-    if (titleMatch) {
+    if (line.startsWith('**Title:**')) {
       if (current) results.push(current);
-      current = { title: titleMatch[1], explanation: "" };
-    } else if (current) {
-      current.explanation += line.trim() + " ";
+      const match = line.match(/\*\*Title:\*\*\s*(.+?)\s+\((\d{4})\)/);
+      if (match) {
+        current = {
+          title: match[1].trim(),
+          year: match[2].trim(),
+          tone: "",
+          imdb: "",
+          plot: ""
+        };
+      }
+    } else if (line.startsWith('**Tone:**') && current) {
+      current.tone = line.replace('**Tone:**', '').trim();
+    } else if (line.startsWith('**IMDb Score:**') && current) {
+      current.imdb = line.replace('**IMDb Score:**', '').trim();
+    } else if (line.startsWith('**Plot:**') && current) {
+      current.plot = line.replace('**Plot:**', '').trim();
+    } else if (current?.plot) {
+      // Append continuation lines to the plot
+      current.plot += " " + line;
     }
   });
 
