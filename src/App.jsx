@@ -53,14 +53,14 @@ export default function App() {
           });
           if (!cancelled) {
             setGptResult(result);
-            console.log("✅ Final GPT result stored:", result);
+            console.log("Final GPT result stored:", result);
           }
         } catch (err) {
           if (err.name === "AbortError") {
-            console.log("ℹ️ GPT request aborted by React cleanup.");
+            console.log("GPT request aborted by React cleanup.");
           } else {
             setError(err.message);
-            console.error("❌ GPT Error in App.jsx:", err);
+            console.error("GPT Error in App.jsx:", err);
           }        
         } finally {
           if (!cancelled) {
@@ -76,7 +76,7 @@ export default function App() {
     return () => {
       cancelled = true;
       if (controller) {
-        console.warn("⛔ Aborting GPT fetch");
+        console.warn("Aborting GPT fetch");
         controller.abort();
       }
     };
@@ -86,18 +86,26 @@ export default function App() {
   const hasMovies = parsedMovies.length > 0;
   
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-4 py-8">
-      <main className="w-full max-w-xl space-y-6">
-        <header className="text-center">
-          <h1 className="text-3xl font-bold tracking-tight">Movie Oracle</h1>
-          <p className="text-sm text-gray-400 mt-1">How do you feel today?</p>
-        </header>
-
+    <div className="min-h-screen flex flex-col px-4 py-8">
+      
+      {/* Title/Logo at the top */}
+      <h1 className="text-5xl font-extrabold tracking-tight text-center text-warm-white mb-16">
+        CineWhisper
+      </h1>
+  
+      <main className="w-full max-w-xl mx-auto py-4 space-y-6">
+  
+        {/* Question, moved further down */}
+        <p className="text-2xl sm:text-3xl text-glow-amber font-medium text-center mt-6 mb-8">
+          How do you feel today?
+        </p>
+  
+        {/* Mood selector */}
         {step === 1 && (
           <MoodSelector
             setMood={(selected) => {
-              setMood(selected);
-              setStep(2);
+              setMood(selected)
+              setStep(2)
             }}
           />
         )}
@@ -158,13 +166,13 @@ export default function App() {
                 </div>
               ) : (
                 <pre className="text-sm text-red-400 whitespace-pre-wrap">
-                  ⚠️ Could not parse GPT result. Here’s the raw text:
+                  Could not parse GPT result. Here’s the raw text:
                   {"\n\n" + gptResult}
                 </pre>
               )
             ) : (
               <pre className="bg-gray-900 text-left p-4 rounded text-sm whitespace-pre-wrap">
-                🟥 No GPT result received yet.
+                No GPT result received yet.
               </pre>
             )}
 
@@ -292,10 +300,10 @@ export default function App() {
           </>
         )}
 
-          <footer style={{ color: 'white' }} className="text-center text-xs mt-10"> 
-          Built with ❤️ by Darin
-        </footer>
       </main>
+        <footer className="text-center text-xs mt-10 text-gray-400 mt-10">
+          Built by Darin · Powered by <span className="text-glow-amber font-semibold">SolaceAI</span>
+        </footer>
     </div>
   );
 }
