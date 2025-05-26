@@ -19,10 +19,21 @@ export default function App() {
   const abortRef = useRef(null);
   const [hasFetched, setHasFetched] = useState(false);
   const [followup, setFollowup] = useState("");
+  const [retryCount, setRetryCount] = useState(0);
 
   useEffect(() => {
     console.log("🧪 gptResult:", gptResult);
-  }, [gptResult]);  
+  }, [gptResult]);
+
+  const handleRetry = () => {
+    if (retryCount < 2) {
+      setRetryCount((prev) => prev + 1);
+      setGptResult("");
+      setHasFetched(false);
+    } else {
+      setMode("chat"); // Auto-switch to refine after 2 retries
+    }
+  };
   
   useEffect(() => {
     let controller = null;
@@ -87,27 +98,33 @@ export default function App() {
   
   return (
     <div className="min-h-screen flex flex-col px-4 py-8">
+      <div className="text-center space-y-1 sm:space-y-2 mb-10 sm:mb-14">
+
       
-      {/* Title/Logo at the top */}
-      <h1 className="text-5xl font-extrabold tracking-tight text-center text-warm-white mb-16">
-        CineWhisper
-      </h1>
-  
-      <main className="w-full max-w-xl mx-auto py-4 space-y-6">
-  
-        {/* Question, moved further down */}
-        <p className="text-2xl sm:text-3xl text-glow-amber font-medium text-center mt-6 mb-8">
-          How do you feel today?
+      <div className="text-center space-y-2 mb-12">
+        <h1 className="text-6xl font-extrabold tracking-tight text-warm-white"><span className="text-4xl">🎬</span>
+        Whispr
+        </h1>
+        <p className="text-pale-sage text-sm sm:text-base tracking-wide">
+          Your emotionally intelligent movie picker
         </p>
+    </div>
+
+      <main className="w-full max-w-xl mx-auto py-4 space-y-6">
   
         {/* Mood selector */}
         {step === 1 && (
+          <>
+          <p className="text-2xl sm:text-3xl text-glow-amber font-medium text-center mt-6 mb-8">
+            How do you feel today?
+          </p>
           <MoodSelector
             setMood={(selected) => {
               setMood(selected)
               setStep(2)
             }}
           />
+          </>
         )}
 
         {step === 2 && (
@@ -151,47 +168,77 @@ export default function App() {
 
         {step === 4 && (
           <>
-            {mode === "guided" && (
+            {mode === "guided" ? (
               <>
-             {gptResult !== "" ? (
-              hasMovies ? (
-                <div className="space-y-4">
-                  {parsedMovies.map((movie, i) => (
-                    <MovieResultCard
-                      key={i}
-                      title={movie.title}
-                      explanation={movie.explanation}
-                    />
-                  ))}
-                </div>
-              ) : (
-                <pre className="text-sm text-red-400 whitespace-pre-wrap">
-                  Could not parse GPT result. Here’s the raw text:
-                  {"\n\n" + gptResult}
-                </pre>
-              )
-            ) : (
-              <pre className="bg-gray-900 text-left p-4 rounded text-sm whitespace-pre-wrap">
-                No GPT result received yet.
-              </pre>
-            )}
+                {gptResult !== "" ? (
+                  hasMovies ? (
+                    <div className="space-y-4">
+                      {parsedMovies.map((movie, i) => (
+                        <MovieResultCard
+                          key={i}
+                          title={movie.title}
+                          year={movie.year}
+                          tone={movie.tone}
+                          imdb={movie.imdb}
+                          plot={movie.plot}
+                        />
+                      ))}
+                    </div>
+                  ) : (
+                    <pre className="text-sm text-red-400 whitespace-pre-wrap">
+                      Could not parse GPT result. Here’s the raw text:
+                      {"\n\n" + gptResult}
+                    </pre>
+                  )
+                ) : (
+                  <pre className="bg-gray-900 text-left p-4 rounded text-sm whitespace-pre-wrap">
+                    No GPT result received yet.
+                  </pre>
+                )}
 
+                {gptResult && mode === "guided" && (
+                  <div className="mt-10 bg-gray-800/60 rounded-xl px-6 py-6 shadow-lg text-center space-y-4 transition-opacity duration-500 ease-in">
+                    <p className="text-lg sm:text-xl font-medium text-glow-amber">
+                      Didn’t quite hit the mark?
+                    </p>
+                    <p className="text-sm text-gray-400">
+                      Try again or give us a nudge to refine it further.
+                    </p>
 
-                {gptResult && (
-                  <div className="mt-6 text-center border-t border-gray-700 pt-4">
-                    <p className="text-sm text-gray-400 mb-2">Not quite it?</p>
-                    <button
-                      className="px-4 py-2 text-sm bg-gray-800 rounded hover:bg-gray-700"
-                      onClick={() => setMode("chat")}
-                    >
-                      Let’s refine it together →
-                    </button>
+                    <div className="flex flex-wrap justify-center gap-4">
+                      <button
+                        onClick={() => {
+                          if (retryCount < 2) {
+                            setRetryCount((prev) => prev + 1);
+                            setGptResult("");
+                            setHasFetched(false);
+                          } else {
+                            setMode("chat");
+                          }
+                        }}
+                        disabled={retryCount >= 2}
+                        className={`flex items-center gap-2 px-4 py-2 text-sm rounded font-medium ${
+                          retryCount < 2
+                            ? "bg-gray-700 hover:bg-gray-600 text-white"
+                            : "bg-gray-700 text-gray-400 cursor-not-allowed"
+                        }`}
+                      >
+                        🔄 Try a fresh 10
+                      </button>
+
+                      <button
+                        onClick={() => setMode("chat")}
+                        className="flex items-center gap-2 px-4 py-2 text-sm bg-glow-amber text-soft-black hover:bg-yellow-300 rounded font-medium"
+                      >
+                        ✏️ Refine Suggestions
+                      </button>
+                    </div>
                   </div>
                 )}
-              </>
-            )}
 
-            {mode === "chat" && (
+              </>
+            ) : (
+              // Mode === "chat"
               <div className="mt-4 space-y-4">
                 <p className="text-sm text-gray-400 text-center">
                   Add a follow-up hint or tell me what missed the mark:
@@ -234,11 +281,7 @@ export default function App() {
             )}
 
             {loading && (
-              <div
-                className="flex justify-center my-8"
-                role="status"
-                aria-live="polite"
-              >
+              <div className="flex justify-center my-8" role="status" aria-live="polite">
                 <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2"></div>
                 <span className="sr-only">Thinking…</span>
               </div>
@@ -263,18 +306,14 @@ export default function App() {
             <div className="text-center mt-4 space-y-2">
               {mode === "chat" ? (
                 <button
-                  onClick={() => {
-                    setMode("guided"); // Go back to results, not guided step 3
-                  }}
+                  onClick={() => setMode("guided")}
                   className="block text-sm text-gray-400 hover:text-white underline"
                 >
                   ← Back to results
                 </button>
               ) : (
                 <button
-                  onClick={() => {
-                    setStep(3); // Go back to energy selector
-                  }}
+                  onClick={() => setStep(3)}
                   className="block text-sm text-gray-400 hover:text-white underline"
                 >
                   ← Go back
@@ -291,19 +330,23 @@ export default function App() {
                   setError("");
                   setHasFetched(false);
                   setMode("guided");
+                  setRetryCount(0);
+                  setRetryCount(0); 
                 }}
                 className="block text-sm text-gray-400 hover:text-white underline"
               >
-                ↻ Start over
+                ↻ Start over from the beginning
               </button>
             </div>
           </>
         )}
+
 
       </main>
         <footer className="text-center text-xs mt-10 text-gray-400 mt-10">
           Built by Darin · Powered by <span className="text-glow-amber font-semibold">SolaceAI</span>
         </footer>
     </div>
+  </div>
   );
 }
