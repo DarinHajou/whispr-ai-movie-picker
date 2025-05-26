@@ -3,7 +3,7 @@ import.meta.env.VITE_OPENAI_API_KEY
 export async function callOpenAI(prompt, { signal } = {}) {
     const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
     console.log("API KEY:", apiKey);
-    console.log("📡 callOpenAI() triggered with prompt:", prompt);
+    console.log("callOpenAI() triggered with prompt:", prompt);
   
     if (!apiKey) {
       throw new Error("Missing VITE_OPENAI_API_KEY");
@@ -18,8 +18,8 @@ export async function callOpenAI(prompt, { signal } = {}) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          model: "gpt-3.5-turbo",
-          max_tokens: 400,
+          model: "gpt-3.5-turbo-1106",
+          max_tokens: 1000,
           messages: [
             {
               role: "system",
@@ -28,7 +28,7 @@ export async function callOpenAI(prompt, { signal } = {}) {
             },
             { role: "user", content: prompt },
           ],
-          temperature: 0.9,
+          temperature: 0.7,
         }),
       });
   
@@ -39,9 +39,9 @@ export async function callOpenAI(prompt, { signal } = {}) {
       }
   
       const data = await response.json();
-      console.log("✅ Full GPT response:", data);
+      console.log("Full GPT response:", data);
   
-      return data.choices?.[0]?.message?.content?.trim() || "⚠️ GPT returned no content.";
+      return data.choices?.[0]?.message?.content?.trim() || "GPT returned no content.";
     } catch (err) {
       console.error("GPT fetch failed:", err);
       throw err;
