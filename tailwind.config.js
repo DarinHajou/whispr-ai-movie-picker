@@ -19,6 +19,15 @@ export default {
         spacing: {
           'fluid': 'clamp(1rem, 2vw, 2rem)',
         },
+        animation: {
+        'fade-in': 'fadeIn 0.7s ease-in forwards',
+        },
+        keyframes: {
+          fadeIn: {
+            from: { opacity: '0' },
+            to: { opacity: '1' },
+          },
+        },
       },
     },
     plugins: [],
