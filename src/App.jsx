@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from "react";
+import { TypeAnimation } from 'react-type-animation';
 import MoodSelector from "./components/moodSelector";
 import IntentSelector from "./components/intentSelector";
 import EnergySelector from "./components/energySelector";
@@ -20,6 +21,7 @@ export default function App() {
   const [hasFetched, setHasFetched] = useState(false);
   const [followup, setFollowup] = useState("");
   const [retryCount, setRetryCount] = useState(0);
+  const [showMood, setShowMood] = useState(false);
 
   useEffect(() => {
     console.log("🧪 gptResult:", gptResult);
@@ -101,29 +103,48 @@ export default function App() {
       <div className="text-center space-y-1 sm:space-y-2 mb-10 sm:mb-14">
 
       
-      <div className="text-center space-y-2 mb-12">
-        <h1 className="text-6xl font-extrabold tracking-tight text-warm-white"><span className="text-4xl">🎬</span>
-        Whispr
+      <div className="text-center space-y-1 mb-10">
+        <h1 className="text-6xl font-extrabold tracking-tight text-warm-white flex justify-center items-center gap-2">
+          <span className="text-4xl">🎬</span> Whispr
         </h1>
-        <p className="text-pale-sage text-sm sm:text-base tracking-wide">
+        <p className="text-sm sm:text-base text-mist-blue tracking-wide italic opacity-90">
           Your emotionally intelligent movie picker
         </p>
-    </div>
+      </div>
+      </div> 
 
       <main className="w-full max-w-xl mx-auto py-4 space-y-6">
   
         {/* Mood selector */}
         {step === 1 && (
           <>
-          <p className="text-2xl sm:text-3xl text-glow-amber font-medium text-center mt-6 mb-8">
-            How do you feel today?
-          </p>
-          <MoodSelector
-            setMood={(selected) => {
-              setMood(selected)
-              setStep(2)
-            }}
-          />
+            <div className="-mt-6 text-center mb-6 text-glow-amber text-xl sm:text-3xl font-medium min-h-[6rem] max-w-md mx-auto">
+              <TypeAnimation
+                sequence={[
+                  "Hi.", 1000,
+                  "I’m Sol.", 1000,
+                  "Tell me how you feel and I’ll whisper something worth watching.", 800, () => setShowMood(true)
+                ]}                              
+                speed={45}
+                wrapper="span"
+                cursor={true}
+                repeat={0}
+              />
+            </div>
+
+            {showMood && (
+                <div className="flex flex-col items-center animate-fade-in transition-opacity duration-700 max-w-md mx-auto">
+                <p className="mb-2">How do You feel today?</p>
+                <div className="mt-2">
+                  <MoodSelector
+                    setMood={(selected) => {
+                      setMood(selected);
+                      setStep(2);
+                    }}
+                  />
+                </div>
+              </div>
+            )}
           </>
         )}
 
@@ -343,10 +364,9 @@ export default function App() {
 
 
       </main>
-        <footer className="text-center text-xs mt-10 text-gray-400 mt-10">
+        <footer className="text-center text-xs mt-10 text-gray-400">
           Built by Darin · Powered by <span className="text-glow-amber font-semibold">SolaceAI</span>
         </footer>
     </div>
-  </div>
   );
 }
