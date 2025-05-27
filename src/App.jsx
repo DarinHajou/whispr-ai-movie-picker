@@ -14,18 +14,10 @@ export default function App() {
   const [mode, setMode] = useState("guided");
   const [intent, setIntent] = useState(null);
   const [energy, setEnergy] = useState(null);
-  const [gptResult, setGptResult] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const abortRef = useRef(null);
-  const [hasFetched, setHasFetched] = useState(false);
   const [followup, setFollowup] = useState("");
-  const [retryCount, setRetryCount] = useState(0);
   const [showMood, setShowMood] = useState(false);
-
-  useEffect(() => {
-    console.log("🧪 gptResult:", gptResult);
-  }, [gptResult]);
 
   const handleRetry = () => {
     if (retryCount < 2) {
@@ -37,72 +29,9 @@ export default function App() {
     }
   };
   
-  useEffect(() => {
-    let controller = null;
-    let cancelled = false;
-  
-    if (
-      step === 4 &&
-      mood &&
-      intent &&
-      energy &&
-      !hasFetched
-    ) {
-      controller = new AbortController();
-      abortRef.current = controller;
-  
-      const run = async () => {
-        const prompt = buildPrompt(mood, intent, energy);
-        if (!prompt) {
-          setError("Prompt invalid. Please go back and re-select options.");
-          return;
-        }
-  
-        setLoading(true);
-        setError("");
-        try {
-          const result = await callOpenAI(prompt, {
-            signal: controller.signal,
-          });
-          if (!cancelled) {
-            setGptResult(result);
-            console.log("Final GPT result stored:", result);
-          }
-        } catch (err) {
-          if (err.name === "AbortError") {
-            console.log("GPT request aborted by React cleanup.");
-          } else {
-            setError(err.message);
-            console.error("GPT Error in App.jsx:", err);
-          }        
-        } finally {
-          if (!cancelled) {
-            setHasFetched(true);
-            setLoading(false);
-          }
-        }
-      };
-  
-      run();
-    }
-  
-    return () => {
-      cancelled = true;
-      if (controller) {
-        console.warn("Aborting GPT fetch");
-        controller.abort();
-      }
-    };
-  }, [step, mood, intent, energy, hasFetched]);
-
-  const parsedMovies = parseGptResult(gptResult) || [];
-  const hasMovies = parsedMovies.length > 0;
-  
   return (
     <div className="min-h-screen flex flex-col px-4 py-8">
       <div className="text-center space-y-1 sm:space-y-2 mb-10 sm:mb-14">
-
-      
       <div className="text-center space-y-1 mb-10">
         <h1 className="text-6xl font-extrabold tracking-tight text-warm-white flex justify-center items-center gap-2">
           <span className="text-4xl">🎬</span> Whispr
