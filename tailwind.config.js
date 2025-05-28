@@ -20,14 +20,24 @@ export default {
           'fluid': 'clamp(1rem, 2vw, 2rem)',
         },
         animation: {
-        'fade-in': 'fadeIn 0.7s ease-in forwards',
+          'fade-in': 'fadeIn 0.7s ease-in forwards',
+          'slide-up': 'slideUp 0.5s ease-out forwards',
+          'zoom-in': 'zoomIn 0.4s ease-in-out forwards',
         },
         keyframes: {
           fadeIn: {
             from: { opacity: '0' },
             to: { opacity: '1' },
           },
-        },
+          slideUp: {
+            from: { opacity: '0', transform: 'translateY(20px)' },
+            to: { opacity: '1', transform: 'translateY(0)' },
+          },
+          zoomIn: {
+            from: { opacity: '0', transform: 'scale(0.95)' },
+            to: { opacity: '1', transform: 'scale(1)' },
+          },
+        }
       },
     },
     plugins: [],
