@@ -8,9 +8,11 @@ A user just shared a few things with you:
 
 Based on that emotional state, recommend a list of 10 films that truly meet them where they are.
 
-Don’t just focus on genre — consider emotional tone, pacing, themes, and the kind of story that might land gently with someone in this headspace.
+Don’t just focus on genre — consider emotional tone, pacing, themes, and the kind of story that might land gently with someone in this head-space.
 
-Avoid over-recommending commonly cited films like *Her*, *Inside Out*, or *Eternal Sunshine*. Favor lesser-known, foreign, or emotionally rich titles that still resonate deeply.
+Don’t over-rely on films like *Her*, *Inside Out*, *A Ghost Story*, or *Eternal Sunshine*. You can include one if it truly fits, but not by default.
+
+Avoid over-recommending commonly cited films like *Her*, *Inside Out*, or *Eternal Sunshine*. Favor lesser-known, or emotionally rich titles that still resonate deeply.
 
 Aim for a few surprises. Prioritize emotional fit, but include at least some lesser-known or unconventional picks. Vary the tone — not all 10 need to feel the same.
 
