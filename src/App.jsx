@@ -1,19 +1,24 @@
 import { useState } from "react";
-import { callOpenAI } from "./lib/callOpenAI";
-import buildPrompt from "./lib/buildPrompt";
-import MovieResultCard from "./components/movieResultCard";
 import GuidedFlow from "./components/guideFlow";
+import GPTResults from "./components/GPTResults";
+import { useGPTFetcher } from "./lib/useGPTFetcher";
 
 export default function App() {
   const [step, setStep] = useState(1);
   const [mood, setMood] = useState(null);
   const [mode, setMode] = useState("guided");
   const [intent, setIntent] = useState(null);
+  const [retryCount, setRetryCount] = useState(0);
   const [energy, setEnergy] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [followup, setFollowup] = useState("");
-  const [showMood, setShowMood] = useState(false);
+  const {
+    gptResult,
+    loading,
+    error,
+    parsedMovies,
+    hasMovies,
+    retry,
+    reset,
+  } = useGPTFetcher({ mood, intent, energy, step });
 
   const handleRetry = () => {
     if (retryCount < 2) {
@@ -33,7 +38,7 @@ export default function App() {
           <span className="text-4xl">🎬</span> Whispr
         </h1>
         <p className="text-sm sm:text-base text-mist-blue tracking-wide italic opacity-90">
-          Your emotionally intelligent movie picker
+         - Your emotionally intelligent movie picker -
         </p>
       </div>
       </div> 
@@ -53,8 +58,17 @@ export default function App() {
 
       {step === 4 && (
         <GPTResults
-          {...allYourProps}
-        />
+        mode="guided"
+        mood={mood}
+        intent={intent}
+        energy={energy}
+        gptResult={gptResult}
+        parsedMovies={parsedMovies}
+        hasMovies={hasMovies}
+        loading={loading}
+        error={error}
+        setStep={setStep}
+      />      
       )}
 
       </main>
