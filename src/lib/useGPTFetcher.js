@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
-import { callOpenAI } from "./lib/callOpenAI";
-import buildPrompt from "./lib/buildPrompt";
+import { callOpenAI } from "./callOpenAI";
+import buildPrompt from "./buildPrompt";
+import parseGPTResult from "./parseGPTResult";
 
 export function useGPTFetcher({ mood, intent, energy, step }) {
   const [gptResult, setGptResult] = useState("");
@@ -9,6 +10,30 @@ export function useGPTFetcher({ mood, intent, energy, step }) {
   const [hasFetched, setHasFetched] = useState(false);
   const [retryCount, setRetryCount] = useState(0);
   const abortRef = useRef(null);
+  const [parsedMovies, setParsedMovies] = useState([]);
+  const hasMovies = parsedMovies?.length > 0;
+
+
+  useEffect(() => {
+    const fetchGPT = async () => {
+      if (step !== 4) return;
+      setLoading(true);
+      try {
+        const prompt = buildPrompt(mood, intent, energy);
+        const result = await callOpenAI(prompt);
+        setGptResult(result);
+        const parsed = parseGPTResult(result);
+        setParsedMovies(parsed || []);
+        setHasFetched(true);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    fetchGPT();
+  }, [step]);
 
   useEffect(() => {
     let controller = null;
@@ -32,6 +57,8 @@ export function useGPTFetcher({ mood, intent, energy, step }) {
           const result = await callOpenAI(prompt, { signal: controller.signal });
           if (!cancelled) {
             setGptResult(result);
+            const parsed = parseGPTResult(result);
+            setParsedMovies(parsed || [])
           }
         } catch (err) {
           if (err.name !== "AbortError") {
@@ -56,9 +83,7 @@ export function useGPTFetcher({ mood, intent, energy, step }) {
 
   function retry() {
     if (retryCount < 2) {
-      setRetryCount((r) => r + 1);
-      setGptResult("");
-      setHasFetched(false);
+      reset();
     }
   }
 
@@ -71,9 +96,12 @@ export function useGPTFetcher({ mood, intent, energy, step }) {
 
   return {
     gptResult,
+    parsedMovies,
+    hasMovies,
     loading,
     error,
     retry,
     reset,
+    retryCount,
   };
 }
