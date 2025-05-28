@@ -8,13 +8,14 @@ export default function GPTResults({
   followup, setFollowup,
   gptResult, setGptResult,
   parsedMovies, hasMovies,
-  retryCount, setRetryCount,
+  retryCount, onRetry,
   loading, setLoading,
   error, setError,
   setHasFetched,
   setStep,
   resetAll
 }) {
+    
   return (
     <>
       {mode === "guided" ? (
@@ -44,25 +45,18 @@ export default function GPTResults({
                 Didn’t quite hit the mark?
               </p>
               <div className="flex flex-wrap justify-center gap-4">
-                <button
-                  onClick={() => {
-                    if (retryCount < 2) {
-                      setRetryCount((r) => r + 1);
-                      setGptResult("");
-                      setHasFetched(false);
-                    } else {
-                      setMode("chat");
-                    }
-                  }}
-                  disabled={retryCount >= 2}
-                  className={`px-4 py-2 text-sm rounded font-medium ${
-                    retryCount < 2
-                      ? "bg-gray-700 hover:bg-gray-600 text-white"
-                      : "bg-gray-700 text-gray-400 cursor-not-allowed"
-                  }`}
-                >
-                  🔄 Try a fresh 10
-                </button>
+              <button
+                onClick={onRetry}
+                disabled={retryCount >= 2}
+                className={`px-4 py-2 text-sm rounded font-medium ${
+                  retryCount < 2
+                    ? "bg-gray-700 hover:bg-gray-600 text-white"
+                    : "bg-gray-700 text-gray-400 cursor-not-allowed"
+                }`}
+              >
+                🔄 Try a fresh 10
+              </button>
+
 
                 <button
                   onClick={() => setMode("chat")}
