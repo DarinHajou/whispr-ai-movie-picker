@@ -1,10 +1,10 @@
-export async function fetchPosterUrl(title, year) {
+export async function fetchMovieMeta(title, year) {
   const accessToken = import.meta.env.VITE_TMDB_ACCESS_TOKEN;
   const encodedTitle = encodeURIComponent(title);
-  const url = `https://api.themoviedb.org/3/search/movie?query=${encodedTitle}${year ? `&year=${year}` : ""}`;
+  const searchUrl = `https://api.themoviedb.org/3/search/movie?query=${encodedTitle}${year ? `&year=${year}` : ""}`;
 
   try {
-    const res = await fetch(url, {
+    const res = await fetch(searchUrl, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json",
@@ -14,21 +14,35 @@ export async function fetchPosterUrl(title, year) {
     const data = await res.json();
     const results = data?.results ?? [];
 
-    // Try to find best match by release year or title
     const match = results.find((movie) => {
       const releaseYear = movie.release_date?.slice(0, 4);
       return (
-        releaseYear === year || movie.title.toLowerCase() === title.toLowerCase()
+        releaseYear === year ||
+        movie.title.toLowerCase() === title.toLowerCase()
       );
-    }) || results[0]; // fallback to first
+    }) || results[0];
 
-    const posterPath = match?.poster_path;
+    if (!match) return { posterUrl: "/poster-placeholder.jpg", imdbId: null };
 
-    return posterPath
-      ? `https://image.tmdb.org/t/p/w500${posterPath}`
+    const posterUrl = match.poster_path
+      ? `https://image.tmdb.org/t/p/w500${match.poster_path}`
       : "/poster-placeholder.jpg";
+
+    // Now fetch IMDb ID
+    const externalUrl = `https://api.themoviedb.org/3/movie/${match.id}/external_ids`;
+    const extRes = await fetch(externalUrl, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    const extData = await extRes.json();
+    const imdbId = extData.imdb_id || null;
+
+    return { posterUrl, imdbId };
   } catch (err) {
-    console.error("TMDB fetch failed:", err);
-    return "/poster-placeholder.jpg";
+    console.error("Failed to fetch movie meta:", err);
+    return { posterUrl: "/poster-placeholder.jpg", imdbId: null };
   }
 }
