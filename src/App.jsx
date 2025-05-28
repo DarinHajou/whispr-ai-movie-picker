@@ -8,7 +8,6 @@ export default function App() {
   const [mood, setMood] = useState(null);
   const [mode, setMode] = useState("guided");
   const [intent, setIntent] = useState(null);
-  const [retryCount, setRetryCount] = useState(0);
   const [energy, setEnergy] = useState(null);
   const {
     gptResult,
@@ -18,17 +17,16 @@ export default function App() {
     hasMovies,
     retry,
     reset,
+    retryCount,
   } = useGPTFetcher({ mood, intent, energy, step });
 
   const handleRetry = () => {
     if (retryCount < 2) {
-      setRetryCount((prev) => prev + 1);
-      setGptResult("");
-      setHasFetched(false);
+      retry();       // ✅ calls the hook’s retry logic
     } else {
-      setMode("chat"); // Auto-switch to refine after 2 retries
+      setMode("chat"); // fallback to refine mode
     }
-  };
+  }  
   
   return (
     <div className="min-h-screen flex flex-col px-4 py-8">
@@ -67,6 +65,8 @@ export default function App() {
         hasMovies={hasMovies}
         loading={loading}
         error={error}
+        retryCount={retryCount}
+        onRetry={handleRetry}  
         setStep={setStep}
       />      
       )}
