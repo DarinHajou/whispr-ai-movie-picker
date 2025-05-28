@@ -1,4 +1,4 @@
-export function parseGptResult(text) {
+export default function parseGptResult(text) {
   const lines = text.split("\n").map(line => line.trim()).filter(Boolean);
   const results = [];
 
