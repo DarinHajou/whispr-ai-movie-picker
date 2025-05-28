@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
-import { fetchPosterUrl } from "../lib/fetchPosterUrl";
+import { fetchMovieMeta } from "../lib/fetchPosterUrl";
 
 export default function MovieResultCard({ title, year, tone, imdb, plot }) {
   const [poster, setPoster] = useState("/poster-placeholder.jpg");
+  const [imdbId, setImdbId] = useState(null);
 
   useEffect(() => {
     const cleanTitle = title.replace(/["(].*$/, "").trim();
-    fetchPosterUrl(cleanTitle, year).then((url) => {
-      setPoster(url);
+    fetchMovieMeta(cleanTitle, year).then(({ posterUrl, imdbId }) => {
+      setPoster(posterUrl);
+      setImdbId(imdbId);
     });
   }, [title, year]);
 
@@ -32,9 +34,21 @@ export default function MovieResultCard({ title, year, tone, imdb, plot }) {
 
       {/* Content */}
       <div className="flex flex-col space-y-1 text-left">
-        <h3 className="text-lg font-bold text-warm-white">
-          {title} ({year})
-        </h3>
+      {imdbId ? (
+          <a
+            href={`https://www.imdb.com/title/${imdbId}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-lg font-bold text-warm-white hover:underline"
+          >
+            {title} ({year})
+          </a>
+        ) : (
+          <h3 className="text-lg font-bold text-warm-white">
+            {title} ({year})
+          </h3>
+        )}
+
         <p className="text-sm text-mist-blue">
           <span className="font-medium">Tone:</span> {tone}
         </p>
