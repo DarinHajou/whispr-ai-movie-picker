@@ -34,8 +34,8 @@ export default function GPTResults({
               </pre>
             )
           ) : (
-            <pre className="bg-gray-900 text-left p-4 rounded text-sm whitespace-pre-wrap">
-              No GPT result received yet.
+            <pre className="bg-pale-sage text-black text-left p-2 rounded text-sm whitespace-pre-wrap max-w-">
+              No result received yet.
             </pre>
           )}
 
@@ -112,8 +112,8 @@ export default function GPTResults({
       )}
 
       {loading && (
-        <div className="flex justify-center my-8" role="status" aria-live="polite">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2"></div>
+        <div className="flex justify-center items-center my-8" role="status" aria-live="polite">
+          <div className="w-12 h-12 rounded-full border-4 border-glow-amber border-t-transparent animate-spin" />
           <span className="sr-only">Thinking…</span>
         </div>
       )}
