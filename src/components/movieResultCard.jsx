@@ -14,12 +14,12 @@ export default function MovieResultCard({ title, year, tone, imdb, plot }) {
   }, [title, year]);
 
   return (
-    <div className="relative flex bg-gray-800 rounded shadow p-4 space-x-4">
+    <div className="relative flex bg-gray-800 mt-12 rounded-lg shadow-sm p-2 sm:p-3 space-x-2">
       {/* Poster */}
       <img
         src={poster}
         alt={`${title} poster`}
-        className="w-24 h-auto rounded"
+        className="w-20 h-auto rounded"
       />
 
       {/* IMDb top-right */}
@@ -39,7 +39,7 @@ export default function MovieResultCard({ title, year, tone, imdb, plot }) {
             href={`https://www.imdb.com/title/${imdbId}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-lg font-bold text-warm-white hover:underline"
+            className="text-base font-semibold text-warm-white hover:underline"
           >
             {title} ({year})
           </a>
@@ -49,10 +49,10 @@ export default function MovieResultCard({ title, year, tone, imdb, plot }) {
           </h3>
         )}
 
-        <p className="text-sm text-mist-blue">
+        <p className="text-xs text-mist-blue">
           <span className="font-medium">Tone:</span> {tone}
         </p>
-        <p className="text-sm text-gray-300 mt-1">{plot}</p>
+        <p className="text-xs text-gray-300 mt-1">{plot}</p>
       </div>
     </div>
   );
