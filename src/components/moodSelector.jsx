@@ -1,32 +1,43 @@
 export default function MoodSelector({ setMood }) {
-	const moods = [
-	  { label: "Sad", emoji: "😢" },
-	  { label: "Defeated", emoji: "🥀" },
-	  { label: "Lonely", emoji: "😔" },
-	  { label: "Anxious", emoji: "😰" },
-	  { label: "Angry", emoji: "😡" },
-	  { label: "Numb", emoji: "😶" },
-	  { label: "Curious", emoji: "🧐" },
-	  { label: "Inspired", emoji: "✨" },
-	  { label: "Happy", emoji: "😊" },
-	  { label: "Calm", emoji: "🌿" }
-	];
-  
-	return (
-		<div className="w-full px-4 flex justify-center">
-			<div className="grid grid-cols-2 gap-x-4 gap-y-4" style={{ maxWidth: '20rem' }}>
-				{moods.map((mood) => (
-					<button
-						key={mood.label}
-						onClick={() => setMood(mood.label)}
-						className="w-full px-2 py-3 rounded-xl text-sm sm:text-base font-medium bg-pale-sage text-soft-black hover:bg-glow-amber transition flex items-center justify-center gap-2"
-					>
-						<span className="text-xl">{mood.emoji}</span>
-						<span className="whitespace-nowrap">{mood.label}</span>
-					</button>
-				))}
-			</div>
-		</div>
-	);				
+  const moods = [
+		{ label: "Sad", emoji: "😢", shift: "right-[14px]" },
+		{ label: "Defeated", emoji: "🥀", shift: "top-[2px]" },
+		{ label: "Lonely", emoji: "😔", shift: "right-[4px]" },
+		{ label: "Anxious", emoji: "😰", shift: "top-[1px]" },
+		{ label: "Bored", emoji: "🥱", shift: "right-[12px]" },
+		{ label: "Curious", emoji: "🧐", shift: "top-[1px]" },
+		{ label: "Inspired", emoji: "✨", shift: "right-[2px]" },
+		{ label: "Happy", emoji: "😊", shift: "right-[10px]" },
+		{ label: "Calm", emoji: "🌿", shift: "right-[5px]" },
+		{ label: "Romantic", emoji: "💘", shift: "right-[2px]" },
+	];	
+
+  return (
+    <div className="w-full px-4 flex justify-center">
+      <div className="flex flex-wrap justify-center gap-2.5 sm:gap-3 max-w-3xl">
+        {moods.map((mood) => (
+          <button
+            key={mood.label}
+            onClick={() => setMood(mood.label)}
+            className="
+              w-[120px] sm:w-[140px]
+              flex items-center justify-center
+              px-4 py-3 sm:px-5 sm:py-4
+              text-sm sm:text-sm font-medium
+              text-soft-black bg-pale-sage rounded-lg
+              transition duration-200 ease-in-out
+              hover:bg-glow-amber hover:text-white hover:scale-105
+              transform focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-glow-amber
+            "
+            aria-label={`Select ${mood.label} mood`}
+          >
+            <span className="inline-flex items-center justify-center gap-2 leading-none">
+							<span className={`text-[1.2rem] relative ${mood.shift}`}>{mood.emoji}</span>
+							<span className="text-sm md:text-xs">{mood.label}</span>
+						</span>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
 }
-  
