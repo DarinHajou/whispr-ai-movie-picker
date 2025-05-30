@@ -32,17 +32,17 @@ export default function App() {
   return (
     <div className="flex flex-col min-h-screen px-4">
       {/* Header */}
-      <div className="text-center mb-6 mt-6">
-        <h1 className="text-5xl font-extrabold tracking-tight text-warm-white flex justify-center items-center gap-2">
-          <span className="text-4xl">🎬</span> Whispr
+      <div className="text-center mb-12 mt-6">
+        <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-warm-white flex justify-center items-center gap-2">
+          <span className="text-3xl sm:text-4xl">🎬</span> Whispr
         </h1>
-        <p className="text-sm md:text-xs text-mist-blue tracking-wide italic opacity-90">
-          - Your emotionally intelligent movie picker -
+        <p className="text-base sm:text-lg text-mist-blue tracking-wide italic opacity-90 mt-2">
+          Your emotionally intelligent movie picker
         </p>
       </div>
 
       {/* Main app flow */}
-      <main className="w-full max-w-xl mx-auto flex-grow flex flex-col items-center justify-start px-4 sm:px-0">
+      <main className="w-full max-w-xl mx-auto flex-grow flex flex-col items-start justify-start px-4 sm:px-0">
         <GuidedFlow
           step={step}
           setStep={setStep}
