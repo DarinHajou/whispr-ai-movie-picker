@@ -28,7 +28,7 @@ export default function GuidedFlow({
         {step === 1 && (
           <>
             <motion.div
-							className="text-lg sm:text-xl text-glow-amber font-medium text-center mt-9 max-w-md mx-auto"
+							className="text-lg sm:text-xl text-glow-amber font-medium text-center mt-2 max-w-md mx-auto"
 							initial={{ opacity: 0, scale: 0.98 }}
 							animate={{ opacity: 1, scale: 1 }}
 							transition={{ duration: 1.2, ease: "easeOut", delay: 0.1 }}
@@ -43,7 +43,7 @@ export default function GuidedFlow({
 									400,
 									() => setShowMood(true),
 								]}
-								speed={90}
+								speed={55}
 								wrapper="span"
 								cursor={true}
 								repeat={0}
@@ -52,14 +52,14 @@ export default function GuidedFlow({
 
 
             {showMood && (
-              <div className="flex flex-col items-center mt-12 space-y-4">
+              <div className="flex flex-col items-center mt-10 space-y-4">
                 <motion.h2
 									initial={{ opacity: 0, scale: 0.98 }}
 									animate={{ opacity: 1, scale: 1 }}
 									transition={{ duration: 0.4, ease: "easeOut" }}
-									className="text-base sm:text-lg font-medium text-warm-white mb-4 text-center"
+									className="text-base sm:text-lg font-medium italic text-warm-white mb-4 text-center"
 								>
-									Pick a mood — Sol’s listening.
+								👉	Pick a mood — Sol’s listening.
 								</motion.h2>
 
 
