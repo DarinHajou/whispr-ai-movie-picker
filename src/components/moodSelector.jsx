@@ -1,16 +1,16 @@
 export default function MoodSelector({ setMood }) {
   const moods = [
-		{ label: "Sad", emoji: "😢", shift: "right-[14px]" },
-		{ label: "Defeated", emoji: "🥀", shift: "top-[2px]" },
-		{ label: "Lonely", emoji: "😔", shift: "right-[4px]" },
-		{ label: "Anxious", emoji: "😰", shift: "top-[1px]" },
-		{ label: "Bored", emoji: "🥱", shift: "right-[12px]" },
-		{ label: "Curious", emoji: "🧐", shift: "top-[1px]" },
-		{ label: "Inspired", emoji: "✨", shift: "right-[2px]" },
-		{ label: "Happy", emoji: "😊", shift: "right-[10px]" },
-		{ label: "Calm", emoji: "🌿", shift: "right-[5px]" },
-		{ label: "Romantic", emoji: "💘", shift: "right-[2px]" },
-	];	
+    { label: "Sad", emoji: "😢", shift: "right-[14px]" },
+    { label: "Defeated", emoji: "🥀", shift: "top-[2px]" },
+    { label: "Lonely", emoji: "😔", shift: "right-[4px]" },
+    { label: "Anxious", emoji: "😰", shift: "top-[1px]" },
+    { label: "Bored", emoji: "🥱", shift: "right-[12px]" },
+    { label: "Curious", emoji: "🧐", shift: "top-[1px]" },
+    { label: "Inspired", emoji: "✨", shift: "right-[2px]" },
+    { label: "Happy", emoji: "😊", shift: "right-[10px]" },
+    { label: "Calm", emoji: "🌿", shift: "right-[5px]" },
+    { label: "Romantic", emoji: "💘", shift: "right-[2px]" },
+  ];
 
   return (
     <div className="w-full px-4 flex justify-center">
@@ -23,7 +23,7 @@ export default function MoodSelector({ setMood }) {
               w-[120px] sm:w-[140px]
               flex items-center justify-center
               px-4 py-3 sm:px-5 sm:py-4
-              text-sm sm:text-sm font-medium
+              text-base sm:text-base font-semibold
               text-soft-black bg-pale-sage rounded-lg
               transition duration-200 ease-in-out
               hover:bg-glow-amber hover:text-white hover:scale-105
@@ -32,9 +32,11 @@ export default function MoodSelector({ setMood }) {
             aria-label={`Select ${mood.label} mood`}
           >
             <span className="inline-flex items-center justify-center gap-2 leading-none">
-							<span className={`text-[1.2rem] relative ${mood.shift}`}>{mood.emoji}</span>
-							<span className="text-sm md:text-xs">{mood.label}</span>
-						</span>
+              <span className={`text-xl sm:text-2xl relative ${mood.shift}`}>
+                {mood.emoji}
+              </span>
+              <span className="text-sm sm:text-base">{mood.label}</span>
+            </span>
           </button>
         ))}
       </div>
