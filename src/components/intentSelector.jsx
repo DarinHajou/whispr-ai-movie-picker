@@ -6,9 +6,13 @@ export default function IntentSelector({ mood, setIntent }) {
   ];
 
   return (
-    <div className="space-y-6">
-      <h2 className="text-xl font-semibold text-center">
-        What do you want to do with your {mood.toLowerCase()} feeling?
+    <div className="space-y-8 w-full max-w-xl mx-auto text-center">
+      <h2 className="text-2xl sm:text-3xl font-semibold text-warm-white">
+        What do you want to do with your{" "}
+        <span className="italic text-glow-amber">
+          {mood ? mood.toLowerCase() : "current"}
+        </span>{" "}
+        feeling?
       </h2>
 
       <div className="space-y-4">
@@ -16,10 +20,19 @@ export default function IntentSelector({ mood, setIntent }) {
           <button
             key={label}
             onClick={() => setIntent(label)}
-            className="w-full text-left py-3 px-4 rounded-lg border border-gray-700 bg-gray-800 hover:bg-gray-700 transition-colors"
+            className="
+              w-full text-left px-5 py-4 sm:py-5 rounded-xl
+              bg-[#1d283a] hover:bg-[#2a3650]
+              focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-glow-amber
+              transition-all duration-200
+            "
           >
-            <span className="block text-lg font-medium">{label}</span>
-            <span className="block text-sm text-gray-400">{description}</span>
+            <span className="block text-lg sm:text-xl font-semibold text-warm-white">
+              {label}
+            </span>
+            <span className="block text-sm sm:text-base text-gray-400 mt-1">
+              {description}
+            </span>
           </button>
         ))}
       </div>
