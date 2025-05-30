@@ -14,45 +14,45 @@ export default function MovieResultCard({ title, year, tone, imdb, plot }) {
   }, [title, year]);
 
   return (
-    <div className="relative flex bg-gray-800 mt-12 rounded-lg shadow-sm p-2 sm:p-3 space-x-2">
+    <div className="relative flex bg-gray-800/80 rounded-xl shadow-lg p-4 gap-4 sm:gap-5 items-start">
       {/* Poster */}
       <img
         src={poster}
         alt={`${title} poster`}
-        className="w-20 h-auto rounded"
+        className="w-20 sm:w-24 rounded-md object-cover"
       />
 
-      {/* IMDb top-right */}
-      <div className="absolute top-2 right-2 flex items-center space-x-1 bg-black/70 px-2 py-1 rounded text-yellow-400 text-xs font-medium">
+      {/* IMDb badge */}
+      <div className="absolute top-2 right-2 flex items-center bg-black/70 px-2 py-1 rounded-md text-yellow-400 text-xs font-semibold gap-1">
         <img
           src="/images/imdb_logo.png"
           alt="IMDb"
-          className="w-6 h-auto"
+          className="w-5 h-4 object-contain"
         />
         <span>{imdb}</span>
       </div>
 
       {/* Content */}
-      <div className="flex flex-col space-y-1 text-left">
-      {imdbId ? (
+      <div className="flex flex-col space-y-2 text-left max-w-[calc(100%-6rem)]">
+        {imdbId ? (
           <a
             href={`https://www.imdb.com/title/${imdbId}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-base font-semibold text-warm-white hover:underline"
+            className="text-lg sm:text-xl font-semibold text-warm-white hover:underline leading-snug"
           >
             {title} ({year})
           </a>
         ) : (
-          <h3 className="text-lg font-bold text-warm-white">
+          <h3 className="text-lg sm:text-xl font-semibold text-warm-white leading-snug">
             {title} ({year})
           </h3>
         )}
 
-        <p className="text-xs text-mist-blue">
+        <p className="text-xs sm:text-sm text-mist-blue leading-tight">
           <span className="font-medium">Tone:</span> {tone}
         </p>
-        <p className="text-xs text-gray-300 mt-1">{plot}</p>
+        <p className="text-xs sm:text-sm text-gray-300 leading-snug">{plot}</p>
       </div>
     </div>
   );
