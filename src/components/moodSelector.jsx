@@ -14,7 +14,7 @@ export default function MoodSelector({ setMood }) {
 
   return (
     <div className="w-full px-4 flex justify-center">
-      <div className="flex flex-wrap justify-center gap-2.5 sm:gap-3 max-w-3xl">
+      <div className="flex flex-wrap justify-center gap-3 sm:gap-4 max-w-3xl">
         {moods.map((mood) => (
           <button
             key={mood.label}
@@ -23,16 +23,16 @@ export default function MoodSelector({ setMood }) {
               w-[120px] sm:w-[140px]
               flex items-center justify-center
               px-4 py-3 sm:px-5 sm:py-4
-              text-base sm:text-base font-semibold
-              text-soft-black bg-pale-sage rounded-lg
+              text-base font-semibold
+              text-soft-black bg-pale-sage rounded-xl
               transition duration-200 ease-in-out
               hover:bg-glow-amber hover:text-white hover:scale-105
-              transform focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-glow-amber
+              focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-glow-amber
             "
             aria-label={`Select ${mood.label} mood`}
           >
             <span className="inline-flex items-center justify-center gap-2 leading-none">
-              <span className={`text-xl sm:text-2xl relative ${mood.shift}`}>
+              <span className={`text-[1.0rem] sm:text-[1.75rem] relative ${mood.shift}`}>
                 {mood.emoji}
               </span>
               <span className="text-sm sm:text-base">{mood.label}</span>
