@@ -66,8 +66,8 @@ export default function GPTResults({
           )}
         </>
       ) : (
-        <div className="mt-10 bg-gray-800/60 rounded-xl px-6 py-6 shadow-lg max-w-xl mx-auto space-y-5">
-        <p className="text-lg sm:text-xl font-medium text-warm-white text-center">
+        <div className="mt-10 bg-gray-800/60 rounded-xl px-6 py-6 max-w-xl mx-auto shadow-lg text-center space-y-5">
+        <p className="text-lg font-semibold text-glow-amber">
           Add a follow-up or describe what missed the mark:
         </p>
       
@@ -75,11 +75,11 @@ export default function GPTResults({
           rows={4}
           value={followup}
           onChange={(e) => setFollowup(e.target.value)}
-          className="w-full bg-gray-900 text-white p-4 rounded-xl text-base shadow-sm focus:outline-none focus:ring-2 focus:ring-glow-amber transition"
+          className="w-full bg-gray-900 text-white p-3 rounded-lg text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-glow-amber transition"
           placeholder="e.g. I want something with a female lead or set in space"
         />
       
-        <div className="flex flex-col sm:flex-row justify-center items-center gap-3 mt-2">
+        <div className="flex flex-col sm:flex-row justify-center items-center gap-3 mt-1">
           <button
             onClick={async () => {
               setLoading(true);
@@ -95,21 +95,15 @@ export default function GPTResults({
                 setLoading(false);
               }
             }}
-            className="px-5 py-3 text-sm font-semibold rounded-xl bg-glow-amber text-soft-black hover:bg-yellow-300 shadow transition"
+            className="px-4 py-2 text-sm font-semibold rounded-lg bg-glow-amber text-soft-black hover:bg-yellow-300 transition shadow"
           >
             ✏️ Refine Suggestions
           </button>
-      
-          <button
-            onClick={() => setMode("guided")}
-            className="text-sm text-gray-400 underline hover:text-white mt-2 sm:mt-0"
-          >
-            Cancel
-          </button>
+
         </div>
       </div>
-      
-      )}
+            
+    )}
 
       {loading && (
         <div className="flex justify-center items-center my-10" role="status" aria-live="polite">
@@ -134,20 +128,27 @@ export default function GPTResults({
         </div>
       )}
 
-        <div className="mt-6 flex flex-col sm:flex-row justify-center items-center gap-3">
-          <button
-            onClick={resetAll}
-            className="px-4 py-2 text-sm font-medium text-soft-black bg-pale-sage rounded-xl transition hover:bg-glow-amber hover:text-white"
-          >
-            ↻ Start over from the beginning
-          </button>
-          <button
-            onClick={() => (mode === "chat" ? setMode("guided") : setStep(3))}
-            className="px-4 py-2 text-sm font-medium text-soft-black bg-pale-sage rounded-xl transition hover:bg-glow-amber hover:text-white"
-          >
-            ← Go back
-          </button>
-        </div>
+      <div className="mt-8 flex flex-col sm:flex-row justify-center items-center gap-3">
+        <button
+          onClick={resetAll}
+          className="px-6 py-2 text-sm font-medium text-soft-black bg-pale-sage rounded-xl transition hover:bg-glow-amber hover:text-white"
+        >
+          ↻ Start over 
+        </button>
+        <button
+          onClick={() => (mode === "chat" ? setMode("guided") : setStep(3))}
+          className="px-6 py-2 text-sm font- text-soft-black bg-pale-sage rounded-xl transition hover:bg-glow-amber hover:text-white"
+        >
+          ← Go back
+        </button>
+        
+      </div>
+        <button
+          onClick={() => setMode("guided")}
+          className="text-m text-gray-400 underline hover:text-white mt-6 "
+        >
+          Cancel
+        </button>
     </>
   );
 }
