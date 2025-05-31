@@ -40,71 +40,75 @@ export default function GPTResults({
 
           {gptResult && (
             <div className="mt-10 bg-gray-800/60 rounded-xl px-6 py-6 shadow-lg text-center space-y-4">
-              <p className="text-xl sm:text-2xl font-semibold text-glow-amber">
-                Didn’t quite hit the mark?
+              <p className="text-xl sm:text-2xl font-semibold text-glow-amber text-center">
+                Tell me what didn’t quite land — Sol's still listening.
               </p>
               <div className="flex flex-wrap justify-center gap-4">
-                <button
-                  onClick={onRetry}
-                  disabled={retryCount >= 2}
-                  className={`px-4 py-2 text-sm rounded-lg font-medium ${
-                    retryCount < 2
-                      ? "bg-gray-700 hover:bg-gray-600 text-white"
-                      : "bg-gray-700 text-gray-400 cursor-not-allowed"
-                  }`}
-                >
-                  🔄 Try a fresh 10
-                </button>
+              <button
+                onClick={onRetry}
+                disabled={retryCount >= 2}
+                className={`px-5 py-3 rounded text-sm font-semibold transition duration-200 ${
+                  retryCount < 2
+                    ? "bg-glow-amber text-soft-black hover:bg-yellow-300 shadow-md"
+                    : "bg-gray-700 text-gray-400 cursor-not-allowed"
+                }`}
+              >
+                🔄 Try a fresh 10
+              </button>
                 <button
                   onClick={() => setMode("chat")}
                   className="px-4 py-2 text-sm bg-glow-amber text-soft-black hover:bg-yellow-300 rounded-lg font-medium"
                 >
-                  ✏️ Refine Suggestions
+                  Refine Suggestions
                 </button>
-              </div>
+              </div>  
             </div>
           )}
         </>
       ) : (
-        <div className="mt-6 space-y-4">
-          <p className="text-base text-gray-400 text-center">
-            Add a follow-up or describe what missed the mark:
-          </p>
-          <textarea
-            rows={4}
-            value={followup}
-            onChange={(e) => setFollowup(e.target.value)}
-            className="w-full bg-gray-800 text-white p-3 rounded-lg text-sm"
-            placeholder="e.g. I want something with a female lead or set in space"
-          />
-          <div className="text-center space-x-3">
-            <button
-              className="px-4 py-2 text-sm bg-gray-700 rounded-lg hover:bg-gray-600"
-              onClick={async () => {
-                setLoading(true);
-                setError("");
-                try {
-                  const prompt = buildPrompt(mood, intent, energy) + `\n\nUser added: ${followup}`;
-                  const result = await callOpenAI(prompt);
-                  setGptResult(result);
-                  setFollowup("");
-                } catch (err) {
-                  setError(err.message);
-                } finally {
-                  setLoading(false);
-                }
-              }}
-            >
-              Refine Suggestions
-            </button>
-            <button
-              className="text-sm text-gray-400 underline hover:text-white"
-              onClick={() => setMode("guided")}
-            >
-              Cancel
-            </button>
-          </div>
+        <div className="mt-10 bg-gray-800/60 rounded-xl px-6 py-6 shadow-lg max-w-xl mx-auto space-y-5">
+        <p className="text-lg sm:text-xl font-medium text-warm-white text-center">
+          Add a follow-up or describe what missed the mark:
+        </p>
+      
+        <textarea
+          rows={4}
+          value={followup}
+          onChange={(e) => setFollowup(e.target.value)}
+          className="w-full bg-gray-900 text-white p-4 rounded-xl text-base shadow-sm focus:outline-none focus:ring-2 focus:ring-glow-amber transition"
+          placeholder="e.g. I want something with a female lead or set in space"
+        />
+      
+        <div className="flex flex-col sm:flex-row justify-center items-center gap-3 mt-2">
+          <button
+            onClick={async () => {
+              setLoading(true);
+              setError("");
+              try {
+                const prompt = buildPrompt(mood, intent, energy) + `\n\nUser added: ${followup}`;
+                const result = await callOpenAI(prompt);
+                setGptResult(result);
+                setFollowup("");
+              } catch (err) {
+                setError(err.message);
+              } finally {
+                setLoading(false);
+              }
+            }}
+            className="px-5 py-3 text-sm font-semibold rounded-xl bg-glow-amber text-soft-black hover:bg-yellow-300 shadow transition"
+          >
+            ✏️ Refine Suggestions
+          </button>
+      
+          <button
+            onClick={() => setMode("guided")}
+            className="text-sm text-gray-400 underline hover:text-white mt-2 sm:mt-0"
+          >
+            Cancel
+          </button>
         </div>
+      </div>
+      
       )}
 
       {loading && (
@@ -130,20 +134,20 @@ export default function GPTResults({
         </div>
       )}
 
-      <div className="text-center mt-6 space-y-2">
-        <button
-          onClick={() => (mode === "chat" ? setMode("guided") : setStep(3))}
-          className="block text-sm text-gray-400 hover:text-white underline"
-        >
-          ← {mode === "chat" ? "Back to results" : "Go back"}
-        </button>
-        <button
-          onClick={resetAll}
-          className="block text-sm text-gray-400 hover:text-white underline"
-        >
-          ↻ Start over from the beginning
-        </button>
-      </div>
+        <div className="mt-6 flex flex-col sm:flex-row justify-center items-center gap-3">
+          <button
+            onClick={resetAll}
+            className="px-4 py-2 text-sm font-medium text-soft-black bg-pale-sage rounded-xl transition hover:bg-glow-amber hover:text-white"
+          >
+            ↻ Start over from the beginning
+          </button>
+          <button
+            onClick={() => (mode === "chat" ? setMode("guided") : setStep(3))}
+            className="px-4 py-2 text-sm font-medium text-soft-black bg-pale-sage rounded-xl transition hover:bg-glow-amber hover:text-white"
+          >
+            ← Go back
+          </button>
+        </div>
     </>
   );
 }
