@@ -28,32 +28,31 @@
           {step === 1 && (
             <>
              <motion.div
-  className="flex justify-center mt-2 min-h-[100px]"
-  initial={{ opacity: 0, scale: 0.98 }}
-  animate={{ opacity: 1, scale: 1 }}
-  transition={{ duration: 1.2, ease: "easeOut", delay: 0.1 }}
->
-  <div className="w-full max-w-lg text-center text-glow-amber font-medium text-lg sm:text-xl">
-    <span className="inline-block w-full">
-      <TypeAnimation
-        sequence={[
-          "👋 Hi",
-          1000,
-          "I’m Sol.",
-          1000,
-          "Tell me how you feel, and I’ll whisper something worth watching.",
-          400,
-          () => setShowMood(true),
-        ]}
-        speed={55}
-        wrapper="span"
-        cursor={true}
-        repeat={0}
-      />
-    </span>
-  </div>
-</motion.div>
-
+              className="flex justify-center mt-2 min-h-[100px]"
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1.2, ease: "easeOut", delay: 0.1 }}
+            >
+              <div className="w-full max-w-lg text-center text-glow-amber font-medium text-lg sm:text-xl">
+                <span className="inline-block w-full">
+                  <TypeAnimation
+                    sequence={[
+                      "👋 Hi",
+                      1000,
+                      "I’m Sol.",
+                      1000,
+                      "Tell me how you feel, and I’ll whisper something worth watching.",
+                      400,
+                      () => setShowMood(true),
+                    ]}
+                    speed={95}
+                    wrapper="span"
+                    cursor={true}
+                    repeat={0}
+                  />
+                </span>
+              </div>
+            </motion.div>
 
               {showMood && (
                 <div className="flex flex-col items-center mt-10 space-y-4">
@@ -65,7 +64,6 @@
                   >
                   👉	Pick a mood — Sol’s listening.
                   </motion.h2>
-
 
                   <MoodSelector
                     setMood={(selected) => {
@@ -89,13 +87,13 @@
                 }}
               />
               <div className="text-center mt-4">
-                <button
-                  onClick={() => setStep(1)}
-                  className="text-sm text-gray-400 hover:text-white underline"
-                >
-                  ← Go back
-                </button>
-              </div>
+              <button
+                onClick={() => setStep(1)}
+                className="px-4 py-2 text-sm font-medium text-soft-black bg-pale-sage rounded-xl transition hover:bg-glow-amber hover:text-white"
+              >
+                ← Go back
+              </button>
+            </div>
             </>
           )}
 
@@ -110,8 +108,8 @@
               />
               <div className="text-center mt-4">
                 <button
-                  onClick={() => setStep(2)}
-                  className="text-sm text-gray-400 hover:text-white underline"
+                  onClick={() => setStep(1)}
+                  className="px-4 py-2 text-sm font-medium text-soft-black bg-pale-sage rounded-xl transition hover:bg-glow-amber hover:text-white"
                 >
                   ← Go back
                 </button>
