@@ -10,6 +10,15 @@ export default function App() {
   const [intent, setIntent] = useState(null);
   const [energy, setEnergy] = useState(null);
 
+  const resetAll = () => {
+    setStep(1);
+    setMood(null);
+    setIntent(null);
+    setEnergy(null);
+    setMode("guided");
+    reset();
+  };  
+
   const {
     gptResult,
     loading,
@@ -57,20 +66,22 @@ export default function App() {
 
           {step === 4 && (
             <GPTResults
-              mode="guided"
-              mood={mood}
-              intent={intent}
-              energy={energy}
-              gptResult={gptResult}
-              parsedMovies={parsedMovies}
-              hasMovies={hasMovies}
-              loading={loading}
-              error={error}
-              retryCount={retryCount}
-              onRetry={handleRetry}
-              step={step}
-              setStep={setStep}
-            />
+            mode={mode}
+            setMode={setMode}
+            mood={mood}
+            intent={intent}
+            energy={energy}
+            gptResult={gptResult}
+            parsedMovies={parsedMovies}
+            hasMovies={hasMovies}
+            loading={loading}
+            error={error}
+            retryCount={retryCount}
+            onRetry={handleRetry}
+            step={step}
+            setStep={setStep}
+            resetAll={resetAll}
+          />
           )}
         </main>
 
