@@ -42,11 +42,11 @@ export default function App() {
     <div className="w-full flex justify-center">
       <div className="flex flex-col min-h-screen px-4">
         {/* Header */}
-        <div className="text-center mb-12 mt-6">
-          <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-warm-white flex justify-center items-center gap-2">
-            <span className="text-3xl sm:text-4xl">🎬</span> Whispr
+        <div className="text-center mb-16 mt-16">
+          <h1 className="text-6xl sm:text-7xl font-extrabold tracking-tight text-warm-white flex justify-center items-center gap-2 whitespace-nowrap transition-colors duration-300 hover:text-[rgba(244,194,135,0.8)]">
+            <span className="text-4xl sm:text-5xl">🎬</span> Whispr
           </h1>
-          <p className="text-base sm:text-lg text-mist-blue tracking-wide italic opacity-90 mt-2">
+          <p className="text-lg sm:text-xl text-[rgba(250,249,246,0.9)] italic leading-snug tracking-wide mt-4 mb-4">
             Your emotionally intelligent movie picker
           </p>
         </div>
