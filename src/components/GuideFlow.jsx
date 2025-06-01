@@ -55,12 +55,12 @@
             </motion.div>
 
               {showMood && (
-                <div className="flex flex-col items-center mt-10 space-y-4">
+                <div className="flex flex-col items-center mt-8 space-y-8">
                   <motion.h2
                     initial={{ opacity: 0, scale: 0.98 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.4, ease: "easeOut" }}
-                    className="text-base sm:text-lg font-medium italic text-warm-white mb-4 text-center"
+                    className="text-base sm:text-lg font-medium italic text-warm-white mb-8 leading-snug text-center"
                   >
                   👉	Pick a mood — Sol’s listening.
                   </motion.h2>
