@@ -86,8 +86,10 @@ export default function App() {
         </main>
 
         {/* Footer */}
-        <footer className="text-center text-xs text-gray-400 opacity-60 mt-6 mb-4">
-          Built by Darin · Powered by <span className="text-glow-amber font-semibold">SolaceAI</span>
+        <footer className="w-full border-t border-[rgba(255,255,255,0.1)] pt-4 mt-16">
+          <div className="text-center text-xs sm:text-sm text-[rgba(166,177,196,0.5)]">
+            Built by Darin · Powered by <span className="text-glow-amber font-semibold">SolaceAI</span>
+          </div>
         </footer>
       </div>
     </div>
