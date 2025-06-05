@@ -2,6 +2,7 @@ import { useState } from "react";
 import GuidedFlow from "./components/guideFlow";
 import GPTResults from "./components/GPTResults";
 import { useGPTFetcher } from "./lib/useGPTFetcher";
+import EmotionalPulseWavesBackground from "./components/EmotionalPulseWavesBackground";
 
 export default function App() {
   const [step, setStep] = useState(1);
@@ -39,20 +40,32 @@ export default function App() {
   };
 
   return (
-    <div className="w-full flex justify-center">
-      <div className="flex flex-col min-h-screen px-4">
+    <div className="w-full min-h-screen flex justify-center bg-[radial-gradient(circle_at_50%_10%,rgba(18,18,18,1)_0%,rgba(18,18,18,0.75)_80%)]">
+      <div className="flex flex-col min-h-screen px-4 bg-[rgba(18,18,18,0.8)] backdrop-blur-sm rounded-2xl shadow-lg p-8 mt-4 max-w-2xl w-full">
         {/* Header */}
-        <div className="text-center mb-16 mt-16">
-          <h1 className="text-6xl sm:text-7xl font-extrabold tracking-tight text-warm-white flex justify-center items-center gap-2 whitespace-nowrap transition-colors duration-300 hover:text-[rgba(244,194,135,0.8)]">
-            <span className="text-4xl sm:text-5xl">🎬</span> Whispr
-          </h1>
-          <p className="text-lg sm:text-xl text-[rgba(250,249,246,0.9)] italic leading-snug tracking-wide mt-4 mb-4">
-            Your emotionally intelligent movie picker
-          </p>
-        </div>
-
+        <div className="text-center mb-10 mt-14">
+        <h1 className="text-6xl sm:text-7xl font-extrabold tracking-tight text-warm-white flex justify-center items-center gap-2 whitespace-nowrap transition-colors duration-300 hover:text-[rgba(244,194,135,0.8)]">
+          <span className="text-4xl sm:text-5xl">🎬</span> Whispr
+        </h1>
+        <p className="text-lg sm:text-xl text-[rgba(250,249,246,0.9)] italic leading-snug tracking-wide mt-4 mb-8">
+          Your emotionally intelligent movie picker
+        </p>
+      </div>
+  
+      <div className="absolute inset-0 -z-10 pointer-events-none overflow-hidden">
+        <EmotionalPulseWavesBackground />
+      </div>
+  
         {/* Main app flow */}
-        <main className="w-full max-w-xl mx-auto flex-grow flex flex-col justify-start px-4 sm:px-0">
+        <main className="
+          w-full 
+          max-w-lg sm:max-w-xl md:max-w-2xl 
+          mx-auto 
+          flex-grow flex flex-col justify-start
+          px-2 sm:px-4 md:px-6 
+          py-4 sm:py-6 md:py-8
+          text-[15px] sm:text-[15px] md:text-[14px]
+        ">
           <GuidedFlow
             step={step}
             setStep={setStep}
@@ -63,30 +76,29 @@ export default function App() {
             energy={energy}
             setEnergy={setEnergy}
           />
-
           {step === 4 && (
             <GPTResults
-            mode={mode}
-            setMode={setMode}
-            mood={mood}
-            intent={intent}
-            energy={energy}
-            gptResult={gptResult}
-            parsedMovies={parsedMovies}
-            hasMovies={hasMovies}
-            loading={loading}
-            error={error}
-            retryCount={retryCount}
-            onRetry={handleRetry}
-            step={step}
-            setStep={setStep}
-            resetAll={resetAll}
-          />
+              mode={mode}
+              setMode={setMode}
+              mood={mood}
+              intent={intent}
+              energy={energy}
+              gptResult={gptResult}
+              parsedMovies={parsedMovies}
+              hasMovies={hasMovies}
+              loading={loading}
+              error={error}
+              retryCount={retryCount}
+              onRetry={handleRetry}
+              step={step}
+              setStep={setStep}
+              resetAll={resetAll}
+            />
           )}
         </main>
-
+  
         {/* Footer */}
-        <footer className="w-full border-t border-[rgba(255,255,255,0.1)] pt-4 mt-16">
+        <footer className="w-full border-t border-[rgba(255,255,255,0.1)] pt-4 mt-8">
           <div className="text-center text-xs sm:text-sm text-[rgba(166,177,196,0.5)]">
             Built by Darin · Powered by <span className="text-glow-amber font-semibold">SolaceAI</span>
           </div>
@@ -94,4 +106,5 @@ export default function App() {
       </div>
     </div>
   );
+  
 }
