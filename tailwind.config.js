@@ -35,11 +35,30 @@ export default {
         'fade-in': 'fadeIn 0.7s ease-in forwards',
         'slide-up': 'slideUp 0.5s ease-out forwards',
         'zoom-in': 'zoomIn 0.4s ease-in-out forwards',
+        'blob1': 'blob1 18s ease-in-out infinite',
+        'blob2': 'blob2 24s ease-in-out infinite',
+        'blob3': 'blob3 31s ease-in-out infinite',
       },
+      
       keyframes: {
         fadeIn: {
           from: { opacity: '0' },
           to: { opacity: '1' },
+        },
+        blob1: {
+          '0%, 100%':   { transform: 'translate(0,0) scale(1.08) rotate(0deg)' },
+          '35%':        { transform: 'translate(-110px, 50px) scale(1.17) rotate(-2deg)' },
+          '65%':        { transform: 'translate(60px, -30px) scale(0.92) rotate(3deg)' },
+        },
+        blob2: {
+          '0%, 100%':   { transform: 'translate(0,0) scale(1.04) rotate(0deg)' },
+          '25%':        { transform: 'translate(150px, -80px) scale(1.10) rotate(2deg)' },
+          '75%':        { transform: 'translate(-60px, 120px) scale(0.89) rotate(-4deg)' },
+        },
+        blob3: {
+          '0%, 100%':   { transform: 'translate(0,0) scale(1) rotate(0deg)' },
+          '20%':        { transform: 'translate(-90px, -80px) scale(1.12) rotate(5deg)' },
+          '80%':        { transform: 'translate(120px, 40px) scale(0.88) rotate(-2deg)' },
         },
         slideUp: {
           from: { opacity: '0', transform: 'translateY(20px)' },
