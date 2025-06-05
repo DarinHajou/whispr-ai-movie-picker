@@ -4,6 +4,7 @@
   import IntentSelector from "./IntentSelector";
   import EnergySelector from "./EnergySelector";
   import { AnimatePresence, motion } from "framer-motion";
+  import ExperienceSelector from "./ExperienceSelector";
 
   export default function GuidedFlow({
     step,
@@ -14,6 +15,8 @@
     setEnergy,
   }) {
     const [showMood, setShowMood] = useState(false);
+    const [showExperience, setShowExperience] = useState(false);
+
 
     return (
       <AnimatePresence mode="wait">
@@ -27,54 +30,74 @@
           {/* STEP 1 */}
           {step === 1 && (
             <>
-             <motion.div
-              className="flex justify-center mt-2 min-h-[100px]"
+          <motion.div
+          className="flex justify-center mt-8 min-h-[160px]"
+          initial={{ opacity: 0, scale: 0.98 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.2, ease: "easeOut", delay: 0.1 }}
+        >
+          <div className="w-full max-w-lg text-center text-glow-amber font-medium text-lg sm:text-xl">
+            <span className="inline-block w-full">
+              <TypeAnimation
+                sequence={[
+                  "👋 Hi",
+                  1000,
+                  "I’m Sol.",
+                  1000,
+                  "Tell me how you feel, and I’ll whisper something worth watching.",
+                  400,
+                  () => setShowMood(true),
+                ]}
+                speed={95}
+                wrapper="span"
+                cursor={true}
+                repeat={0}
+              />
+            </span>
+          </div>
+        </motion.div>
+
+        {showMood && (
+          <div className="flex flex-col items-center mt-8 space-y-8">
+            <motion.h2
               initial={{ opacity: 0, scale: 0.98 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1.2, ease: "easeOut", delay: 0.1 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              className="text-lg sm:text-xl font-medium italic text-warm-white text-center"
             >
-              <div className="w-full max-w-lg text-center text-glow-amber font-medium text-lg sm:text-xl">
-                <span className="inline-block w-full">
-                  <TypeAnimation
-                    sequence={[
-                      "👋 Hi",
-                      1000,
-                      "I’m Sol.",
-                      1000,
-                      "Tell me how you feel, and I’ll whisper something worth watching.",
-                      400,
-                      () => setShowMood(true),
-                    ]}
-                    speed={95}
-                    wrapper="span"
-                    cursor={true}
-                    repeat={0}
-                  />
-                </span>
-              </div>
-            </motion.div>
+              👉 Pick a mood — Sol’s listening.
+            </motion.h2>
 
-              {showMood && (
-                <div className="flex flex-col items-center mt-8 space-y-8">
-                  <motion.h2
-                    initial={{ opacity: 0, scale: 0.98 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.4, ease: "easeOut" }}
-                    className="text-base sm:text-lg font-medium italic text-warm-white mb-8 leading-snug text-center"
+            {!showExperience ? (
+              <>
+                <MoodSelector
+                  setMood={(selected) => {
+                    setMood(selected);
+                    setStep(2);
+                  }}
+                />
+                <div className="text-center mt-4">
+                  <button
+                    onClick={() => setShowExperience(true)}
+                    className="text-sm text-glow-amber underline opacity-80 hover:opacity-100 transition"
                   >
-                  👉	Pick a mood — Sol’s listening.
-                  </motion.h2>
-
-                  <MoodSelector
-                    setMood={(selected) => {
-                      setMood(selected);
-                      setStep(2);
-                    }}
-                  />
+                    Not sure how you feel? Pick an experience instead.
+                  </button>
                 </div>
-              )}
-            </>
-          )}
+              </>
+            ) : (
+              <ExperienceSelector
+                setExperience={(selected) => {
+                  setExperience(selected);
+                  setStep(3); // or whatever next step you want
+                }}
+                onBack={() => setShowExperience(false)} // optional, lets user go back to moods
+              />
+            )}
+          </div>
+        )}
+          </>
+        )}
 
           {/* STEP 2 */}
           {step === 2 && (
@@ -87,13 +110,13 @@
                 }}
               />
               <div className="text-center mt-4">
-              <button
-                onClick={() => setStep(1)}
-                className="px-4 py-2 text-sm font-medium text-soft-black bg-pale-sage rounded-xl transition hover:bg-glow-amber hover:text-white"
-              >
-                ← Go back
-              </button>
-            </div>
+                <button
+                  onClick={() => setStep(1)}
+                  className="text-sm text-gray-400 hover:text-white underline focus:outline-none focus:shadow-[0_0_0_2px_rgba(244,194,135,0.6)]"
+                >
+                  ← Go back
+                </button>
+              </div>
             </>
           )}
 
@@ -108,8 +131,8 @@
               />
               <div className="text-center mt-4">
                 <button
-                  onClick={() => setStep(1)}
-                  className="px-4 py-2 text-sm font-medium text-soft-black bg-pale-sage rounded-xl transition hover:bg-glow-amber hover:text-white"
+                  onClick={() => setStep(2)}
+                  className="text-sm text-gray-400 hover:text-white underline"
                 >
                   ← Go back
                 </button>
