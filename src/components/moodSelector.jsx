@@ -12,33 +12,29 @@ export default function MoodSelector({ setMood }) {
     { label: "Romantic", emoji: "💘", shift: "right-[-5px]" },
   ];
 
-    return (
-      <div className="w-full px-2 flex justify-center">
-        <div className="
-        grid grid-cols-2 sm:grid-cols-4 gap-4 w-full max-w-3xl
-        justify-items-center
-      ">
-        {moods.map((mood) => (
-          <button
-            key={mood.label}
-            onClick={() => setMood(mood.label)}
-            className={`w-full px-3 py-2 text-base font-medium
-              text-soft-black bg-pale-sage rounded-xl
-              transition hover:bg-mood-hover hover:text-soft-black hover:scale-[1.02]
-              focus:outline-none focus:shadow-[0_0_0_2px_rgba(244,194,135,0.6)]
-              ${mood.label === "Calm" ? "col-start-2" : ""}
-            `}            
-            aria-label={`Select ${mood.label} mood`}
-          >
-            <span className="inline-flex items-center justify-center gap-2 leading-none">
-             <span className={`text-2xl sm:text-3xl relative ${mood.shift}`}>
-                {mood.emoji}
+  return (
+    <div className="w-full px-2 flex justify-center">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 w-full max-w-2xl justify-items-center py-8 sm:py-0">
+        {moods.map((mood, idx) => {
+          let extra = "";
+          // Ads manual col-start on sm screens for last row
+          if (idx === 8) extra = "sm:col-start-2";
+          if (idx === 9) extra = "sm:col-start-3";
+          return (
+            <button
+              key={mood.label}
+              onClick={() => setMood(mood.label)}
+              className={`w-full px-3 py-2 sm:py-3 text-sm sm:text-base font-medium text-soft-black bg-pale-sage rounded-xl transition hover:bg-mood-hover hover:text-soft-black hover:scale-[1.02] focus:outline-none focus:shadow-[0_0_0_2px_rgba(244,194,135,0.6)] min-h-[44px] min-w-[44px] ${extra}`}
+              aria-label={`Select ${mood.label} mood`}
+            >
+              <span className="inline-flex items-center gap-1 leading-none">
+                <span className={`text-2xl sm:text-3xl relative ${mood.shift || ""}`}>{mood.emoji}</span>
+                <span>{mood.label}</span>
               </span>
-              <span className="text-xs sm:text-sm">{mood.label}</span>
-            </span>
-          </button>
-        ))}
+            </button>
+          );
+        })}
       </div>
     </div>
-  );  
+  );
 }
