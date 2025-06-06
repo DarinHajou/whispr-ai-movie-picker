@@ -13,8 +13,8 @@ export default function MoodSelector({ setMood }) {
   ];
 
   return (
-    <div className="w-full px-2 flex justify-center">
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 w-full max-w-2xl justify-items-center py-8 sm:py-0">
+    <div className="w-full flex justify-center">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 w-full max-w-[560px] justify-items-center py-8 sm:py-6">
         {moods.map((mood, idx) => {
           let extra = "";
           // Ads manual col-start on sm screens for last row
@@ -24,11 +24,26 @@ export default function MoodSelector({ setMood }) {
             <button
               key={mood.label}
               onClick={() => setMood(mood.label)}
-              className={`w-full px-3 py-2 sm:py-3 text-sm sm:text-base font-medium text-soft-black bg-pale-sage rounded-xl transition hover:bg-mood-hover hover:text-soft-black hover:scale-[1.02] focus:outline-none focus:shadow-[0_0_0_2px_rgba(244,194,135,0.6)] min-h-[44px] min-w-[44px] ${extra}`}
+              className={`
+                w-full px-3 py-2 sm:py-3 
+                text-sm sm:text-base 
+                font-medium 
+                text-soft-black 
+                bg-pale-sage 
+                rounded-xl 
+                transition 
+                hover:bg-mood-hover 
+                hover:text-soft-black 
+                hover:scale-[1.02] 
+                focus:outline-none 
+                focus:shadow-[0_0_0_2px_rgba(244,194,135,0.6)] 
+                min-h-[44px] min-w-[44px] 
+                ${extra}
+              `}              
               aria-label={`Select ${mood.label} mood`}
             >
               <span className="inline-flex items-center gap-1 leading-none">
-                <span className={`text-2xl sm:text-3xl relative ${mood.shift || ""}`}>{mood.emoji}</span>
+                <span className={`text-2xl sm:text-2xl relative ${mood.shift || ""}`}>{mood.emoji}</span>
                 <span>{mood.label}</span>
               </span>
             </button>
