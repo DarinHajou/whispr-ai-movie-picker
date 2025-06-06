@@ -7,7 +7,7 @@ export default function IntentSelector({ mood, setIntent }) {
 
   return (
     <div className="space-y-8 w-full max-w-xl mx-auto text-center">
-      <h2 className="text-2xl sm:text-3xl font-semibold text-warm-white">
+      <h2 className="text-2xl sm:text-3xl font-semibold mt-8 mb-12 text-warm-white">
         What do you want to do with your{" "}
         <span className="italic text-glow-amber">
           {mood ? mood.toLowerCase() : "current"}
