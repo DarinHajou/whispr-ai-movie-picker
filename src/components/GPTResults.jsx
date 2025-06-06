@@ -17,8 +17,11 @@ export default function GPTResults({
 }) {
   return (
     <>
-      {mode === "guided" ? (
-        <>
+     {mode === "guided" ? (
+      <>
+        <p className="text-lg sm:text-xl font-medium italic text-glow-amber text-center mt-8 mb-12"
+          >🎞️ Here’s what Sol recommends
+        </p> 
           {gptResult !== "" ? (
             hasMovies ? (
               <div className="space-y-4">
