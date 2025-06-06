@@ -7,7 +7,7 @@ export default function EnergySelector({ setEnergy }) {
 
   return (
     <div className="space-y-8 w-full max-w-xl mx-auto text-center">
-      <h2 className="text-2xl sm:text-3xl font-semibold text-warm-white">
+      <h2 className="text-2xl sm:text-3xl font-semibold mb-12 mt-6 text-warm-white">
         How much mental energy do you have right now?
       </h2>
 
