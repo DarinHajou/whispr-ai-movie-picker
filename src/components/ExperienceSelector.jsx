@@ -1,38 +1,65 @@
-export default function ExperienceSelector({ setExperience, setStep }) {
-	const experiences = [
-		{ label: "Make me feel something deep" },
-		{ label: "Give me something fun and light" },
-		{ label: "I want to process something heavy" },
-		{ label: "Show me something that makes me think" },
-		{ label: "I need to escape reality for a bit" },
-	];
+export default function ExperienceSelector({ setExperience, onBack }) {
+  const experiences = [
+    {
+      label: "Feel Something Deep",
+      description: "Give me an experience with emotional depth."
+    },
+    {
+      label: "Fun and Light",
+      description: "I want something uplifting and easy."
+    },
+    {
+      label: "Process Something Heavy",
+      description: "Help me process a difficult emotion."
+    },
+    {
+      label: "Make Me Think",
+      description: "Show me something thought-provoking."
+    },
+    {
+      label: "Escape Reality",
+      description: "Let me lose myself in another world."
+    }
+  ];
 
-	return (
-		<div className="flex flex-col items-center mt-8 space-y-8">
-			<h2 className="text-lg sm:text-xl font-medium italic text-warm-white text-center mb-4">
-				What kind of experience are you in the mood for?
-			</h2>
-			<div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-2xl">
-				{experiences.map(exp => (
-					<button
-						key={exp.label}
-						onClick={() => {
-							setExperience(exp.label);
-							setStep(3);
-						}}
-						className="w-full px-3 py-4 text-base font-medium text-soft-black bg-pale-sage rounded-xl transition hover:bg-mood-hover hover:text-soft-black hover:scale-[1.02] focus:outline-none focus:shadow-[0_0_0_2px_rgba(244,194,135,0.6)]"
-					>
-						{exp.label}
-					</button>
-				))}
-			</div>
-			<button
-				onClick={() => setStep(1)}
-				className="text-sm text-glow-amber underline mt-4"
-			>
-				← Go back to mood picker
-			</button>
-		</div>
-	);
+  return (
+    <div className="space-y-8 w-full max-w-xl mx-auto text-center">
+      <h2 className="text-2xl sm:text-3xl font-semibold  text-glow-amber">
+        What kind of experience are you in the mood for?
+      </h2>
+
+      <div className="space-y-4">
+        {experiences.map(({ label, description }) => (
+          <button
+            key={label}
+            onClick={() => setExperience(label)}
+            className="
+              w-full text-left px-5 py-4 sm:py-5 rounded-xl
+              bg-[#1d283a] hover:bg-[#2a3650]
+              focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-glow-amber
+              transition-all duration-200
+            "
+          >
+            <span className="block text-lg sm:text-xl font-semibold text-warm-white">
+              {label}
+            </span>
+            <span className="block text-sm sm:text-base text-gray-400 mt-1">
+              {description}
+            </span>
+          </button>
+        ))}
+      </div>
+
+      {onBack && (
+        <div className="text-center mt-4">
+          <button
+            onClick={onBack}
+            className="text-sm text-gray-400 hover:text-white underline focus:outline-none focus:shadow-[0_0_0_2px_rgba(244,194,135,0.6)]"
+          >
+            ← Back to moods
+          </button>
+        </div>
+      )}
+    </div>
+  );
 }
-  
