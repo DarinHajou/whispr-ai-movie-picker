@@ -79,12 +79,19 @@
                       }}
                     />
                     <div className="text-center mt-4">
-                      <button
-                        onClick={() => setShowExperience(true)}
-                        className="text-sm text-glow-amber underline opacity-80 hover:opacity-100 transition"
-                      >
-                        Not sure how you feel? Pick an experience instead.
-                      </button>
+                    <button
+                      onClick={() => setStep("experience")} // or route if needed
+                      className="
+                        mt-3 text-sm sm:text-base text-mist-blue 
+                        italic hover:text-glow-amber 
+                        underline underline-offset-4 
+                        transition duration-150
+                        focus:outline-none focus:ring-1 focus:ring-glow-amber
+                      "
+                    >
+                      Not sure how you feel? Pick an experience instead.
+                    </button>
+
                     </div>
                   </>
                 ) : (
@@ -99,7 +106,7 @@
               </div>
             )}
 
-        </>
+              </>
             )}
 
             {/* STEP 2 */}
