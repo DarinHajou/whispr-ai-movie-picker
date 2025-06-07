@@ -7,7 +7,7 @@ export default function EmotionalPulseWavesBackground() {
           absolute
           left-1/2 top-[20%]
           w-[60vw] h-[44vw]
-          sm:left-[56%] sm:top-[14%] sm:w-[26vw] sm:h-[19vw]
+          sm:left-[49%] sm:top-[14%] sm:w-[26vw] sm:h-[19vw]
           -translate-x-1/2
           bg-glow-amber opacity-30 rounded-full blur-3xl animate-blob1
         "
@@ -38,7 +38,7 @@ export default function EmotionalPulseWavesBackground() {
         className="absolute inset-0 pointer-events-none z-10"
         style={{
           background:
-            'radial-gradient(ellipse at center, transparent 20%, rgba(18,18,18,0.8) 100%)',
+            'radial-gradient(ellipse at center, transparent 50%, rgba(18,18,18,0.4) 100%)',
         }}
       />
     </div>
