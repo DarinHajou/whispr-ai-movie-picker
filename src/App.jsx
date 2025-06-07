@@ -96,7 +96,11 @@ export default function App() {
             />
           )}
         </main>
-  
+        
+        <p className="text-center text-xs sm:text-xs text-gray-500 max-w-md mx-auto mt-16 px-4 leading-relaxed">
+        "Whispr is a calm companion  built with soul — Built with soul — not for clicks, but for real connection, one story at a time."<br /><span className="not-italic text-[rgba(166,177,196,0.7)]"> — Sol</span>.
+        </p>
+
         {/* Footer */}
         <footer className="w-full border-t border-[rgba(255,255,255,0.1)] pt-4 mt-8">
           <div className="text-center text-xs sm:text-sm text-[rgba(166,177,196,0.5)]">
