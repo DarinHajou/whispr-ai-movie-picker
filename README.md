@@ -103,4 +103,4 @@ This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) f
 
 Questions, feedback, or ideas?
 Feel free to reach out or fork the repo to contribute.
->>>>>>> 033e2c8d5cd757c45076ea3b45f68b6ceb9a4b6e
+---------> 033e2c8d5cd757c45076ea3b45f68b6ceb9a4b6e
