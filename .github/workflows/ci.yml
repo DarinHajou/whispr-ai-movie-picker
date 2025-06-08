@@ -13,6 +13,9 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-      - run: rm -rf node_modules package-lock.json
-      - run: npm install
+      - run: npm ci
+        env:
+          ROLLUP_NO_NATIVE: 1
       - run: npm run build
+        env:
+          ROLLUP_NO_NATIVE: 1
