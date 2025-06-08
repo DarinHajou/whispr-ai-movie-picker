@@ -17,11 +17,12 @@ jobs:
         with:
           node-version: 18
 
-      - name: Clean install (no native crap)
+      - name: Clean install
         run: |
           rm -rf node_modules package-lock.json
           npm cache clean --force
           npm install --omit=optional
+          npm install --save-dev rollup@2.79.1
         env:
           ROLLUP_NO_NATIVE: 1
 
