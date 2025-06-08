@@ -12,6 +12,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Clean lockfiles and node_modules   # <--- ADD THIS HERE
+        run: rm -rf node_modules package-lock.json yarn.lock
+
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
