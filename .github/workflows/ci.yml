@@ -12,3 +12,4 @@ jobs:
       - run: npm install
       - run: npm ls --all || true
       - run: npm run build
+
