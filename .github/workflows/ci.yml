@@ -15,15 +15,15 @@ jobs:
         with:
           node-version: 18
 
-      - name: Wipe modules + reinstall fresh
+      - name: Clean and reinstall
         run: |
           rm -rf node_modules package-lock.json
           npm cache clean --force
-          npm install
+          npm install --omit=optional
         env:
           ROLLUP_NO_NATIVE: 1
 
-      - name: Build the app
+      - name: Build
         run: npm run build
         env:
           ROLLUP_NO_NATIVE: 1
