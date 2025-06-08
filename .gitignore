@@ -7,10 +7,15 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Dependency directories and build artifacts
 node_modules
 dist
 dist-ssr
 *.local
+
+# Lockfiles (add these lines!)
+package-lock.json
+yarn.lock
 
 # Editor directories and files
 .vscode/*
@@ -22,6 +27,5 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-
 
 .env
