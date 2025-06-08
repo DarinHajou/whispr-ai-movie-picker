@@ -1,4 +1,4 @@
-import MovieResultCard from "./movieResultCard";
+import MovieResultCard from "./MovieResultCard";
 import buildPrompt from "../lib/buildPrompt";
 import { callOpenAI } from "../lib/callOpenAI";
 
