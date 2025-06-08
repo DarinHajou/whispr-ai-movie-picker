@@ -12,13 +12,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
+      - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
 
-      - name: Install dependencies with Yarn
+      - name: Install dependencies
         run: yarn install --ignore-optional
 
-      - name: Build the app
+      - name: Build
         run: yarn build
+        env:
+          ROLLUP_NO_NATIVE: 1
