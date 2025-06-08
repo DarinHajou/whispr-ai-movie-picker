@@ -7,12 +7,22 @@
 ## 🎯 Features
 
 * 🎭 Mood-based movie suggestions
-* 🧠 AI-powered emotional reasoning
-* ✨ Step-by-step mood, intent, and energy selector
-* 🗣 Refine suggestions through follow-up conversations
-* 🎬 Dynamic poster fetching (via TMDb)
-* 📊 Rate-limited retries for cost-consciousness
-* 📱 Responsive design, mobile-first friendly
+
+* 🧠 AI-powered emotional reasoning for tailored picks
+
+* ✨ Guided flow: mood, intent, energy, and experience selection
+
+* 🗣 Interactive follow-up chats to refine recommendations
+
+* 🎬 Dynamic fetching of movie posters and info (TMDb)
+
+* 📊 Smart retry logic to balance cost and performance
+
+* 📱 Fully responsive, mobile-first design with smooth animations
+
+* 🔒 Privacy-first—no tracking or ads, just you and stories
+
+* 🌙 Soothing UI with a calm, soulful vibe
 
 ---
 
@@ -70,7 +80,7 @@ src/
 
 ## 🧠 About Sol
 
-Whispr is powered by **Sol** — a warm, emotionally intelligent AI presence designed to guide you through emotional storytelling. Sol helps translate mood and mental energy into thoughtful film recommendations.
+Whispr is powered by **Sol** - a warm, emotionally intelligent AI presence designed to guide you through emotional storytelling. Sol helps translate mood and mental energy into thoughtful film recommendations.
 
 ---
 
@@ -85,7 +95,7 @@ This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) f
 * Movie data & posters provided by [The Movie Database (TMDb)](https://www.themoviedb.org/)
 * AI integration via [OpenAI](https://openai.com/)
 
-> **Whispr** is part of the SolaceAI initiative — building emotionally intelligent interfaces for a more human digital experience.
+> **Whispr** is part of the WhisprAI initiative - building emotionally intelligent interfaces for a more human digital experience.
 
 ---
 
