@@ -12,21 +12,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up Node
+      - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: yarn
 
-      - name: Clean install
-        run: |
-          rm -rf node_modules .yarn yarn.lock
-          yarn set version berry
-          yarn install --immutable --check-cache
+      - name: Install dependencies
+        run: yarn install --ignore-optional
         env:
-          ROLLUP_NO_NATIVE: 1
+          ROLLUP_NO_NATIVE: "1"
 
       - name: Build
         run: yarn build
         env:
-          ROLLUP_NO_NATIVE: 1
+          ROLLUP_NO_NATIVE: "1"
