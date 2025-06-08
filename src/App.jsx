@@ -1,5 +1,5 @@
 import { useState } from "react";
-import GuidedFlow from "./components/guideFlow";
+import GuidedFlow from "./components/GuideFlow";
 import GPTResults from "./components/GPTResults";
 import { useGPTFetcher } from "./lib/useGPTFetcher";
 import EmotionalPulseWavesBackground from "./components/EmotionalPulseWavesBackground";
