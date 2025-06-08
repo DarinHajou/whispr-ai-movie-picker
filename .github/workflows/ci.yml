@@ -17,20 +17,14 @@ jobs:
         with:
           node-version: 18
 
-      - name: Clean install with Rollup fix
+      - name: Disable native Rollup and install deps
         run: |
-          rm -rf node_modules
-          rm -f package-lock.json yarn.lock
           yarn cache clean
-          yarn add -D rollup@^2.79.1
           yarn install --ignore-optional
         env:
           ROLLUP_NO_NATIVE: 1
-          NODE_OPTIONS: "--no-experimental-fetch"
 
-      - name: Build the project
+      - name: Build project
         run: yarn build
         env:
           ROLLUP_NO_NATIVE: 1
-          NODE_OPTIONS: "--no-experimental-fetch"
-
