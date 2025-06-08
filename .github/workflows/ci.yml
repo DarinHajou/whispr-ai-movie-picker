@@ -12,7 +12,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Clean lockfiles and node_modules   # <--- ADD THIS HERE
+      - name: Clean node_modules and lockfiles
         run: rm -rf node_modules package-lock.json yarn.lock
 
       - name: Set up Node.js
@@ -22,10 +22,9 @@ jobs:
 
       - name: Install dependencies
         run: yarn install --ignore-optional
-        env:
-          ROLLUP_NO_NATIVE: "1"
+
+      - name: Print dependency tree (debug only)
+        run: yarn list || true
 
       - name: Build
         run: yarn build
-        env:
-          ROLLUP_NO_NATIVE: "1"
