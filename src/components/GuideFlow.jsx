@@ -1,12 +1,12 @@
     import { useState } from "react";
     import { TypeAnimation } from "react-type-animation";
-    import MoodSelector from "./MoodSelector";
+    import MoodSelector from "./MoodSelector"
     import IntentSelector from "./IntentSelector";
     import EnergySelector from "./EnergySelector";
     import { AnimatePresence, motion } from "framer-motion";
     import ExperienceSelector from "./ExperienceSelector";
 
-    
+
     export default function GuidedFlow({
       step,
       setStep,
