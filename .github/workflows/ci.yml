@@ -15,7 +15,7 @@ jobs:
         with:
           node-version: 18
 
-      - name: Clean and reinstall
+      - name: Clean and install without optional deps
         run: |
           rm -rf node_modules package-lock.json
           npm cache clean --force
@@ -23,7 +23,7 @@ jobs:
         env:
           ROLLUP_NO_NATIVE: 1
 
-      - name: Build
+      - name: Build the app
         run: npm run build
         env:
           ROLLUP_NO_NATIVE: 1
