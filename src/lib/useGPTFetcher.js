@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { callOpenAI } from "./callOpenAI";
 import buildPrompt from "./buildPrompt";
-import parseGPTResult from "./parseGPTResult";
+import parseGPTResult from "./parseGptresult";
 
 export function useGPTFetcher({ mood, intent, energy, step }) {
   const [gptResult, setGptResult] = useState("");
