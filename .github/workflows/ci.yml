@@ -8,9 +8,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    env:
-      ROLLUP_NO_NATIVE: 1  # ✅ Apply globally to all steps
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -20,8 +17,19 @@ jobs:
         with:
           node-version: 18
 
-      - name: Install dependencies
-        run: yarn install --ignore-optional
+      - name: Clean install with Rollup fix
+        run: |
+          rm -rf node_modules
+          rm -f package-lock.json yarn.lock
+          yarn cache clean
+          yarn add -D rollup@^2.79.1
+          yarn install --ignore-optional
+        env:
+          ROLLUP_NO_NATIVE: 1
+          NODE_OPTIONS: "--no-experimental-fetch"
 
-      - name: Build
+      - name: Build the project
         run: yarn build
+        env:
+          ROLLUP_NO_NATIVE: 1
+          NODE_OPTIONS: "--no-experimental-fetch"
