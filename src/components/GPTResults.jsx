@@ -1,4 +1,4 @@
-import MovieResultCard from "./MovieResultCard";
+import MovieResultCard from "./movieResultCard";
 import buildPrompt from "../lib/buildPrompt";
 import { callOpenAI } from "../lib/callOpenAI";
 
@@ -19,7 +19,7 @@ export default function GPTResults({
     <>
      {mode === "guided" ? (
       <>
-        <p className="text-lg sm:text-xl font-medium italic text-glow-amber text-center mt-8 mb-12"
+        <p className="text-lg sm:text-2xl font-medium italic text-glow-amber text-center mt-8 mb-12"
           >🎞️ Here’s what Sol recommends
         </p> 
           {gptResult !== "" ? (
