@@ -4,14 +4,40 @@ import { fetchMovieMeta } from "../lib/fetchPosterUrl";
 export default function MovieResultCard({ title, year, tone, imdb, plot }) {
   const [poster, setPoster] = useState("/poster-placeholder.jpg");
   const [imdbId, setImdbId] = useState(null);
+  const [tmdbId, setTmdbId] = useState(null);
+  const [providers, setProviders] = useState([]);
 
   useEffect(() => {
     const cleanTitle = title.replace(/["(].*$/, "").trim();
-    fetchMovieMeta(cleanTitle, year).then(({ posterUrl, imdbId }) => {
+    fetchMovieMeta(cleanTitle, year).then(({ posterUrl, imdbId, tmdbId }) => {
       setPoster(posterUrl);
       setImdbId(imdbId);
+      setTmdbId(tmdbId);
     });
   }, [title, year]);
+
+  useEffect(() => {
+    if (!tmdbId) return;
+    const accessToken = import.meta.env.VITE_TMDB_ACCESS_TOKEN;
+    fetch(`https://api.themoviedb.org/3/movie/${tmdbId}/watch/providers`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    })
+      .then(res => res.json())
+      .then(data => {
+        let countryObj = data.results.NO || data.results.US || Object.values(data.results)[0];
+        if (!countryObj) {
+          setProviders([]); // No providers at all
+          return;
+        }
+        const movieLink = countryObj.link; // <-- the streaming page for THIS movie
+        const flatrate = countryObj.flatrate || [];
+        // Attach movieLink to each provider object for rendering
+        setProviders(flatrate.map(p => ({ ...p, movieLink })));
+      });
+  }, [tmdbId]);  
 
   return (
     <div className="relative flex bg-gray-800/80 rounded-xl shadow-lg p-4 gap-4 sm:gap-5 items-start">
@@ -53,6 +79,27 @@ export default function MovieResultCard({ title, year, tone, imdb, plot }) {
           <span className="font-medium">Tone:</span> {tone}
         </p>
         <p className="text-xs sm:text-sm text-gray-300 leading-snug">{plot}</p>
+
+        {/* Streaming Providers */}
+        {providers.length > 0 && (
+          <div className="flex flex-row gap-2 mt-2">
+            {providers.map(provider => (
+              <a
+                key={provider.provider_id}
+                href={provider.movieLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                title={provider.provider_name}
+              >
+                <img
+                  src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
+                  alt={provider.provider_name}
+                  className="w-8 h-8 rounded"
+                />
+              </a>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
