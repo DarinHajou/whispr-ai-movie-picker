@@ -22,13 +22,13 @@ export async function fetchMovieMeta(title, year) {
       );
     }) || results[0];
 
-    if (!match) return { posterUrl: "/poster-placeholder.jpg", imdbId: null };
+    if (!match) return { posterUrl: "/poster-placeholder.jpg", imdbId: null, tmdbId: null };
 
     const posterUrl = match.poster_path
       ? `https://image.tmdb.org/t/p/w500${match.poster_path}`
       : "/poster-placeholder.jpg";
 
-    // Now fetch IMDb ID
+    // Fetch IMDb ID
     const externalUrl = `https://api.themoviedb.org/3/movie/${match.id}/external_ids`;
     const extRes = await fetch(externalUrl, {
       headers: {
@@ -40,9 +40,10 @@ export async function fetchMovieMeta(title, year) {
     const extData = await extRes.json();
     const imdbId = extData.imdb_id || null;
 
-    return { posterUrl, imdbId };
+    // --- Return tmdbId
+    return { posterUrl, imdbId, tmdbId: match.id };
   } catch (err) {
     console.error("Failed to fetch movie meta:", err);
-    return { posterUrl: "/poster-placeholder.jpg", imdbId: null };
+    return { posterUrl: "/poster-placeholder.jpg", imdbId: null, tmdbId: null };
   }
 }
