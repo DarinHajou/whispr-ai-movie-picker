@@ -2,7 +2,7 @@ export default function buildPrompt(mood, intent, energy) {
   return `
 A user just shared a few things with you:
 
-- They’re currently feeling **${mood}**
+- They’re currently feeling **${Array.isArray(mood) ? mood.join(", ") : mood}**
 - Their intention is to **${intent.toLowerCase()}** that feeling
 - Their mental energy right now is **${energy.toLowerCase()}**
 

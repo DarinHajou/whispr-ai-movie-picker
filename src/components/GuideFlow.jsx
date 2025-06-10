@@ -73,11 +73,13 @@
                       👉 Pick a mood — Sol’s listening.
                     </motion.h2>
                     <MoodSelector
-                      setMood={(selected) => {
-                        setMood(selected);
-                        setStep(2);
+                      selectedMoods={mood}
+                      setSelectedMoods={(updated) => {
+                        setMood(updated);
                       }}
+                      onContinue={() => setStep(2)}
                     />
+
                     <div className="text-center mt-4">
                     <button
                       onClick={() => setShowExperience(true)
@@ -98,7 +100,7 @@
                 ) : (
                   <ExperienceSelector
                   setExperience={(mappedMood) => {
-                    setMood(mappedMood);         // app gets a mood like usual
+                    setMood(mappedMood);         // app gets a mood
                     setShowExperience(false);    // hide experience view
                     setStep(2);                  // move to intent step
                   }}
