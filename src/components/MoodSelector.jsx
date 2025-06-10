@@ -1,15 +1,15 @@
 export default function MoodSelector({ setMood }) {
   const moods = [
-    { label: "Sad", emoji: "😢", shift: "right-[7px]" },
-    { label: "Defeated", emoji: "🥀", shift: "top-[0px]" },
-    { label: "Lonely", emoji: "😔", shift: "right-[2px]" },
+    { label: "Sad", emoji: "😢", shift: "right-[13px]" },
+    { label: "Nostalgic", emoji: "🥲", shift: "right-[-3px]" },
     { label: "Anxious", emoji: "😰", shift: "top-[0px]" },
-    { label: "Bored", emoji: "🥱", shift: "right-[0px]" },
-    { label: "Curious", emoji: "🧐", shift: "top-[0px]" },
-    { label: "Inspired", emoji: "✨", shift: "right-[0px]" },
+    { label: "Scared", emoji: "😱", shift: "right-[6px]" },
+    { label: "Explore", emoji: "🌍", shift: "top-[0px]" },
+    { label: "Excited", emoji: "🤩", shift: "right-[2px]" },
     { label: "Happy", emoji: "😊", shift: "right-[5px]" },
-    { label: "Calm", emoji: "🌿", shift: "right-[5px]" },
-    { label: "Romantic", emoji: "💘", shift: "right-[-5px]" },
+    { label: "Romantic", emoji: "💘", shift: "right-[0px]" },
+    { label: "Chill", emoji: "🌿", shift: "right-[12px]" },
+    { label: "Curious", emoji: "🧐", shift: "top-[0px]" },
   ];
 
   return (
