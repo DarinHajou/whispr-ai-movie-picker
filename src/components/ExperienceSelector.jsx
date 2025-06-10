@@ -34,7 +34,19 @@ export default function ExperienceSelector({ setExperience, onBack }) {
         {experiences.map(({ label, description }) => (
           <button
             key={label}
-            onClick={() => setExperience(label)}
+            onClick={() => {
+              const experienceToMood = {
+                "Feel Something Deep": "Sad",
+                "Fun and Light": "Happy",
+                "Process Something Heavy": "Anxious",
+                "Make Me Think": "Curious",
+                "Escape Reality": "Adventurous",
+              };
+            
+              const mappedMood = experienceToMood[label];
+              setExperience(mappedMood); // send the mood to GuidedFlow
+            }}
+            
             className="
               w-full text-left px-4 sm:px-5 py-4 sm:py-5 rounded-xl
               bg-[#1d283a] hover:bg-[#2a3650]

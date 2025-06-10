@@ -18,7 +18,6 @@
       const [showMood, setShowMood] = useState(false);
       const [showExperience, setShowExperience] = useState(false);
 
-
       return (
         <AnimatePresence mode="wait">
           <motion.div
@@ -50,7 +49,7 @@
                         400,
                         () => setShowMood(true),
                       ]}
-                      speed={55}
+                      speed={95}
                       wrapper="span"
                       cursor={true}
                       repeat={0}
@@ -81,7 +80,8 @@
                     />
                     <div className="text-center mt-4">
                     <button
-                      onClick={() => setStep("experience")} // or route if needed
+                      onClick={() => setShowExperience(true)
+                      } 
                       className="
                         mt-3 text-sm sm:text-base text-mist-blue 
                         italic hover:text-glow-amber 
@@ -97,12 +97,13 @@
                   </>
                 ) : (
                   <ExperienceSelector
-                    setExperience={(selected) => {
-                      setShowExperience(selected);
-                      setStep(3); // or whatever next step you want
-                    }}
-                    onBack={() => setShowExperience(false)}
-                  />
+                  setExperience={(mappedMood) => {
+                    setMood(mappedMood);         // app gets a mood like usual
+                    setShowExperience(false);    // hide experience view
+                    setStep(2);                  // move to intent step
+                  }}
+                  onBack={() => setShowExperience(false)}
+                />
                 )}
               </div>
             )}
