@@ -19,7 +19,7 @@ export default function GPTResults({
     <>
      {mode === "guided" ? (
       <>
-        <p className="text-lg sm:text-2xl font-medium italic text-glow-amber text-center mt-8 mb-12"
+        <p className="text-lg sm:text-xl font-medium italic text-glow-amber text-center mt-8 mb-12"
           >🎞️ Here’s what Sol recommends
         </p> 
           {gptResult !== "" ? (
