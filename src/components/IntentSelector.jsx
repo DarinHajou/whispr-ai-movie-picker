@@ -10,7 +10,10 @@ export default function IntentSelector({ mood, setIntent }) {
       <h2 className="text-2xl sm:text-3xl font-semibold mt-8 mb-12 text-warm-white">
         What do you want to do with your{" "}
         <span className="italic text-glow-amber">
-          {mood ? mood.toLowerCase() : "current"}
+          {Array.isArray(mood) && mood.length > 0
+            ? mood.join(", ").replace(/, ([^,]*)$/, ' & $1').toLowerCase()
+
+            : "current"}
         </span>{" "}
         feeling?
       </h2>
