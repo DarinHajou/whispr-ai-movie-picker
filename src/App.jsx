@@ -6,7 +6,7 @@ import EmotionalPulseWavesBackground from "./components/EmotionalPulseWavesBackg
 
 export default function App() {
   const [step, setStep] = useState(1);
-  const [mood, setMood] = useState(null);
+  const [mood, setMood] = useState([]);
   const [mode, setMode] = useState("guided");
   const [intent, setIntent] = useState(null);
   const [energy, setEnergy] = useState(null);
