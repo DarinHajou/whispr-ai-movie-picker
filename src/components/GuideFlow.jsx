@@ -4,8 +4,6 @@
     import IntentSelector from "./IntentSelector";
     import EnergySelector from "./EnergySelector";
     import { AnimatePresence, motion } from "framer-motion";
-    import ExperienceSelector from "./ExperienceSelector";
-
 
     export default function GuidedFlow({
       step,
@@ -70,13 +68,11 @@
                       transition={{ duration: 0.4, ease: "easeOut" }}
                       className="text-lg sm:text-xl font-medium italic text-warm-white text-center"
                     >
-                      👉 Pick a mood — Sol’s listening.
+                      👉 Pick up to 3 moods — Sol blends your feelings into one unique recommendation.
                     </motion.h2>
                     <MoodSelector
                       selectedMoods={mood}
-                      setSelectedMoods={(updated) => {
-                        setMood(updated);
-                      }}
+                      setSelectedMoods={setMood}
                       onContinue={() => setStep(2)}
                     />
 
