@@ -5,33 +5,44 @@ export default function EmotionalPulseWavesBackground() {
       <div
         className="
           absolute
-          left-1/2 top-[20%]
-          w-[60vw] h-[44vw]
-          sm:left-[49%] sm:top-[14%] sm:w-[26vw] sm:h-[19vw]
+          left-1/2 top-[18%]
+          w-[54vw] h-[36vw]
+          sm:left-[60%] sm:top-[14%] sm:w-[20vw] sm:h-[10vw]
           -translate-x-1/2
-          bg-glow-amber opacity-30 rounded-full blur-3xl animate-blob1
-        "
+          bg-glow-amber opacity-40 blur-[60px]
+          rounded-[100%/60%] animate-blob1
+      "
       />
+
       {/* Blue blob (mobile: bottom right, desktop: bottom right) */}
       <div
         className="
           absolute
-          right-[-12vw] bottom-[30vw]
-          w-[40vw] h-[20vw]
-          sm:right-[0%] sm:top-[77%] sm:w-[12vw] sm:h-[9vw]
-          bg-mist-blue opacity-38 rounded-full blur-2xl animate-blob2
+          right-[-4vw] bottom-[22vw]
+          w-[24vw] h-[18vw]
+          sm:right-[8%] sm:top-[75%]
+          sm:w-[10vw] sm:h-[8vw]
+          bg-mist-blue opacity-18
+          blur-[70px] rounded-[40%/100%]
+          animate-blob2
         "
       />
+
       {/* Sage blob (mobile: left bottom, desktop: left bottom) */}
       <div
         className="
           absolute
-          left-[-10vw] bottom-[18vw]
-          w-[30vw] h-[14vw]
-          sm:left-[-7%] sm:top-[69%] sm:w-[8vw] sm:h-[6vw]
-          bg-pale-sage opacity-22 rounded-full blur-2xl animate-blob3
+          left-[-10vw] bottom-[16vw]
+          w-[36vw] h-[12vw]
+          sm:left-[-2%] sm:top-[70%]
+          sm:w-[12vw] sm:h-[6vw]
+          bg-pale-sage opacity-28
+          blur-[55px] rounded-[100%/40%]
+          animate-blob3
         "
       />
+
+
 
       {/* Cinematic vignette overlay */}
       <div
