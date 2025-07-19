@@ -25,9 +25,16 @@ export default function ExperienceSelector({ setExperience, onBack }) {
 
   return (
     <div className=" space-y-8 w-full max-w-lg mx-auto text-center">
-      <h2 className="text-xl sm:text-3xl font-semibold text-glow-amber">
+      <h2
+        className="
+          text-xl sm:text-3xl
+          font-semibold
+          text-[#FFC542]                            
+        "
+      >
         What kind of experience are you in the mood for?
       </h2>
+
 
       <div className="space-y-6">
       <div className="grid grid-cols-2 sm:grid-cols-2 gap-4 w-full max-w-[560px] justify-items-center py-8 sm:py-6">
