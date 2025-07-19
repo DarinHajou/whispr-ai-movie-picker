@@ -6,7 +6,7 @@ export default {
         'soft-black': '#121212',          // deep, cinematic black
         'warm-white': '#FAF9F6',          // soft off-white
         'mist-blue': '#A6B1C4',           // calmer neutral
-        'glow-amber': '#F4C287',          // warm golden glow
+        'bright-amber': '#FFC542',        // bright golden glow
         'pale-sage': '#D8E3DC',           // button background
         'mood-hover': '#F8E7D1',          // soft warm hover
       },
@@ -35,30 +35,37 @@ export default {
         'fade-in': 'fadeIn 0.7s ease-in forwards',
         'slide-up': 'slideUp 0.5s ease-out forwards',
         'zoom-in': 'zoomIn 0.4s ease-in-out forwards',
-        'blob1': 'blob1 18s ease-in-out infinite',
+        'blob1': 'blob1 8s ease-in-out infinite',
         'blob2': 'blob2 24s ease-in-out infinite',
         'blob3': 'blob3 31s ease-in-out infinite',
+        softGlow: 'softGlow 2.5s ease-in-out infinite',
       },
-      
       keyframes: {
         fadeIn: {
           from: { opacity: '0' },
           to: { opacity: '1' },
         },
+        softGlow: {
+          '0%, 100%': {
+            opacity: '0.6',
+            textShadow: '0 0 4px #F4C287',
+          },
+          '50%': {
+            opacity: '1',
+            textShadow: '0 0 10px #F4C287',
+          },
+        },
         blob1: {
-          '0%, 100%':   { transform: 'translate(0,0) scale(1.08) rotate(0deg)' },
-          '35%':        { transform: 'translate(-110px, 50px) scale(1.17) rotate(-2deg)' },
-          '65%':        { transform: 'translate(60px, -30px) scale(0.92) rotate(3deg)' },
+          '0%, 100%': { transform: 'translate(0, 0) scale(1)' },
+          '50%':      { transform: 'translate(-50px, 15px) scale(1.08)' },
         },
         blob2: {
-          '0%, 100%':   { transform: 'translate(0,0) scale(1.04) rotate(0deg)' },
-          '25%':        { transform: 'translate(150px, -80px) scale(1.10) rotate(2deg)' },
-          '75%':        { transform: 'translate(-60px, 120px) scale(0.89) rotate(-4deg)' },
+          '0%, 100%': { transform: 'translate(0, 0) scale(1)' },
+          '50%':      { transform: 'translate(10px, -10px) scale(1.02)' },
         },
         blob3: {
-          '0%, 100%':   { transform: 'translate(0,0) scale(1) rotate(0deg)' },
-          '20%':        { transform: 'translate(-90px, -80px) scale(1.12) rotate(5deg)' },
-          '80%':        { transform: 'translate(120px, 40px) scale(0.88) rotate(-2deg)' },
+          '0%, 100%': { transform: 'translate(0, 0) scale(1)' },
+          '50%':      { transform: 'translate(-15px, 8px) scale(1.04)' },
         },
         slideUp: {
           from: { opacity: '0', transform: 'translateY(20px)' },
