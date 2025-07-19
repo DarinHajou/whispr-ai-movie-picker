@@ -8,7 +8,22 @@ export default function EnergySelector({ setEnergy }) {
   return (
     <div className="space-y-8 w-full max-w-xl mx-auto text-center">
       <h2 className="text-2xl sm:text-3xl font-semibold mb-12 mt-6 text-warm-white">
-        How much mental <span className="text-glow-amber">Energy</span> do you have right now?
+       <button className="font-medium text-base sm:text-lg">
+          How much mental{' '}
+          <span
+            className="
+              italic
+              text-[#FFC542]                      
+              bg-[#1d283a]                            
+              hover:bg-[#2a3650]                      
+              px-1                                     
+              rounded                                 
+            "
+          >
+            Energy
+          </span>{' '}
+          do you have right now?
+        </button>
       </h2>
 
       <div className="space-y-4">
