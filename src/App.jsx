@@ -41,7 +41,7 @@ export default function App() {
 
   return (
     <div className="w-full min-h-screen flex justify-center bg-[radial-gradient(circle_at_50%_10%,rgba(18,18,18,1)_0%,rgba(18,18,18,0.75)_80%)]">
-      <div className="flex flex-col min-h-screen px-4 bg-[rgba(18,18,18,0.8)] backdrop-blur-sm rounded-2xl shadow-lg p-8 mt-4 max-w-2xl w-full">
+      <div className="flex flex-col min-h-screen px-4 bg-[rgba(18,18,18,0.8)] backdrop-blur-sm rounded-2xl shadow-lg p-8 mt-4 max-w-3xl w-full">
         {/* Header */}
         <div className="text-center mb-10 mt-14">
         <h1 className="text-6xl sm:text-7xl font-extrabold tracking-tight text-warm-white flex justify-center items-center gap-2 whitespace-nowrap transition-colors duration-300 hover:text-[rgba(244,194,135,0.8)]">
@@ -102,13 +102,22 @@ export default function App() {
         </p>
 
         {/* Footer */}
-        <footer className="w-full border-t border-[rgba(255,255,255,0.1)] pt-4 mt-8">
-          <div className="text-center text-xs sm:text-sm text-[rgba(166,177,196,0.5)]">
-            Built by Darin · Powered by <span className="text-glow-amber font-semibold">SolaceAI</span>
-          </div>
-        </footer>
+          <footer className="w-full border-t border-[rgba(255,255,255,0.1)] pt-4 mt-8">
+            <div className="text-center text-xs sm:text-sm text-[rgba(166,177,196,0.5)]">
+              Built by Darin · Powered by{' '}
+              <span
+                className="
+                  font-semibold
+                  text-[#FFC542]                               /* solid amber */
+                  drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]      /* depth for contrast */
+                "
+              >
+                SolaceAI
+              </span>
+            </div>
+          </footer>
+
       </div>
     </div>
   );
-  
 }
