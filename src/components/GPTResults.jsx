@@ -19,9 +19,17 @@ export default function GPTResults({
     <>
      {mode === "guided" ? (
       <>
-        <p className="text-lg sm:text-xl font-medium italic text-glow-amber text-center mt-8 mb-12"
-          >🎞️ Here’s what Sol recommends
-        </p> 
+        <p
+          className="
+            text-lg sm:text-xl
+            font-medium italic
+            text-[#FFC542]                          
+            text-center mt-8 mb-12
+          "
+        >
+          🎞️ Here’s what Sol recommends
+        </p>
+
           {gptResult !== "" ? (
             hasMovies ? (
               <div className="space-y-4">
@@ -43,9 +51,17 @@ export default function GPTResults({
 
           {gptResult && (
             <div className="mt-10 bg-gray-800/60 rounded-xl px-6 py-6 shadow-lg text-center space-y-4">
-              <p className="text-xl sm:text-2xl font-semibold text-glow-amber text-center">
+              <p
+                className="
+                  text-xl sm:text-2xl
+                  font-semibold
+                  text-[#FFC542]                            
+                  text-center
+                "
+              >
                 Tell me what didn’t quite land — Sol's still listening.
               </p>
+
               <div className="flex flex-wrap justify-center gap-4">
               <button
                 onClick={onRetry}
@@ -70,9 +86,16 @@ export default function GPTResults({
         </>
       ) : (
         <div className="mt-10 bg-gray-800/60 rounded-xl px-6 py-6 max-w-xl mx-auto shadow-lg text-center space-y-5">
-        <p className="text-lg font-semibold text-glow-amber">
+        <p
+          className="
+            text-lg
+            font-semibold
+            text-[#FFC542]                           
+          "
+        >
           Add a follow-up or describe what missed the mark:
         </p>
+
       
         <textarea
           rows={4}
