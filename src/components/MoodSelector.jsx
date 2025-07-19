@@ -42,7 +42,7 @@
                 onClick={() => toggleMood(mood.label)}
                 className={`
                   w-full px-3 py-2 sm:py-3 
-                  text-sm sm:text-base 
+                  text-sm sm:text-
                   font-medium 
                   ${isSelected ? "bg-yellow-200" : "bg-pale-sage"}
                   text-soft-black 
