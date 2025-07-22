@@ -68,12 +68,19 @@
         </div>
 
         {selectedMoods.length > 0 && (
-          <button
-            onClick={handleContinue}
-            className="mt-4 px-6 py-3 bg-glow-amber text-black rounded-lg shadow hover:shadow-lg focus:outline-none transition"
-          >
-            Share your mood
-          </button>
+         <button
+          onClick={handleContinue}
+          className="
+            mt-8 px-6 py-3 rounded-full
+            bg-[#FFC542]/70 hover:bg-[#FFC542]/90
+            text-black font-semibold
+            shadow-md hover:shadow-lg
+            transition-all duration-200 ease-in-out
+          "
+        >
+          Continue
+        </button>
+
         )}
       </div>
     );
