@@ -14,6 +14,12 @@
       { label: "Curious", emoji: "🧐", shift: "top-[0px]" },
     ];
 
+       {selectedMoods.length > 0 && (
+          <div className="text-sm text-[#FFC542] font-medium mb-2">
+            {selectedMoods.length}/3 selected
+          </div>
+        )}
+
     const toggleMood = (mood) => {
       if (selectedMoods.includes(mood)) {
         setSelectedMoods(selectedMoods.filter((m) => m !== mood));
