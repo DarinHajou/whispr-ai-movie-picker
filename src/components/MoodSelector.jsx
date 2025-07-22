@@ -14,12 +14,6 @@
       { label: "Curious", emoji: "🧐", shift: "top-[0px]" },
     ];
 
-       {selectedMoods.length > 0 && (
-          <div className="text-sm text-[#FFC542] font-medium mb-2">
-            {selectedMoods.length}/3 selected
-          </div>
-        )}
-
     const toggleMood = (mood) => {
       if (selectedMoods.includes(mood)) {
         setSelectedMoods(selectedMoods.filter((m) => m !== mood));
@@ -72,6 +66,12 @@
             );
           })}
         </div>
+          
+        {selectedMoods.length === 0 ? (
+          <p className="text-sm text-white/60 mt-2">Step 1 of 3</p>
+        ) : (
+          <p className="text-sm text-[#FFC542] mt-2">{selectedMoods.length}/3 selected</p>
+        )}
 
         {selectedMoods.length > 0 && (
          <button
