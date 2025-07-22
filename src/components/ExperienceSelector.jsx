@@ -24,7 +24,7 @@ export default function ExperienceSelector({ setExperience, onBack }) {
   ];
 
   return (
-    <div className=" space-y-8 w-full max-w-lg mx-auto text-center">
+    <div className=" space-y-6 w-full max-w-lg mx-auto text-center">
       <h2
         className="
           text-xl sm:text-3xl
@@ -36,7 +36,7 @@ export default function ExperienceSelector({ setExperience, onBack }) {
       </h2>
 
 
-      <div className="space-y-6">
+      <div className="space-y-8">
       <div className="grid grid-cols-2 sm:grid-cols-2 gap-4 w-full max-w-[560px] justify-items-center py-8 sm:py-6">
         {experiences.map(({ label, description }) => (
           <button
