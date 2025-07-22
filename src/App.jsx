@@ -40,14 +40,14 @@ export default function App() {
   };
 
   return (
-    <div className="w-full min-h-screen flex justify-center bg-[radial-gradient(circle_at_50%_10%,rgba(18,18,18,1)_0%,rgba(18,18,18,0.75)_80%)]">
-      <div className="flex flex-col min-h-screen px-4 bg-[rgba(18,18,18,0.8)] backdrop-blur-sm rounded-2xl shadow-lg p-8 mt-4 max-w-3xl w-full">
+    <div className="w-full min-h-screen flex justify-center bg-[radial-gradient(circle_at_50%_30%,rgba(18,18,18,1)_40%,rgba(18,18,18,0.75)_90%)]">
+      <div className="flex flex-col min-h-screen px-4 bg-[rgba(18,18,18,0.4)] backdrop-brightness-50 rounded-3xl shadow-lg p-8 mt-4 max-w-3xl w-full">
         {/* Header */}
-        <div className="text-center mb-10 mt-14">
-        <h1 className="text-6xl sm:text-7xl font-extrabold tracking-tight text-warm-white flex justify-center items-center gap-2 whitespace-nowrap transition-colors duration-300 hover:text-[rgba(244,194,135,0.8)]">
+        <div className="text-center mb-10 mt-20">
+        <h1 className="text-6xl sm:text-7xl font-extrabold tracking-tight text-warm-white flex justify-center items-center gap-2 whitespace-nowrap transition-colors duration-300 hover:text-[#FFC542]">
           <span className="text-4xl sm:text-5xl">🎬</span> Whispr
         </h1>
-        <p className="text-lg sm:text-xl text-[rgba(250,249,246,0.9)] italic leading-snug tracking-wide mt-4 mb-8">
+        <p className="text-lg sm:text-xl text-[rgba(250,249,246,0.9)] italic leading-snug tracking-wide mt-4 mb-20">
           Your emotionally intelligent movie picker
         </p>
       </div>
@@ -116,7 +116,6 @@ export default function App() {
               </span>
             </div>
           </footer>
-
       </div>
     </div>
   );
