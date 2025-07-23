@@ -48,7 +48,7 @@ export default function GuidedFlow({
                       400,
                       () => setHasTypedFinished(true),
                     ]}
-                    speed={95}
+                    speed={55}
                     wrapper="p"
                     cursor={true}
                     repeat={0}
