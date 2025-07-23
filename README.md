@@ -1,6 +1,6 @@
 # Whispr – AI-Powered Mood-Based Movie Picker
 
-**Whispr** is a mood-based movie recommendation app powered by a conversational AI engine. It helps users find films that resonate with how they feel - not just what's trending. Built with **React**, **Tailwind CSS**, and the **OpenAI API**, Whispr is part of the **SolaceAI** project and guided by an emotionally intelligent companion named **Sol**.
+**Whispr** is a mood-based movie recommendation app powered by a conversational AI engine. It helps users find films that resonate with how they feel - not just what's trending. Built with **React**, **Tailwind CSS**, and the **OpenAI API**, Whispr is guided by an emotionally intelligent companion named **Sol**.
 
 ---
 
