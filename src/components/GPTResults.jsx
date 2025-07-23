@@ -1,4 +1,4 @@
-import MovieResultCard from "./movieResultCard";
+import MovieResultCard from "./MovieResultCard";
 import buildPrompt from "../lib/buildPrompt";
 import { callOpenAI } from "../lib/callOpenAI";
 
@@ -50,7 +50,7 @@ export default function GPTResults({
           )}
 
           {gptResult && (
-            <div className="mt-10 bg-gray-800/60 rounded-xl px-6 py-6 shadow-lg text-center space-y-4">
+            <div className="mt-12 bg-gray-800/60 rounded-xl px-6 py-6 shadow-lg text-center space-y-4">
               <p
                 className="
                   text-xl sm:text-2xl
@@ -66,9 +66,9 @@ export default function GPTResults({
               <button
                 onClick={onRetry}
                 disabled={retryCount >= 2}
-                className={`px-5 py-3 rounded text-sm font-semibold transition duration-200 ${
+                className={`px-5 py-3 rounded bg-soft-black text-sm font-semibold transition duration-200 ${
                   retryCount < 2
-                    ? "bg-glow-amber text-soft-black hover:bg-yellow-300 shadow-md"
+                    ? "bg-glow-amber text-white hover:bg-yellow-300 hover:text-soft-black shadow-md"
                     : "bg-gray-700 text-gray-400 cursor-not-allowed"
                 }`}
               >
@@ -76,7 +76,7 @@ export default function GPTResults({
               </button>
                 <button
                   onClick={() => setMode("chat")}
-                  className="px-4 py-2 text-sm bg-glow-amber text-soft-black hover:bg-yellow-300 rounded-lg font-medium"
+                  className="px-4 py-2 text-sm bg-glow-amber bg-soft-black text-white hover:bg-[#FFC542] hover:text-soft-black rounded-lg font-medium"
                 >
                   Refine Suggestions
                 </button>

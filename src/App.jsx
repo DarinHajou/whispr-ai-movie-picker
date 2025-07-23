@@ -41,7 +41,7 @@ export default function App() {
 
   return (
     <div className="w-full min-h-screen flex justify-center bg-[radial-gradient(circle_at_50%_30%,rgba(18,18,18,1)_40%,rgba(18,18,18,0.75)_90%)]">
-      <div className="flex flex-col min-h-screen  px-4 bg-[rgba(18,18,18,0.4)] backdrop-brightness-75 rounded-3xl shadow-lg p-8 mt-4 max-w-3xl w-full">
+      <div className="flex flex-col min-h-screen px-4 bg-[rgba(18,18,18,0.4)] backdrop-brightness-75 rounded-3xl shadow-lg p-16 mt-4 max-w-3xl w-full">
         {/* Header */}
         <div className="text-center mb-10 mt-20">
         <h1 className="text-6xl sm:text-7xl font-extrabold tracking-tight text-warm-white flex justify-center items-center gap-2 whitespace-nowrap transition-colors duration-300 hover:text-[#FFC542]">
