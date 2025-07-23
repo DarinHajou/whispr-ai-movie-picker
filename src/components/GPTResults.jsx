@@ -50,42 +50,63 @@ export default function GPTResults({
           )}
 
           {gptResult && (
-            <div className="mt-12 bg-gray-800/60 rounded-xl px-6 py-6 shadow-lg text-center space-y-4">
-              <p
-                className="
-                  text-xl sm:text-2xl
-                  font-semibold
-                  text-[#FFC542]                            
-                  text-center
-                "
-              >
-                Tell me what didn’t quite land — Sol's still listening.
-              </p>
+          <div className="mt-10 bg-gray-800/60 rounded-xl px-6 py-6 shadow-lg text-center">
+            {/* Heading */}
+            <p className="text-xl mt-2 sm:text-2xl font-semibold text-[#FFC542]">
+              Tell me what didn’t quite land — Sol’s still listening.
+            </p>
 
-              <div className="flex flex-wrap justify-center gap-4">
+            {/* Primary & Secondary CTAs */}
+            <div className="flex justify-center gap-4 mt-8">
               <button
                 onClick={onRetry}
                 disabled={retryCount >= 2}
-                className={`px-5 py-3 rounded bg-soft-black text-sm font-semibold transition duration-200 ${
-                  retryCount < 2
+                className={`px-5 py-3 rounded-lg text-sm font-semibold transition duration-200
+                  ${retryCount < 2
                     ? "bg-bright-amber text-black hover:bg-yellow-300 hover:text-soft-black shadow-md"
                     : "bg-gray-700 text-gray-400 cursor-not-allowed"
-                }`}
+                  }`}
               >
-                🔄 Try a fresh 10
+                🔄 Try a fresh 10
               </button>
-                <button
-                  onClick={() => setMode("chat")}
-                  className="px-4 py-2 text-sm bg-bright-amber hover:bg-yellow-300 text-black  hover:text-soft-black rounded-lg font-medium"
-                >
-                  Refine Suggestions
-                </button>
-              </div>  
+              <button
+                onClick={() => setMode("chat")}
+                className="px-5 py-3 rounded-lg text-sm font-medium bg-gray-700 text-white hover:bg-gray-600 shadow transition"
+              >
+                Refine Suggestions
+              </button>
             </div>
+
+            {/* Navigation links */}
+            <div className="flex justify-center gap-8 mt-12">
+              <button
+                onClick={() => setStep(3)}
+                className="text-sm text-gray-400 underline hover:text-white"
+              >
+                ← Go back
+              </button>
+              <button
+                onClick={resetAll}
+                className="text-sm text-gray-400 underline hover:text-white"
+              >
+                ↻ Start over
+              </button>
+            </div>
+
+            {/* Tertiary “Cancel” */}
+            <div className="mt-4">
+              <button
+                onClick={() => setMode("guided")}
+                className="text-sm text-gray-400 underline hover:text-white"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
           )}
         </>
       ) : (
-        <div className="mt-10 bg-gray-800/60 rounded-xl px-6 py-6 max-w-xl mx-auto shadow-lg text-center space-y-5">
+        <div className="mt-10 bg-red rounded-xl px-6 py-6 max-w-xl mx-auto shadow-lg text-center space-y-10">
         <p
           className="
             text-lg
@@ -153,28 +174,6 @@ export default function GPTResults({
           </button>
         </div>
       )}
-
-      <div className="mt-8 flex flex-col sm:flex-row justify-center items-center gap-3">
-        <button
-          onClick={resetAll}
-          className="px-6 py-2 text-sm font-medium text-soft-black bg-pale-sage rounded-xl transition hover:bg-glow-amber hover:text-white"
-        >
-          ↻ Start over 
-        </button>
-        <button
-          onClick={() => (mode === "chat" ? setMode("guided") : setStep(3))}
-          className="px-6 py-2 text-sm font- text-soft-black bg-pale-sage rounded-xl transition hover:bg-glow-amber hover:text-white"
-        >
-          ← Go back
-        </button>
-        
-      </div>
-        <button
-          onClick={() => setMode("guided")}
-          className="text-m text-gray-400 underline hover:text-white mt-6 "
-        >
-          Cancel
-        </button>
     </>
   );
 }
