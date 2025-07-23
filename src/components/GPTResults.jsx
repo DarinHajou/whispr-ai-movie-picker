@@ -76,7 +76,7 @@ export default function GPTResults({
               </button>
                 <button
                   onClick={() => setMode("chat")}
-                  className="px-4 py-2 text-sm bg-bright-amber text-black  hover:bg-yellow-300 hover:text-soft-black rounded-lg font-medium"
+                  className="px-4 py-2 text-sm bg-bright-amber hover:bg-yellow-300 text-black  hover:text-soft-black rounded-lg font-medium"
                 >
                   Refine Suggestions
                 </button>
