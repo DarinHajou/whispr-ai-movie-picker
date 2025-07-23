@@ -41,9 +41,9 @@ export default function App() {
 
   return (
     <div className="w-full min-h-screen flex justify-center bg-[radial-gradient(circle_at_50%_30%,rgba(18,18,18,1)_40%,rgba(18,18,18,0.75)_90%)]">
-      <div className="flex flex-col min-h-screen px-4 bg-[rgba(18,18,18,0.4)] backdrop-brightness-75 rounded-3xl shadow-lg p-16 mt-4 max-w-3xl w-full">
+      <div className="flex flex-col min-h-screen px-4 bg-[rgba(18,18,18,0.4)] backdrop-brightness-75 rounded-3xl shadow-lg p-6 sm:p-10 md:p-16 mt-4 max-w-4xl w-full">
         {/* Header */}
-        <div className="text-center mb-10 mt-20">
+      <div className="text-center mt-10 sm:mt-16 md:mt-20 mb-8 sm:mb-10">
         <h1 className="text-6xl sm:text-7xl font-extrabold tracking-tight text-warm-white flex justify-center items-center gap-2 whitespace-nowrap transition-colors duration-300 hover:text-[#FFC542]">
           <span className="text-4xl sm:text-5xl">🎬</span> Whispr
         </h1>
@@ -104,7 +104,7 @@ export default function App() {
         {/* Footer */}
           <footer className="w-full border-t border-[rgba(255,255,255,0.1)] pt-4 mt-8">
             <div className="text-center text-xs sm:text-sm text-[rgba(166,177,196,0.5)]">
-              Built by Darin · Powered by{' '}
+              Built by Darin · Guided by{' '}
               <span
                 className="
                   font-semibold
@@ -112,7 +112,7 @@ export default function App() {
                   drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]      /* depth for contrast */
                 "
               >
-                SolaceAI
+                Sol
               </span>
             </div>
           </footer>

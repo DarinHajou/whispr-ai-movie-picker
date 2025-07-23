@@ -32,23 +32,23 @@ export default function GuidedFlow({
             {/* Intro animation */}
             {!showExperience && (
               <motion.div
-                className="flex justify-center mt-8 min-h-[160px]"
+                className="flex justify-center sm:mt-8 min-h-[160px]"
                 initial={{ opacity: 0, scale: 0.98 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 1.2, ease: "easeOut", delay: 0.1 }}
               >
-                <div className="w-full max-w-lg px-4 sm:px-8 text-center">
+                <div className="w-full max-w-lg px-6 sm:px-6 text-center mb-6">
                   <TypeAnimation
                     sequence={[
                       "👋 Hi",
                       1000,
                       "I’m Sol.",
                       1000,
-                      "Tell me how you feel, and I’ll whisper something worth watching.",
+                      "Tell me how you want to feel, and I’ll whisper something worth watching.",
                       400,
                       () => setHasTypedFinished(true),
                     ]}
-                    speed={55}
+                    speed={70}
                     wrapper="p"
                     cursor={true}
                     repeat={0}
@@ -85,7 +85,7 @@ export default function GuidedFlow({
 
             {/* Mood picker */}
             {showMood && (
-              <div className="flex flex-col items-center px-4 sm:px-8 mt-12 space-y-12">
+              <div className="flex flex-col items-center px-4 sm:px-8 mt-8 sm:mt-10 md:mt-12 space-y-8 sm:space-y-10">
                 {!showExperience ? (
                   <>
                     <motion.h2
@@ -108,20 +108,20 @@ export default function GuidedFlow({
                       <button
                         onClick={() => setShowExperience(true)}
                         className="
-                          px-6 py-3 rounded-full 
+                          px-6 py-3 mt-12 rounded-full
                           bg-[#FFC542]/10 hover:bg-[#FFC542]/20 
                           text-[#FFC542] font-semibold 
                           drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)] 
                           transition-all duration-200
                         "
                       >
-                        Pick a vibe instead
+                        Pick a vibe instead?
                       </button>
 
                       <button
                         onClick={() => setShowMood(false)}
                         className="
-                          px-6 py-3 rounded-full 
+                          px-6 py-3 mt-6 sm:mt-12 rounded-full 
                           border border-[#FFC542]/30 
                           text-[#FFC542]/70 hover:text-[#FFC542] 
                           drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)] 
