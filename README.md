@@ -6,23 +6,23 @@
 
 ## 🎯 Features
 
-* 🎭 Mood-based movie suggestions
+* Mood-based movie suggestions
 
-* 🧠 AI-powered emotional reasoning for tailored picks
+* AI-powered emotional reasoning for tailored picks
 
-* ✨ Guided flow: mood, intent, energy, and experience selection
+* Guided flow: mood, intent, energy, and experience selection
 
-* 🗣 Interactive follow-up chats to refine recommendations
+* Interactive follow-up chats to refine recommendations
 
-* 🎬 Dynamic fetching of movie posters and info (TMDb)
+* Dynamic fetching of movie posters and info (TMDb)
 
-* 📊 Smart retry logic to balance cost and performance
+* Smart retry logic to balance cost and performance
 
-* 📱 Fully responsive, mobile-first design with smooth animations
+* Fully responsive, mobile-first design with smooth animations
 
-* 🔒 Privacy-first—no tracking or ads, just you and stories
+* Privacy-first—no tracking or ads, just you and stories
 
-* 🌙 Soothing UI with a calm, soulful vibe
+* Soothing UI with a calm, soulful vibe
 
 ---
 
