@@ -68,7 +68,7 @@ export default function GPTResults({
                 disabled={retryCount >= 2}
                 className={`px-5 py-3 rounded bg-soft-black text-sm font-semibold transition duration-200 ${
                   retryCount < 2
-                    ? "bg-glow-amber text-white hover:bg-yellow-300 hover:text-soft-black shadow-md"
+                    ? "bg-bright-amber text-black hover:bg-yellow-300 hover:text-soft-black shadow-md"
                     : "bg-gray-700 text-gray-400 cursor-not-allowed"
                 }`}
               >
@@ -76,7 +76,7 @@ export default function GPTResults({
               </button>
                 <button
                   onClick={() => setMode("chat")}
-                  className="px-4 py-2 text-sm bg-glow-amber bg-soft-black text-white hover:bg-[#FFC542] hover:text-soft-black rounded-lg font-medium"
+                  className="px-4 py-2 text-sm bg-bright-amber text-black  hover:bg-yellow-300 hover:text-soft-black rounded-lg font-medium"
                 >
                   Refine Suggestions
                 </button>
@@ -121,7 +121,7 @@ export default function GPTResults({
                 setLoading(false);
               }
             }}
-            className="px-4 py-2 text-sm font-semibold rounded-lg bg-glow-amber text-soft-black hover:bg-yellow-300 transition shadow"
+            className="px-4 py-2 text-sm font-semibold rounded-lg bg-bright-amber text-soft-black hover:bg-yellow-300 transition shadow"
           >
             ✏️ Refine Suggestions
           </button>
