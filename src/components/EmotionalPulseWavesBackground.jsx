@@ -4,12 +4,12 @@ export default function EmotionalPulseWavesBackground() {
 
      <div
       className="
-        absolute left-1/2 top-[18%]
+        absolute left-1/2 top-[2%]
         w-[40vw] h-[26vw]
-        sm:left-[70%] sm:top-[5%] sm:w-[16vw] sm:h-[20vw]
+        sm:left-[60%] sm:top-[8%] sm:w-[18vw] sm:h-[16vw]
         -translate-x-1/2
         bg-[#FFC542]
-        opacity-25 sm:opacity-45   /* only down 5% on mobile, 5% on desktop */
+        opacity-25 sm:opacity-65   /* only down 5% on mobile, 5% on desktop */
         blur-[55px]
         rounded-[100%/60%]
         animate-blob1
@@ -21,9 +21,9 @@ export default function EmotionalPulseWavesBackground() {
         className="
           absolute right-[-2vw] bottom-[20vw] 
           w-[20vw] h-[14vw]                   
-          sm:right-[8%] sm:top-[75%] sm:w-[6vw] sm:h-[10vw]
-          bg-mist-blue opacity-18
-          blur-[40px]                    
+          opacity-18 sm:right-[8%] sm:top-[75%] sm:w-[8vw] sm:h-[6vw]
+          bg-mist-blue
+          blur-[35px]                    
           rounded-[40%/100%]
           animate-blob2
         "
