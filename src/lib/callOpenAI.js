@@ -1,5 +1,7 @@
 import.meta.env.VITE_OPENAI_API_KEY
 
+console.log("Fetching OpenAI?:", import.meta.env.VITE_OPENAI_API_KEY )
+
 export async function callOpenAI(prompt, { signal } = {}) {
     const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
     console.log("API KEY:", apiKey);
