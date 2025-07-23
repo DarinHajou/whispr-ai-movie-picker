@@ -29,7 +29,7 @@ export default {
         '2xl': '1.5rem',
       },
       spacing: {
-        fluid: 'clamp(1.5rem, 4vw, 4rem)', // NEW: wider range
+        'fluid': 'clamp(1rem, 2vw, 2rem)', // dynamic margin/padding
       },
       animation: {
         'fade-in': 'fadeIn 0.7s ease-in forwards',
