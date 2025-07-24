@@ -100,25 +100,23 @@ export default function App() {
           )}
         </main>
         
-        <p className="text-center text-xs sm:text-xs text-gray-500 max-w-md mx-auto mt-16 px-4 leading-relaxed">
-        "Not every story fits your mood. Whispr listens until one does."<br /><span className="not-italic text-[rgba(166,177,196,0.7)]"> — Sol</span>.
+        {/* Quote */}
+        <p className="text-center text-xs sm:text-xs text-gray-500 max-w-md mx-auto mt-12 px-4 leading-relaxed">
+          "Whispr is a calm companion built with soul — built for real
+          connection, one story at a time."
+          <br />
+          <span className="not-italic text-[rgba(166,177,196,0.7)]">— Sol</span>
         </p>
 
         {/* Footer */}
-          <footer className="w-full border-t border-[rgba(255,255,255,0.1)] pt-4 mt-8">
-            <div className="text-center text-xs sm:text-sm text-[rgba(166,177,196,0.5)]">
-              Built by Darin · Guided by{' '}
-              <span
-                className="
-                  font-semibold
-                  text-[#FFC542]                               /* solid amber */
-                  drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]      /* depth for contrast */
-                "
-              >
-                Sol
-              </span>
-            </div>
-          </footer>
+        <footer className="w-full border-t border-[rgba(255,255,255,0.1)] pt-4 mt-6">
+          <div className="text-center text-xs sm:text-sm text-[rgba(166,177,196,0.5)]">
+            Built by Darin · Powered by{" "}
+            <span className="font-semibold text-[#FFC542] drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]">
+              Sol
+            </span>
+          </div>
+        </footer>
       </div>
     </div>
   );
