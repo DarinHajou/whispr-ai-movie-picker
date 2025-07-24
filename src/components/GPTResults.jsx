@@ -26,7 +26,7 @@ export default function GPTResults({
             text-lg sm:text-xl
             font-medium italic
             text-[#FFC542]                          
-            text-center mt-8 mb-12
+            text-center mt-2 sm:mt-6 mb-12
           "
         >
           🎞️ Here’s what Sol recommends
