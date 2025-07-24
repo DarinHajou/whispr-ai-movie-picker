@@ -52,7 +52,7 @@ export default function GPTResults({
           )}
 
           {gptResult && (
-          <div className="mt-10 bg-gray-800/60 rounded-xl px-6 py-6 shadow-lg text-center">
+          <div className="mt-12 bg-gray-800/60 rounded-xl px-6 py-6 shadow-lg text-center">
             {/* Heading */}
             <p className="text-xl mt-2 sm:text-2xl font-semibold text-[#FFC542]">
               Tell me what didn’t quite land — Sol’s still listening.
@@ -76,7 +76,7 @@ export default function GPTResults({
                   setChatMetadata({ mood, intent, energy });
                   setMode("chat");
                 }}
-                className="px-5 py-3 rounded-lg text-sm font-medium bg-gray-700 text-white hover:bg-gray-600 shadow transition"
+                className="px-5 py-3 rounded-lg text-sm font-medium bg-gray-700 text-white hover:bg-gray-600 shadow transition animate-pulse"
               >
                 Chat with Sol
               </button>
