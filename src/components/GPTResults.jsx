@@ -106,8 +106,6 @@ export default function GPTResults({
         >
           Add a follow-up or describe what missed the mark:
         </p>
-
-      
         <textarea
           rows={4}
           value={followup}
@@ -138,6 +136,21 @@ export default function GPTResults({
           </button>
 
         </div>
+         {/* Navigation links */}
+            <div className="flex justify-center gap-8 mt-12">
+              <button
+                onClick={() => setStep(3)}
+                className="text-sm text-gray-400 underline hover:text-white"
+              >
+                ← Go back
+              </button>
+              <button
+                onClick={resetAll}
+                className="text-sm text-gray-400 underline hover:text-white"
+              >
+                ↻ Start over
+              </button>
+            </div>
       </div>
             
     )}
