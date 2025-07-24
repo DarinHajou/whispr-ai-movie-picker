@@ -104,11 +104,11 @@ export default function GuidedFlow({
                       onContinue={() => setStep(2)}
                     />
 
-                    <div className="flex justify-center gap-4 flex-wrap">
+                    <div className="flex justify-center gap-4 flex-wrap ">
                       <button
                         onClick={() => setShowExperience(true)}
                         className="
-                          px-6 py-3 mt-12 rounded-full
+                          px-6 py-3 rounded-full
                           bg-[#FFC542]/10 hover:bg-[#FFC542]/20 
                           text-[#FFC542] font-semibold 
                           drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)] 
@@ -121,7 +121,7 @@ export default function GuidedFlow({
                       <button
                         onClick={() => setShowMood(false)}
                         className="
-                          px-6 py-3 mt-6 sm:mt-12 rounded-full 
+                          px-6 py-3 rounded-full 
                           border border-[#FFC542]/30 
                           text-[#FFC542]/70 hover:text-[#FFC542] 
                           drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)] 
