@@ -76,7 +76,7 @@
          <button
           onClick={handleContinue}
           className="
-            mt-8 px-6 py-3 rounded-full
+            mt-8 mb-8 px-6 py-3 rounded-full
             bg-[#FFC542]/70 hover:bg-[#FFC542]/90
             text-black font-medium
             shadow-md hover:shadow-lg
