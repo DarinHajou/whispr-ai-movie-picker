@@ -153,7 +153,7 @@ export default function GPTResults({
           {/* Navigation links */}
               <div className="flex justify-center gap-8 mt-12">
                 <button
-                  onClick={() => setStep(3)}
+                  onClick={() => setMode("guided")}
                   className="text-sm text-gray-400 underline hover:text-white"
                 >
                   ← Back to results
