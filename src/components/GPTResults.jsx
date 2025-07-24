@@ -13,7 +13,9 @@ export default function GPTResults({
   error, setError,
   setHasFetched,
   setStep,
-  resetAll
+  resetAll,
+  chatMetadata,
+  setChatMetadata,
 }) {
   return (
     <>
@@ -70,10 +72,13 @@ export default function GPTResults({
                 🔄 Try a fresh 10
               </button>
               <button
-                onClick={() => setMode("chat")}
+                onClick={() => {
+                  setChatMetadata({ mood, intent, energy });
+                  setMode("chat");
+                }}
                 className="px-5 py-3 rounded-lg text-sm font-medium bg-gray-700 text-white hover:bg-gray-600 shadow transition"
               >
-                Refine Suggestions
+                Chat with Sol
               </button>
             </div>
 
@@ -104,7 +109,16 @@ export default function GPTResults({
             text-[#FFC542]                           
           "
         >
-          Add a follow-up or describe what missed the mark:
+          
+          {mode === "chat" && (
+            <p className="text-[#FFC542] text-center text-lg italic mt-6">
+              Didn't find what you were looking for? No worries. <br />
+              You're feeling <strong>{chatMetadata.mood.join(", ")}</strong>,
+              want to <strong>{chatMetadata.intent}</strong>,
+              and your energy is <strong>{chatMetadata.energy}</strong>.
+            </p>
+          )}
+
         </p>
         <textarea
           rows={4}
@@ -135,25 +149,24 @@ export default function GPTResults({
             ✏️ Refine Suggestions
           </button>
 
-        </div>
-         {/* Navigation links */}
-            <div className="flex justify-center gap-8 mt-12">
-              <button
-                onClick={() => setStep(3)}
-                className="text-sm text-gray-400 underline hover:text-white"
-              >
-                ← Go back
-              </button>
-              <button
-                onClick={resetAll}
-                className="text-sm text-gray-400 underline hover:text-white"
-              >
-                ↻ Start over
-              </button>
-            </div>
-      </div>
-            
-    )}
+          </div>
+          {/* Navigation links */}
+              <div className="flex justify-center gap-8 mt-12">
+                <button
+                  onClick={() => setStep(3)}
+                  className="text-sm text-gray-400 underline hover:text-white"
+                >
+                  ← Go back
+                </button>
+                <button
+                  onClick={resetAll}
+                  className="text-sm text-gray-400 underline hover:text-white"
+                >
+                  ↻ Start over
+                </button>
+              </div>
+        </div>         
+      )}
 
       {loading && (
         <div className="flex justify-center items-center my-10" role="status" aria-live="polite">
