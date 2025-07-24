@@ -92,16 +92,6 @@ export default function GPTResults({
                 ↻ Start over
               </button>
             </div>
-
-            {/* Tertiary “Cancel” */}
-            <div className="mt-4">
-              <button
-                onClick={() => setMode("guided")}
-                className="text-sm text-gray-400 underline hover:text-white"
-              >
-                Cancel
-              </button>
-            </div>
           </div>
           )}
         </>
