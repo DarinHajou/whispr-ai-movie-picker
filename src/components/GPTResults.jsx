@@ -78,7 +78,7 @@ export default function GPTResults({
                 }}
                 className="px-5 py-3 rounded-lg text-sm font-medium bg-gray-700 text-white hover:bg-gray-600 shadow transition animate-pulse"
               >
-                Chat with Sol
+                💬 Chat with Sol
               </button>
             </div>
 
