@@ -101,7 +101,7 @@ export default function GPTResults({
           )}
         </>
       ) : (
-        <div className="mt-10 bg-red rounded-xl px-6 py-6 max-w-xl mx-auto text-center space-y-10">
+        <div className="bg-red rounded-xl px-8 py-6 max-w-lg mx-auto text-center">
         <p
           className="
             text-lg
@@ -111,7 +111,7 @@ export default function GPTResults({
         >
           
           {mode === "chat" && (
-            <p className="text-[#FFC542] text-center text-lg italic mt-6">
+            <p className="text-[#FFC542] text-center text-lg italic mb-10">
               Didn't find what you were looking for? No worries. <br />
               You're feeling <strong>{chatMetadata.mood.join(", ")}</strong>,
               want to <strong>{chatMetadata.intent}</strong>,
@@ -128,7 +128,7 @@ export default function GPTResults({
           placeholder="e.g. I want something with a female lead or set in space"
         />
       
-        <div className="flex flex-col sm:flex-row justify-center items-center gap-3 mt-1">
+        <div className="flex flex-col sm:flex-row justify-center items-center gap-3 mt-8">
           <button
             onClick={async () => {
               setLoading(true);
@@ -144,14 +144,14 @@ export default function GPTResults({
                 setLoading(false);
               }
             }}
-            className="px-4 py-2 text-sm font-semibold rounded-lg bg-bright-amber text-soft-black hover:bg-yellow-300 transition shadow"
+            className="px-4 py-2 text-sm font-semibold rounded-lg bg-bright-amber text-soft-black hover:bg-yellow-300 transition shadow "
           >
             ✏️ Refine Suggestions
           </button>
 
           </div>
           {/* Navigation links */}
-              <div className="flex justify-center gap-8 mt-12">
+              <div className="flex justify-center gap-8 mt-16">
                 <button
                   onClick={() => setMode("guided")}
                   className="text-sm text-gray-400 underline hover:text-white"
