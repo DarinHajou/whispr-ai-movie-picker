@@ -38,7 +38,8 @@ export default {
         'blob1': 'blob1 8s ease-in-out infinite',
         'blob2': 'blob2 24s ease-in-out infinite',
         'blob3': 'blob3 31s ease-in-out infinite',
-        softGlow: 'softGlow 2.5s ease-in-out infinite',
+        'softGlow': 'softGlow 2.5s ease-in-out infinite',
+        'pulse-slow': 'pulse 2.5s ease-in-out infinite',
       },
       keyframes: {
         fadeIn: {
