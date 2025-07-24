@@ -67,7 +67,7 @@
         </div>
           
         {selectedMoods.length === 0 ? (
-          <p className="text-sm text-white/60 mt-2">Step 1 of 3</p>
+          <p className="text-sm mb-8 text-white/60 mt-4">Step 1 of 3</p>
         ) : (
           <p className="text-sm text-[#FFC542] mt-8">{selectedMoods.length}/3 selected</p>
         )}
