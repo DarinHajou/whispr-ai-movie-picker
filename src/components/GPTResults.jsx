@@ -110,14 +110,25 @@ export default function GPTResults({
           "
         >
           
-          {mode === "chat" && (
-            <p className="text-[#FFC542] text-center text-lg italic mb-10">
-              Didn't find what you were looking for? No worries. <br />
-              You're feeling <strong>{chatMetadata.mood.join(", ")}</strong>,
-              want to <strong>{chatMetadata.intent}</strong>,
-              and your energy is <strong>{chatMetadata.energy}</strong>.
-            </p>
-          )}
+        {mode === "chat" && (
+          <p className="text-center text-lg italic mb-16 text-white">
+            Didn't find what you were looking for? No worries. <br />
+            You're feeling{" "}
+            <span className="text-[#FFC542] font-semibold">
+              {chatMetadata.mood.join(", ")}
+            </span>
+            , want to{" "}
+            <span className="text-[#FFC542] font-semibold">
+              {chatMetadata.intent}
+            </span>
+            , and your energy is{" "}
+            <span className="text-[#FFC542] font-semibold">
+              {chatMetadata.energy}
+            </span>
+            .
+          </p>
+        )}
+
 
         </p>
         <textarea
@@ -151,7 +162,7 @@ export default function GPTResults({
 
           </div>
           {/* Navigation links */}
-              <div className="flex justify-center gap-8 mt-16">
+              <div className="flex justify-center gap-8 mt-12">
                 <button
                   onClick={() => setMode("guided")}
                   className="text-sm text-gray-400 underline hover:text-white"
