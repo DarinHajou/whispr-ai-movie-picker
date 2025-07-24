@@ -10,6 +10,7 @@ export default function App() {
   const [mode, setMode] = useState("guided");
   const [intent, setIntent] = useState(null);
   const [energy, setEnergy] = useState(null);
+  const [chatMetadata, setChatMetadata] = useState(null);
 
   const resetAll = () => {
     setStep(1);
@@ -93,6 +94,8 @@ export default function App() {
               step={step}
               setStep={setStep}
               resetAll={resetAll}
+              chatMetadata={chatMetadata}
+              setChatMetadata={setChatMetadata}
             />
           )}
         </main>
