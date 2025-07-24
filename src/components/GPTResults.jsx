@@ -101,7 +101,7 @@ export default function GPTResults({
           )}
         </>
       ) : (
-        <div className="mt-10 bg-red rounded-xl px-6 py-6 max-w-xl mx-auto shadow-lg text-center space-y-10">
+        <div className="mt-10 bg-red rounded-xl px-6 py-6 max-w-xl mx-auto text-center space-y-10">
         <p
           className="
             text-lg
@@ -156,7 +156,7 @@ export default function GPTResults({
                   onClick={() => setStep(3)}
                   className="text-sm text-gray-400 underline hover:text-white"
                 >
-                  ← Go back
+                  ← Back to results
                 </button>
                 <button
                   onClick={resetAll}
