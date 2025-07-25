@@ -48,7 +48,7 @@ export default function App() {
         <h1 className="text-6xl sm:text-7xl font-extrabold tracking-tight text-warm-white flex justify-center items-center gap-2 whitespace-nowrap transition-colors duration-300 hover:text-[#FFC542]">
           <span className="text-4xl sm:text-5xl">🎬</span> Whispr
         </h1>
-        <p className="text-lg sm:text-xl text-[rgba(250,249,246,0.9)] italic leading-snug tracking-wide mt-4 mb-20">
+        <p className="text-lg sm:text-xl text-[rgba(250,249,246,0.9)] italic leading-snug tracking-wide mt-4 mb-12">
           Your emotionally intelligent movie picker
         </p>
       </div>
