@@ -9,7 +9,7 @@ export default function EmotionalPulseWavesBackground() {
         sm:left-[60%] sm:top-[8%] sm:w-[18vw] sm:h-[16vw]
         -translate-x-1/2
         bg-[#FFC542]
-        opacity-25 sm:opacity-65   /* only down 5% on mobile, 5% on desktop */
+        opacity-45 sm:opacity-65   /* only down 5% on mobile, 5% on desktop */
         blur-[55px]
         rounded-[100%/60%]
         animate-blob1
