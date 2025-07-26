@@ -58,8 +58,8 @@
                 aria-label={`Select ${mood.label} mood`}
               >
                 <span className="flex items-center justify-start gap-2">
-                  <span className="text-3xl sm:text-2xl leading-8">{mood.emoji}</span>
-                  <span className="text-lg sm:text-lg">{mood.label}</span>
+                  <span className="text-2xl sm:text-2xl leading-8">{mood.emoji}</span>
+                  <span className="text-medium sm:text-lg">{mood.label}</span>
                 </span>
               </button>
             );
