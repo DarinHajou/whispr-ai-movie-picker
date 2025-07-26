@@ -6,10 +6,10 @@ export default function EmotionalPulseWavesBackground() {
       className="
         absolute left-1/2 top-[8%]
         w-[29vw] h-[26vw]
-        sm:left-[60%] sm:top-[8%] sm:w-[18vw] sm:h-[16vw]
+        sm:left-[65%] sm:top-[6%] sm:w-[18vw] sm:h-[16vw]
         -translate-x-1/2
         bg-[#FFC542]
-        opacity-70 sm:opacity-65   /* only down 5% on mobile, 5% on desktop */
+        opacity-70 sm:opacity-45   /* only down 5% on mobile, 5% on desktop */
         blur-[55px]
         rounded-[100%/60%]
         animate-blob1
@@ -21,9 +21,9 @@ export default function EmotionalPulseWavesBackground() {
         className="
           absolute right-[-2vw] bottom-[20vw] 
           w-[20vw] h-[14vw]                   
-          opacity-18 sm:right-[8%] top-[80%] sm:top-[75%] sm:w-[8vw] sm:h-[6vw]
+          opacity-18 sm:right-[18%] top-[80%] sm:top-[85%] sm:w-[8vw] sm:h-[6vw]
           bg-mist-blue
-          blur-[35px]                    
+          blur-[40px]                    
           rounded-[40%/100%]
           animate-blob2
         "
@@ -34,9 +34,9 @@ export default function EmotionalPulseWavesBackground() {
         className="
           absolute left-[-8vw] bottom-[14vw]   
           w-[28vw] h-[10vw]                  
-          sm:left-[6%] top-[60%] sm:top-[70%] sm:w-[5vw] sm:h-[10vw] 
+          sm:left-[6%] top-[60%] sm:top-[70%] sm:w-[10vw] sm:h-[8vw] 
           bg-pale-sage opacity-28
-          blur-[45px]                     
+          blur-[55px]                     
           rounded-[100%/40%]
           animate-blob3
         "
