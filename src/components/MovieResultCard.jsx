@@ -81,25 +81,29 @@ export default function MovieResultCard({ title, year, tone, imdb, plot }) {
         <p className="text-xs sm:text-sm text-gray-300 leading-snug">{plot}</p>
 
         {/* Streaming Providers */}
-        {providers.length > 0 && (
-          <div className="flex flex-row gap-2 mt-2">
-            {providers.map(provider => (
-              <a
-                key={provider.provider_id}
-                href={provider.movieLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                title={provider.provider_name}
-              >
-                <img
-                  src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
-                  alt={provider.provider_name}
-                  className="w-8 h-8 rounded"
-                />
-              </a>
-            ))}
-          </div>
-        )}
+          {providers.length > 0 ? (
+            <div className="flex flex-row gap-2 mt-2">
+              {providers.map(provider => (
+                <a
+                  key={provider.provider_id}
+                  href={provider.movieLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title={provider.provider_name}
+                >
+                  <img
+                    src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
+                    alt={provider.provider_name}
+                    className="w-8 h-8 rounded"
+                  />
+                </a>
+              ))}
+            </div>
+          ) : (
+            <p className="text-sm italic text-gray-400 mt-2">
+              Not available for streaming
+            </p>
+          )}
       </div>
     </div>
   );
