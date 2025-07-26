@@ -32,12 +32,12 @@ export default function GuidedFlow({
             {/* Intro animation */}
             {!showExperience && (
               <motion.div
-                className="flex justify-center sm:mt-8 min-h-[160px]"
+                className="flex justify-center mt-8 sm:mt-8 min-h-[160px]"
                 initial={{ opacity: 0, scale: 0.98 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 1.2, ease: "easeOut", delay: 0.1 }}
               >
-                <div className="w-full max-w-lg px-6 sm:px-6 text-center mb-6">
+                <div className="w-full max-w-lg px-6 sm:px-6 text-center ">
                   <TypeAnimation
                     sequence={[
                       "👋 Hi",
@@ -61,7 +61,7 @@ export default function GuidedFlow({
                   />
 
                   {hasTypedFinished && !showMood && !showExperience && (
-                    <div className="mt-16 mb-12 text-center">
+                    <div className="mt-10 mb-12 text-center">
                       <button
                         onClick={() => setShowMood(true)}
                         className="
