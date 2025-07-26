@@ -61,7 +61,7 @@ export default function GuidedFlow({
                   />
 
                   {hasTypedFinished && !showMood && !showExperience && (
-                    <div className="mt-10 mb-12 text-center">
+                    <div className="mt-10 sm:mb-16 text-center">
                       <button
                         onClick={() => setShowMood(true)}
                         className="
