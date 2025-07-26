@@ -1,6 +1,7 @@
 import MovieResultCard from "./MovieResultCard";
 import buildPrompt from "../lib/buildPrompt";
 import { callOpenAI } from "../lib/callOpenAI";
+import { useState, useEffect } from "react";
 
 export default function GPTResults({
   mode, setMode,
@@ -17,39 +18,68 @@ export default function GPTResults({
   chatMetadata,
   setChatMetadata,
 }) {
+
+
+const microMoments = [
+  "Sol is thinking...",
+  "Tuning into your mood...",
+  "Piecing together the perfect picks...",
+  "Almost ready with something special...",
+];
+
+const [loadingMessage, setLoadingMessage] = useState(microMoments[0]);
+
+useEffect(() => {
+  if (!loading || gptResult) return;
+
+  let i = 1;
+  const interval = setInterval(() => {
+    setLoadingMessage(microMoments[i % microMoments.length]);
+    i++;
+  }, 2000);
+
+  return () => clearInterval(interval);
+}, [loading, gptResult]);
+
   return (
     <>
      {mode === "guided" ? (
       <>
-        <p
-          className="
-            text-lg sm:text-xl
-            font-medium italic
-            text-[#FFC542]                          
-            text-center mt-2 sm:mt-6 mb-12
-          "
-        >
-          🎞️ Here’s what Sol recommends
-        </p>
+        {!loading && gptResult !== "" && (
+          <p
+            className="
+              text-lg sm:text-xl
+              font-medium italic
+              text-[#FFC542]                          
+              text-center mt-2 sm:mt-6 mb-12
+            "
+          >
+            🎞️ Here’s what Sol recommends
+          </p>
+        )}
 
-          {gptResult !== "" ? (
-            hasMovies ? (
-              <div className="space-y-4">
-                {parsedMovies.map((movie, i) => (
-                  <MovieResultCard key={i} {...movie} />
-                ))}
-              </div>
-            ) : (
-              <pre className="text-sm text-red-400 whitespace-pre-wrap">
-                Could not parse GPT result. Here’s the raw text:
-                {"\n\n" + gptResult}
-              </pre>
-            )
+         {gptResult !== "" ? (
+          hasMovies ? (
+            <div className="space-y-4">
+              {parsedMovies.map((movie, i) => (
+                <MovieResultCard key={i} {...movie} />
+              ))}
+            </div>
           ) : (
-            <pre className="bg-pale-sage text-black p-3 rounded text-sm whitespace-pre-wrap">
-              No result received yet.
+            <pre className="text-sm text-red-400 whitespace-pre-wrap">
+              Could not parse GPT result. Here’s the raw text:
+              {"\n\n" + gptResult}
             </pre>
-          )}
+          )
+        ) : loading ? (
+          <div className="text-center text-[#FFC542] text-lg italic mt-2 min-h-[40px]">
+            {loadingMessage}
+          </div>
+        ) : (
+          <div className="text-center text-gray-500 text-sm italic mt-10">
+            Still warming up...
+          </div>
+        )}
 
           {gptResult && (
           <div className="mt-12 bg-gray-800/60 rounded-xl px-6 py-6 shadow-lg text-center">
