@@ -146,58 +146,58 @@ useEffect(() => {
       ) : (
         <div className="bg-red rounded-xl px-8 py-6 max-w-lg mx-auto text-center">
         {mode === "chat" && chatMetadata && (
-  <div className="text-center text-lg italic mb-16 min-h-[120px] text-[#FFC542]">
-    {step === 0 && (
-      <TypeAnimation
-        sequence={[
-          "Didn’t find what you were looking for?",
-          1200,
-          () => setSteps(1),
-        ]}
-        speed={65}
-        wrapper="p"
-        cursor={false}
-        repeat={0}
-        className="font-medium"
-      />
-    )}
+          <div className="text-center text-lg italic mb-16 min-h-[120px] text-[#FFC542]">
+            {step === 0 && (
+              <TypeAnimation
+                sequence={[
+                  "Didn’t find what you were looking for?",
+                  1200,
+                  () => setSteps(1),
+                ]}
+                speed={65}
+                wrapper="p"
+                cursor={false}
+                repeat={0}
+                className="font-medium"
+              />
+            )}
 
-    {step === 1 && (
-      <TypeAnimation
-        sequence={[
-          "No worries.",
-          1000,
-          () => setSteps(2),
-        ]}
-        speed={65}
-        wrapper="p"
-        cursor={false}
-        repeat={0}
-        className="font-medium"
-      />
-    )}
+            {step === 1 && (
+              <TypeAnimation
+                sequence={[
+                  "No worries.",
+                  1000,
+                  () => setSteps(2),
+                ]}
+                speed={65}
+                wrapper="p"
+                cursor={false}
+                repeat={0}
+                className="font-medium"
+              />
+            )}
 
-    {step === 2 && (
-      <motion.p
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
-        className="font-medium text-[#FFC542]"
-      >
-        You’re feeling{" "}
-        <span className="text-white font-semibold">
-          {chatMetadata.mood.join(", ")}
-        </span>
-        , and want to{" "}
-        <span className="text-white font-semibold">
-          {chatMetadata.intent}
-        </span>
+            {step === 2 && (
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.8 }}
+                className="font-medium text-[#FFC542]"
+              >
+                You’re feeling{" "}
+                <span className="text-white font-semibold">
+                  {chatMetadata.mood.join(", ")}
+                </span>
+                , and want to{" "}
+                <span className="text-white font-semibold">
+                  {chatMetadata.intent}
+                </span>
 
-        .
-      </motion.p>
-    )}
-  </div>
-)}
+                .
+              </motion.p>
+            )}
+          </div>
+        )}
 
         <textarea
           rows={4}
