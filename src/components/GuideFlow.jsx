@@ -44,7 +44,7 @@ export default function GuidedFlow({
                       1000,
                       "I’m Sol.",
                       1000,
-                      "Tell me how you want to feel, and I’ll whisper something worth watching.",
+                      "Tell me how you want to feel, and I'll whisper something worth watching.",
                       400,
                       () => setHasTypedFinished(true),
                     ]}

@@ -6,6 +6,25 @@ export default function MovieResultCard({ title, year, tone, imdb, plot }) {
   const [imdbId, setImdbId] = useState(null);
   const [tmdbId, setTmdbId] = useState(null);
   const [providers, setProviders] = useState([]);
+  
+const solCommentaryByTone = {
+  reflective: "This one hits hard if you’re feeling distant.",
+  uplifting: "A gentle boost when you're low on energy.",
+  thrilling: "Buckle up — this will mess with your head in the best way.",
+  romantic: "Soft, tender, and just the right kind of ache.",
+  dark: "Lean into the shadows — it's worth it.",
+  heartwarming: "Let yourself feel something again.",
+  intimate: "For when you're in the mood to feel something real.",
+  nostalgic: "This one taps into something personal and warm.",
+  whimsical: "Playful and imaginative — let yourself wander.",
+  witty: "Sharp and clever — with a dose of charm.",
+  subdued: "Quiet, soft, and emotionally resonant.",
+  contemplative: "This one lingers after it ends.",
+};
+
+  const matchedComment = Object.entries(solCommentaryByTone).find(([key]) =>
+    tone?.toLowerCase().includes(key.toLowerCase())
+  )?.[1];
 
   useEffect(() => {
     const cleanTitle = title.replace(/["(].*$/, "").trim();
@@ -29,26 +48,23 @@ export default function MovieResultCard({ title, year, tone, imdb, plot }) {
       .then(data => {
         let countryObj = data.results.NO || data.results.US || Object.values(data.results)[0];
         if (!countryObj) {
-          setProviders([]); // No providers at all
+          setProviders([]);
           return;
         }
-        const movieLink = countryObj.link; // <-- the streaming page for THIS movie
+        const movieLink = countryObj.link;
         const flatrate = countryObj.flatrate || [];
-        // Attach movieLink to each provider object for rendering
         setProviders(flatrate.map(p => ({ ...p, movieLink })));
       });
-  }, [tmdbId]);  
+  }, [tmdbId]);
 
   return (
     <div className="relative flex bg-gray-800/80 rounded-xl shadow-lg p-4 gap-4 sm:gap-5 items-start">
-      {/* Poster */}
       <img
         src={poster}
         alt={`${title} poster`}
         className="w-20 sm:w-24 rounded-md object-cover"
       />
 
-      {/* IMDb badge */}
       <div className="absolute top-2 right-2 flex items-center bg-black/70 px-1 py-0.5 rounded-md text-yellow-400 text-xs font-semibold gap-1">
         <img
           src="/images/imdb_logo.png"
@@ -58,7 +74,6 @@ export default function MovieResultCard({ title, year, tone, imdb, plot }) {
         <span>{imdb}</span>
       </div>
 
-      {/* Content */}
       <div className="flex flex-col space-y-2 text-left max-w-[calc(100%-6rem)]">
         {imdbId ? (
           <a
@@ -75,36 +90,45 @@ export default function MovieResultCard({ title, year, tone, imdb, plot }) {
           </h3>
         )}
 
-        <p className="text-xs sm:text-sm text-mist-blue leading-tight">
-          <span className="font-medium">Tone:</span> {tone}
-        </p>
+        {tone && (
+          <p className="text-xs sm:text-sm text-mist-blue leading-tight">
+            <span className="font-medium text-bright-amber">Tone:</span> {tone}
+          </p>
+        )}
+
+        {matchedComment && (
+          <p className="text-xs sm:text-sm italic text-[#FFC542] mt-1">
+            💬 {matchedComment}
+          </p>
+        )}
+
         <p className="text-xs sm:text-sm text-gray-300 leading-snug">{plot}</p>
 
-        {/* Streaming Providers */}
-          {providers.length > 0 ? (
-            <div className="flex flex-row gap-2 mt-2">
-              {providers.map(provider => (
-                <a
-                  key={provider.provider_id}
-                  href={provider.movieLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  title={provider.provider_name}
-                >
-                  <img
-                    src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
-                    alt={provider.provider_name}
-                    className="w-8 h-8 rounded"
-                  />
-                </a>
-              ))}
-            </div>
-          ) : (
-            <p className="text-sm italic text-gray-400 mt-2">
-              Not available for streaming
-            </p>
-          )}
+        {providers.length > 0 ? (
+          <div className="flex flex-row gap-2 mt-2">
+            {providers.map(provider => (
+              <a
+                key={provider.provider_id}
+                href={provider.movieLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                title={provider.provider_name}
+              >
+                <img
+                  src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
+                  alt={provider.provider_name}
+                  className="w-8 h-8 rounded"
+                />
+              </a>
+            ))}
+          </div>
+        ) : (
+          <p className="text-sm italic text-blue-300 mt-2">
+            Not available for streaming.
+          </p>
+        )}
       </div>
     </div>
   );
 }
+
