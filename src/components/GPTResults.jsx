@@ -2,6 +2,9 @@ import MovieResultCard from "./MovieResultCard";
 import buildPrompt from "../lib/buildPrompt";
 import { callOpenAI } from "../lib/callOpenAI";
 import { useState, useEffect } from "react";
+import { TypeAnimation } from "react-type-animation";
+import { useMemo } from "react";
+import { motion } from "framer-motion";
 
 export default function GPTResults({
   mode, setMode,
@@ -19,6 +22,16 @@ export default function GPTResults({
   setChatMetadata,
 }) {
 
+const [step, setSteps] = useState(0);
+
+const chatSummary = useMemo(() => {
+  if (!chatMetadata) return "";
+  const moodList = chatMetadata.mood?.join(", ");
+  const intent = chatMetadata.intent;
+  const energy = chatMetadata.energy;
+
+  return `You're feeling ${moodList}, want to ${intent}, and your energy is ${energy}.`;
+}, [chatMetadata]);
 
 const microMoments = [
   "Sol is thinking...",
@@ -132,35 +145,60 @@ useEffect(() => {
         </>
       ) : (
         <div className="bg-red rounded-xl px-8 py-6 max-w-lg mx-auto text-center">
-        <p
-          className="
-            text-lg
-            font-semibold
-            text-[#FFC542]                           
-          "
-        >
-          
-        {mode === "chat" && (
-          <p className="text-center text-lg italic mb-16 text-white">
-            Didn't find what you were looking for? No worries. <br />
-            You're feeling{" "}
-            <span className="text-[#FFC542] font-semibold">
-              {chatMetadata.mood.join(", ")}
-            </span>
-            , want to{" "}
-            <span className="text-[#FFC542] font-semibold">
-              {chatMetadata.intent}
-            </span>
-            , and your energy is{" "}
-            <span className="text-[#FFC542] font-semibold">
-              {chatMetadata.energy}
-            </span>
-            .
-          </p>
-        )}
+        {mode === "chat" && chatMetadata && (
+  <div className="text-center text-lg italic mb-16 min-h-[120px] text-[#FFC542]">
+    {step === 0 && (
+      <TypeAnimation
+        sequence={[
+          "Didn’t find what you were looking for?",
+          1200,
+          () => setSteps(1),
+        ]}
+        speed={65}
+        wrapper="p"
+        cursor={false}
+        repeat={0}
+        className="font-medium"
+      />
+    )}
 
+    {step === 1 && (
+      <TypeAnimation
+        sequence={[
+          "No worries.",
+          1000,
+          () => setSteps(2),
+        ]}
+        speed={65}
+        wrapper="p"
+        cursor={false}
+        repeat={0}
+        className="font-medium"
+      />
+    )}
 
-        </p>
+    {step === 2 && (
+      <motion.p
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+        className="font-medium text-[#FFC542]"
+      >
+        You’re feeling{" "}
+        <span className="text-white font-semibold">
+          {chatMetadata.mood.join(", ")}
+        </span>
+        , and want to{" "}
+        <span className="text-white font-semibold">
+          {chatMetadata.intent}
+        </span>
+
+        .
+      </motion.p>
+    )}
+  </div>
+)}
+
         <textarea
           rows={4}
           value={followup}
