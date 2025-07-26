@@ -7,7 +7,7 @@ export default function EnergySelector({ setEnergy }) {
 
   return (
     <div className="space-y-8 w-full max-w-xl mx-auto text-center">
-      <h2 className="text-2xl sm:text-3xl font-semibold mt-8 mb-12 text-warm-white">
+      <h2 className="text-2xl sm:text-3xl font-semibold mt-8 text-warm-white">
         How much mental{" "}
         <span className="italic text-[#FFC542]">
           Energy
