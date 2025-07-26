@@ -82,9 +82,9 @@ useEffect(() => {
         )}
 
           {gptResult && (
-          <div className="mt-12 bg-gray-800/60 rounded-xl px-6 py-6 shadow-lg text-center">
+          <div className="mt-8 bg-gray-800/60 rounded-xl px-6 py-6 shadow-lg text-center space-y-8">
             {/* Heading */}
-            <p className="text-xl mt-2 sm:text-2xl font-semibold text-[#FFC542]">
+            <p className="text-xl sm:text-2xl font-semibold text-[#FFC542]">
               Tell me what didn’t quite land — Sol’s still listening.
             </p>
 
