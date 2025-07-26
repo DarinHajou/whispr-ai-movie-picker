@@ -49,7 +49,7 @@ export default function MovieResultCard({ title, year, tone, imdb, plot }) {
       />
 
       {/* IMDb badge */}
-      <div className="absolute top-2 right-2 flex items-center bg-black/70 px-2 py-1 rounded-md text-yellow-400 text-xs font-semibold gap-1">
+      <div className="absolute top-2 right-2 flex items-center bg-black/70 px-1 py-0.5 rounded-md text-yellow-400 text-xs font-semibold gap-1">
         <img
           src="/images/imdb_logo.png"
           alt="IMDb"
