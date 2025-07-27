@@ -27,7 +27,7 @@
 
     return (
       <div className="w-full flex flex-col items-center">
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6 w-full sm:min-w-[560px] justify-items-center py-4 sm:py-6">
+        <div className="grid grid-cols-3 sm:grid-cols-3 gap-4 sm:gap-6 w-full sm:min-w-[560px] justify-items-center py-4 sm:py-6">
           {moods.map((mood, idx) => {
             let extra = "";
             if (idx === 8) extra = "sm:col-start-2";
@@ -53,8 +53,8 @@
                 `}
                 aria-label={`Select ${mood.label} mood`}
               >
-                <span className="flex items-center justify-start gap-2">
-                  <span className="text-2xl sm:text-2xl leading-8">{mood.emoji}</span>
+                <span className="flex items-center justify-start gap-1">
+                  <span className="text-sm sm:text-2xl leading-8">{mood.emoji}</span>
                   <span className="text-medium sm:text-lg">{mood.label}</span>
                 </span>
               </button>
