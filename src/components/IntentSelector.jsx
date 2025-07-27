@@ -1,7 +1,7 @@
 export default function IntentSelector({ mood, setIntent }) {
   const options = [
     { label: "Escape", description: "I just want to forget for a while" },
-    { label: "Understand", description: "Help me process what I'm feeling" },
+    { label: "Embrace", description: "Help me process what I'm feeling" },
     { label: "Transform", description: "I want to shift this energy" },
   ];
 
