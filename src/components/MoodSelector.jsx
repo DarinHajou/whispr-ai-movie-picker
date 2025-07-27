@@ -2,18 +2,14 @@
   
   export default function MoodSelector({ selectedMoods, setSelectedMoods, onContinue }) {
     const moods = [
-      { label: "Sad", emoji: "😢" },
-      { label: "Nostalgic", emoji: "🥲" },
-      { label: "Anxious", emoji: "😰" },
-      { label: "Scared", emoji: "😱" },
-      { label: "Explore", emoji: "🌍" },
-      { label: "Excited", emoji: "🤩" },
-      { label: "Happy", emoji: "😊" },
-      { label: "Romantic", emoji: "💘" },
-      { label: "Chill", emoji: "🌿" },
-      { label: "Curious", emoji: "🧐" },
+      { label: "Anger", emoji: "😠" },
+      { label: "Fear ", emoji: "😱" },
+      { label: "Hope", emoji: "🌅" },
+      { label: "Love", emoji: "💘" },
+      { label: "Sadness", emoji: "🥲" },
+      { label: "Joy", emoji: "😊" },
+      { label: "Wonder", emoji: "🤯" },
     ];
-
 
     const toggleMood = (mood) => {
       if (selectedMoods.includes(mood)) {
@@ -31,7 +27,7 @@
 
     return (
       <div className="w-full flex flex-col items-center">
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 w-full sm:min-w-[660px] justify-items-center py-4 sm:py-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6 w-full sm:min-w-[560px] justify-items-center py-4 sm:py-6">
           {moods.map((mood, idx) => {
             let extra = "";
             if (idx === 8) extra = "sm:col-start-2";
