@@ -94,7 +94,7 @@ export default function GuidedFlow({
                       transition={{ duration: 0.4, ease: "easeOut" }}
                       className="text-lg sm:text-xl font-medium italic text-warm-white text-center"
                     >
-                      👉 Pick up to <span className="text-[#FFC542]">3</span> moods —<br />{" "}
+                      👉 Pick up to <span className="text-[#FFC542]">2</span> moods —<br />{" "}
                       <span className="text-[#FFC542]">Sol</span> blends your feelings into one unique recommendation.
                     </motion.h2>
 

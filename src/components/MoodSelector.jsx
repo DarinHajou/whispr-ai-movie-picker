@@ -14,7 +14,7 @@
     const toggleMood = (mood) => {
       if (selectedMoods.includes(mood)) {
         setSelectedMoods(selectedMoods.filter((m) => m !== mood));
-      } else if (selectedMoods.length < 3) {
+      } else if (selectedMoods.length < 2) {
         setSelectedMoods([...selectedMoods, mood]);
       }
     };
@@ -63,9 +63,9 @@
         </div>
           
         {selectedMoods.length === 0 ? (
-          <p className="text-sm mb-8 text-white/60 mt-4">Step 1 of 3</p>
+          <p className="text-sm mb-8 text-white/60 mt-4">Step 1 of 2</p>
         ) : (
-          <p className="text-sm text-[#FFC542] mt-8">{selectedMoods.length}/3 selected</p>
+          <p className="text-sm text-[#FFC542] mt-8">{selectedMoods.length}/2 selected</p>
         )}
 
         {selectedMoods.length > 0 && (
