@@ -30,8 +30,7 @@
         <div className="grid grid-cols-3 sm:grid-cols-3 gap-4 sm:gap-6 w-full sm:min-w-[560px] justify-items-center py-4 sm:py-6">
           {moods.map((mood, idx) => {
             let extra = "";
-            if (idx === 8) extra = "sm:col-start-2";
-            if (idx === 9) extra = "sm:col-start-3";
+            if (idx === moods.length - 1) extra = "col-start-2";
             const isSelected = selectedMoods.includes(mood.label);
             return (
               <button
