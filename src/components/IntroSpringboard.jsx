@@ -1,4 +1,3 @@
-// src/components/IntroSpringboard.jsx
 import React from "react";
 
 export default function IntroSpringboard({ onStart }) {
