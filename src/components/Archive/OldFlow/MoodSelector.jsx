@@ -1,6 +1,4 @@
-  import { useState } from "react";
-  
-  export default function MoodSelector({ selectedMoods, setSelectedMoods, onContinue }) {
+export default function MoodSelector({ selectedMoods, setSelectedMoods, onContinue }) {
     const moods = [
       { label: "Anger", emoji: "😠" },
       { label: "Fear ", emoji: "😱" },
