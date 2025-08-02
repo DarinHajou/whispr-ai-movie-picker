@@ -11,6 +11,3 @@ export default function IntensityPicker({ onNext }) {
     </div>
   );
 }
-
-
-// test github commits issue
