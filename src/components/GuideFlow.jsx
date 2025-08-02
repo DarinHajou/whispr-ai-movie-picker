@@ -1,4 +1,5 @@
 // src/components/GuidedFlow.jsx
+import FadeOnly from "./FadeOnly";
 import React from "react";
 import IntroSpringboard from "./IntroSpringboard";
 import EmotionPicker from "./EmotionPicker";
