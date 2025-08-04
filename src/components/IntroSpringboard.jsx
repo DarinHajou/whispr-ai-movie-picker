@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import EmotionalPulseWavesBackground from './EmotionalPulseWavesBackground';
 import SolOrbCanvas from './SolOrbCanvas';
+import React, { useState, useEffect, useRef } from 'react';
+import SolSoulCloud from './SolSoulCloud';
 
 export default function IntroSpringboard({ onStart }) {
   // Controls black overlay (fades out)
@@ -13,7 +14,18 @@ export default function IntroSpringboard({ onStart }) {
   // Pulse state for orb
   const [pulse, setPulse] = useState(false);
 
+
   const fullText = "Hi, I’m Sol. How’s your heart feeling tonight? Hi, I’m Sol. How’s your heart feeling tonight? Hi, I’m Sol. How’s your heart feeling tonight?";
+
+  const lastPulse = useRef(Date.now());
+
+  function tryPulse() {
+    const now = Date.now();
+    if (now - lastPulse.current > 380) { // Adjust ms to taste
+      setPulse(p => !p);
+      lastPulse.current = now;
+    }
+  }
 
   useEffect(() => {
     const fadeStart = 1000;              // 1s: how long the black stays
@@ -30,16 +42,26 @@ export default function IntroSpringboard({ onStart }) {
   }, []);
 
   // Typewriter effect & pulse
-  useEffect(() => {
-    if (!showContent) return;
+   useEffect(() => {
     let i = 0;
     const iv = setInterval(() => {
+      const nextChar = fullText[i];
       setGreetText(fullText.slice(0, ++i));
-      setPulse(p => !p); // trigger orb pulse
+      if (
+        nextChar === " " ||
+        nextChar === "." ||
+        nextChar === "," ||
+        nextChar === "!" ||
+        nextChar === "?" ||
+        i === fullText.length
+      ) {
+        tryPulse();
+      }
       if (i >= fullText.length) clearInterval(iv);
     }, 80);
     return () => clearInterval(iv);
   }, [showContent]);
+  
 
   return (
     <div className="fixed inset-0 flex items-center justify-center overflow-hidden">
