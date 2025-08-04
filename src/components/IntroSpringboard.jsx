@@ -1,23 +1,49 @@
 import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import EmotionalPulseWavesBackground from './EmotionalPulseWavesBackground';
+import SolOrbCanvas from './SolOrbCanvas';
 
 export default function IntroSpringboard({ onStart }) {
-  // controls black overlay
+  // Controls black overlay (fades out)
   const [fade, setFade] = useState(true);
-  // controls when text + button appear
+  // Controls when to show typewriter text/button
   const [showContent, setShowContent] = useState(false);
+  // Typewriter state
+  const [greetText, setGreetText] = useState('');
+  // Pulse state for orb
+  const [pulse, setPulse] = useState(false);
+
+  const fullText = "Hi, I’m Sol. How’s your heart feeling tonight? Hi, I’m Sol. How’s your heart feeling tonight? Hi, I’m Sol. How’s your heart feeling tonight?";
 
   useEffect(() => {
-    // start the fade-out next animation frame
-    requestAnimationFrame(() => setFade(false));
-    // when fade duration (e.g. 800ms) is up, show content
-    const timeout = setTimeout(() => setShowContent(true), 800);
-    return () => clearTimeout(timeout);
+    const fadeStart = 1000;              // 1s: how long the black stays
+    const orbFadeDuration = 3500;        // 2.5s: orb intro fade
+    const contentDelay = fadeStart + orbFadeDuration; // total wait before text/button
+
+    const fadeTimer = setTimeout(() => setFade(false), fadeStart);
+    const contentTimer = setTimeout(() => setShowContent(true), contentDelay);
+
+    return () => {
+      clearTimeout(fadeTimer);
+      clearTimeout(contentTimer);
+    };
   }, []);
+
+  // Typewriter effect & pulse
+  useEffect(() => {
+    if (!showContent) return;
+    let i = 0;
+    const iv = setInterval(() => {
+      setGreetText(fullText.slice(0, ++i));
+      setPulse(p => !p); // trigger orb pulse
+      if (i >= fullText.length) clearInterval(iv);
+    }, 80);
+    return () => clearInterval(iv);
+  }, [showContent]);
 
   return (
     <div className="fixed inset-0 flex items-center justify-center overflow-hidden">
-      {/* Gradient background */}
+      {/* Gradient Background */}
       <div
         className="absolute inset-0"
         style={{
@@ -26,25 +52,35 @@ export default function IntroSpringboard({ onStart }) {
         }}
       />
 
-      {/* Blob animation */}
+      {/* Blobs/ambient animation */}
       <div className="absolute inset-0 -z-10 pointer-events-none">
         <EmotionalPulseWavesBackground />
       </div>
 
-      {/* Black overlay */}
+      
+
+      {/* --- 3D ORB: Always visible but reacts only when showContent is true --- */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <SolOrbCanvas pulse={pulse} />
+      </div>
+
+      {/* --- Black overlay that fades out --- */}
       <div
         className="absolute inset-0 bg-black"
         style={{
           opacity: fade ? 1 : 0,
-          transition: 'opacity 0.8s ease-out'  // matches the 800ms delay
+          transition: 'opacity 0.8s ease-out'
         }}
       />
 
-      {/* Intro content, shown only after the overlay has faded */}
+      {/* --- Content (text & button): Only appears after full intro --- */}
       {showContent && (
         <div className="relative z-10 flex flex-col items-center justify-center h-full p-4 text-center">
-          <p className="text-2xl font-mono text-warm-white mb-4">
-            Sol: How’s your heart feeling tonight?
+          <p
+            className="font-mono text-2xl text-warm-white mb-6"
+            style={{ textShadow: '0 0 8px rgba(255,197,66,0.75)' }}
+          >
+            {greetText}
           </p>
           <button
             onClick={onStart}
