@@ -1,4 +1,3 @@
-// src/components/GuidedFlow.jsx
 import FadeOnly from "./FadeOnly";
 import React from "react";
 import IntroSpringboard from "./IntroSpringboard";
@@ -6,7 +5,7 @@ import EmotionPicker from "./EmotionPicker";
 import IntensityPicker from "./IntensityPicker";
 import IntentPicker from "./IntentPicker";
 
-// Make sure this matches your App.jsx FLOW enum
+// Match this to your App.jsx FLOW enum
 const FLOW = {
   INTRO: 0,
   EMOTION: 1,
@@ -15,7 +14,7 @@ const FLOW = {
   RESULTS: 4,
 };
 
-export default function GuidedFlow({
+export default function GuideFlow({
   flowMode,
   setFlowMode,
   emotion,
@@ -24,43 +23,30 @@ export default function GuidedFlow({
   setIntensity,
   intent,
   setIntent,
+  pulse,
+  onPulse
 }) {
   switch (flowMode) {
     case FLOW.INTRO:
-      return <IntroSpringboard onStart={() => setFlowMode(FLOW.EMOTION)} />;
+      return (
+        <IntroSpringboard
+          onStart={() => setFlowMode(FLOW.EMOTION)}
+          onPulse={onPulse}
+          pulse={pulse}
+        />
+      );
 
     case FLOW.EMOTION:
-      return (
-        <EmotionPicker
-          onNext={() => {
-            /* here you’d capture emotion via props in a real picker */
-            setFlowMode(FLOW.INTENSITY);
-          }}
-        />
-      );
+      return <EmotionPicker onNext={() => setFlowMode(FLOW.INTENSITY)} />;
 
     case FLOW.INTENSITY:
-      return (
-        <IntensityPicker
-          onNext={() => {
-            /* here you’d capture intensity via props in a real picker */
-            setFlowMode(FLOW.INTENT);
-          }}
-        />
-      );
+      return <IntensityPicker onNext={() => setFlowMode(FLOW.INTENT)} />;
 
     case FLOW.INTENT:
-      return (
-        <IntentPicker
-          onNext={() => {
-            /* capture intent */
-            setFlowMode(FLOW.RESULTS);
-          }}
-        />
-      );
+      return <IntentPicker onNext={() => setFlowMode(FLOW.RESULTS)} />;
 
     case FLOW.RESULTS:
-      return null; // App.jsx will show <GPTResults> here
+      return null;
 
     default:
       return null;
