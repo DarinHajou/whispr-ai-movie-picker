@@ -3,10 +3,8 @@ import { useFrame, extend } from "@react-three/fiber";
 import * as THREE from "three";
 import FresnelMaterial from './FresnelMaterial';
 
-// Register the custom material so JSX recognizes it
 extend({ FresnelMaterial });
 
-// Generates positions/types for the cloud
 function generateSoulCloud(count, radius) {
   const types = ["cube", "sphere", "capsule"];
   const data = [];
@@ -23,7 +21,7 @@ function generateSoulCloud(count, radius) {
         r * Math.cos(phi)
       ],
       rot: [Math.random() * Math.PI, Math.random() * Math.PI, Math.random() * Math.PI],
-      scale: 0.12 + Math.random() * 0.07
+      scale: 0.04 + Math.random() * 0.05
     });
   }
   return data;
@@ -32,8 +30,9 @@ function generateSoulCloud(count, radius) {
 export default function SolSoulCloud({ pulse }) {
   const group = useRef();
   const pulseTimer = useRef(-1); // -1 means idle
+  const pulseAmount = useRef(0);
 
-  const soulData = useMemo(() => generateSoulCloud(260, 1.18), []);
+  const soulData = useMemo(() => generateSoulCloud(370, 1.21), []);
 
   // Pulse logic: start timer when pulse prop changes
   useEffect(() => {
@@ -42,48 +41,44 @@ export default function SolSoulCloud({ pulse }) {
     }
   }, [pulse]);
 
-  // Animate the group as a whole, and increment pulse timer
   useFrame((_, delta) => {
     const t = performance.now() / 1000;
     if (group.current) {
       group.current.rotation.y = t * 0.14;
       group.current.position.y = Math.sin(t * 0.5) * 0.12;
     }
-    // Step pulse timer forward (if pulsing)
+    // Animate pulse globally
     if (pulseTimer.current >= 0) {
+      const pulseDuration = 0.48;
+      let tt = pulseTimer.current / pulseDuration;
+      if (tt > 1) tt = 1;
+      pulseAmount.current = Math.sin(Math.PI * tt);
       pulseTimer.current += delta;
-      if (pulseTimer.current > 0.48) pulseTimer.current = -1;
+      if (pulseTimer.current > pulseDuration) {
+        pulseTimer.current = -1;
+        pulseAmount.current = 0;
+      }
     }
   });
 
   return (
     <group ref={group}>
       {soulData.map((item, i) => {
-        let geometry;
-        if (item.shape === "cube") geometry = <boxGeometry args={[1, 1, 1]} />;
-        if (item.shape === "sphere") geometry = <sphereGeometry args={[0.85, 10, 10]} />;
-        if (item.shape === "capsule") geometry = <capsuleGeometry args={[0.48, 1.0, 4, 8]} />;
+        // Interpolate from "clustered" to "expanded"
+        const base = item.pos.map(v => v * 0.65); // clustered state
+        const currPos = base.map((v, idx) =>
+          v + (item.pos[idx] - v) * pulseAmount.current
+        );
 
-        // NEW: Use a ref to store mesh
+        // Animate this voxel in useFrame (breathing)
         const meshRef = useRef();
-
-        // Calculate per-voxel pulse (delayed by Y position for "wave")
-        const delay = 0.13 * (item.pos[1] / 1.18); // -0.13 to +0.13 sec
-        let pulseAmount = 0;
-        if (pulseTimer.current >= 0) {
-          const pulseDuration = 0.48;
-          const t = Math.min(Math.max((pulseTimer.current - delay), 0), pulseDuration) / pulseDuration;
-          pulseAmount = Math.sin(Math.PI * t) * (t > 0 && t < 1 ? 1 : 0);
-        }
-
-        // Animate this voxel in useFrame (breathing + pulse)
         useFrame(({ clock }) => {
           if (meshRef.current) {
             const t = clock.getElapsedTime();
             // Breath/wobble offset
-            meshRef.current.position.x = item.pos[0] + Math.sin(t * 0.7 + i) * 0.03;
-            meshRef.current.position.y = item.pos[1] + Math.sin(t * 0.5 + i * 1.7) * 0.03;
-            meshRef.current.position.z = item.pos[2] + Math.sin(t * 0.9 - i) * 0.03;
+            meshRef.current.position.x = currPos[0] + Math.sin(t * 0.7 + i) * 0.03;
+            meshRef.current.position.y = currPos[1] + Math.sin(t * 0.5 + i * 1.7) * 0.03;
+            meshRef.current.position.z = currPos[2] + Math.sin(t * 0.9 - i) * 0.03;
             meshRef.current.rotation.x = item.rot[0] + Math.sin(t * 0.7 + i) * 0.11;
             meshRef.current.rotation.y = item.rot[1] + Math.cos(t * 0.6 - i) * 0.13;
           }
@@ -92,7 +87,7 @@ export default function SolSoulCloud({ pulse }) {
         // Color morph: gold (idle) → cyan (on pulse) → gold
         const gold = new THREE.Color("#ffc542");
         const cyan = new THREE.Color("#41fff9");
-        const currRim = gold.clone().lerp(cyan, pulseAmount);
+        const currRim = gold.clone().lerp(cyan, pulseAmount.current);
 
         return (
           <mesh
@@ -101,20 +96,22 @@ export default function SolSoulCloud({ pulse }) {
             castShadow
             receiveShadow
             scale={[
-              item.scale + pulseAmount * 0.08,
-              item.scale + pulseAmount * 0.08,
-              item.scale + pulseAmount * 0.08
+              item.scale + pulseAmount.current * 0.08,
+              item.scale + pulseAmount.current * 0.08,
+              item.scale + pulseAmount.current * 0.08
             ]}
           >
-            {geometry}
+            {item.shape === "cube" && <boxGeometry args={[1, 1, 1]} />}
+            {item.shape === "sphere" && <sphereGeometry args={[0.85, 10, 10]} />}
+            {item.shape === "capsule" && <capsuleGeometry args={[0.48, 1.0, 4, 8]} />}
             <fresnelMaterial
               attach="material"
               baseColor="#fff7cf"
               rimColor={currRim}
-              rimStrength={2.0 + pulseAmount * 1.0}
-              gloss={0.15 + pulseAmount * 0.10}
+              rimStrength={2.0 + pulseAmount.current * 1.0}
+              gloss={0.15 + pulseAmount.current * 0.10}
               transparent
-              opacity={0.77 + pulseAmount * 0.12}
+              opacity={0.77 + pulseAmount.current * 0.12}
             />
           </mesh>
         );
