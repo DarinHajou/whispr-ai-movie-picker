@@ -35,6 +35,7 @@ export default {
         'fade-in': 'fadeIn 0.7s ease-in forwards',
         'slide-up': 'slideUp 0.5s ease-out forwards',
         'zoom-in': 'zoomIn 0.4s ease-in-out forwards',
+        'fade-in': 'fadeIn 1.5s ease-out forwards',
         'blob1': 'blob1 8s ease-in-out infinite',
         'blob2': 'blob2 24s ease-in-out infinite',
         'blob3': 'blob3 31s ease-in-out infinite',
@@ -45,6 +46,8 @@ export default {
         fadeIn: {
           from: { opacity: '0' },
           to: { opacity: '1' },
+          '0%': { opacity: 0 },
+          '100%': { opacity: 1 },
         },
         softGlow: {
           '0%, 100%': {
