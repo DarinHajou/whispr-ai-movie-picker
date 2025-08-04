@@ -14,6 +14,7 @@ export default function IntroSpringboard({ onStart }) {
   // Pulse state for orb
   const [pulse, setPulse] = useState(false);
 
+  const [typingStarted, setTypingStarted] = useState(false);
 
   const fullText = "Hi, I’m Sol. How’s your heart feeling tonight? Hi, I’m Sol. How’s your heart feeling tonight? Hi, I’m Sol. How’s your heart feeling tonight?";
 
@@ -43,24 +44,29 @@ export default function IntroSpringboard({ onStart }) {
 
   // Typewriter effect & pulse
    useEffect(() => {
-    let i = 0;
-    const iv = setInterval(() => {
-      const nextChar = fullText[i];
-      setGreetText(fullText.slice(0, ++i));
-      if (
+  if (!showContent) return;
+  setTypingStarted(true); // <-- this line
+  let i = 0;
+  const iv = setInterval(() => {
+    const nextChar = fullText[i];
+    setGreetText(fullText.slice(0, ++i));
+    if (
+      i > 1 && (
         nextChar === " " ||
         nextChar === "." ||
         nextChar === "," ||
         nextChar === "!" ||
         nextChar === "?" ||
         i === fullText.length
-      ) {
-        tryPulse();
-      }
-      if (i >= fullText.length) clearInterval(iv);
-    }, 80);
-    return () => clearInterval(iv);
-  }, [showContent]);
+      )
+    ) {
+      tryPulse();
+    }
+    if (i >= fullText.length) clearInterval(iv);
+  }, 80);
+  return () => clearInterval(iv);
+}, [showContent]);
+
   
 
   return (
