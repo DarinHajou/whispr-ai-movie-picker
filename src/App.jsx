@@ -1,5 +1,5 @@
 import { useState } from "react";
-import GuidedFlow from "./components/GuideFlow";
+import GuideFlow from "./components/GuideFlow";
 import GPTResults from "./components/GPTResults";
 import { useGPTFetcher } from "./lib/useGPTFetcher";
 import EmotionalPulseWavesBackground from "./components/EmotionalPulseWavesBackground";
@@ -17,7 +17,7 @@ export default function App() {
   const [emotion, setEmotion] = useState(null);
   const [intensity, setIntensity] = useState(null);
   const [intent, setIntent] = useState(null);
-  const [chatMetadata, setChatMetadata] = useState(null);
+  const [chatMetadata, setChatMetadata] = useState(null); 
 
   // Reset back to intro
   const resetAll = () => {
@@ -73,6 +73,7 @@ export default function App() {
         <div className="fixed inset-0 -z-10 pointer-events-none overflow-hidden">
           <EmotionalPulseWavesBackground />
         </div>
+        
 
         {/* Main app flow */}
         <main
@@ -86,7 +87,7 @@ export default function App() {
             text-[15px] sm:text-[15px] md:text-[14px]
           "
         >
-          <GuidedFlow
+          <GuideFlow
             flowMode={flowMode}
             setFlowMode={setFlowMode}
             emotion={emotion}
@@ -96,6 +97,7 @@ export default function App() {
             intent={intent}
             setIntent={setIntent}
           />
+
 
           {flowMode === FLOW.RESULTS && (
             <GPTResults
