@@ -1,12 +1,11 @@
 // src/components/SolOrbCanvas.jsx
-import React from "react";
+import SolSoulCloud from './SolSoulCloud';
 import { Canvas } from "@react-three/fiber";
-import { EffectComposer, Bloom } from "@react-three/postprocessing";
-import SolSoulCloud from "./SolSoulCloud";
 
 export default function SolOrbCanvas({ pulse }) {
+  console.log("Canvas got pulse:", pulse);
   return (
-    <Canvas camera={{ position: [0, 0, 8], fov: 60 }}>
+   <Canvas camera={{ position: [0, 0, 8], fov: 60 }}>
       {/* Key light: main source, a bit warm */}
       <directionalLight
         position={[2, 4, 6]}
@@ -31,18 +30,12 @@ export default function SolOrbCanvas({ pulse }) {
       {/* Ambient: very low just for shadow lift */}
       <ambientLight intensity={0.17} />
       {/* The orb */}
-      <group>
-        <SolSoulCloud pulse={pulse} />
-      </group>
-      {/* BLOOM POSTPROCESSING */}
-      <EffectComposer>
-        <Bloom
-          intensity={0.33}
-          luminanceThreshold={0.12}
-          luminanceSmoothing={0.95}
-          mipmapBlur
-        />
-      </EffectComposer>
+      {/* Subtle orb pushed behind at z = -3 */}
++     <group >
++       <SolSoulCloud pulse={pulse} />
++     </group>
+      {/* (Optional) EffectComposer ... */}
     </Canvas>
+
   );
 }
