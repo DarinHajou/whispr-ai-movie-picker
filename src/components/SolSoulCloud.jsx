@@ -25,7 +25,7 @@ function generateVoxels(count = 350, radius = 1.0) {
     const scale     = 0.02 + Math.random() * 0.04;
     const spinAxis  = new THREE.Vector3(Math.random()-0.5, Math.random()-0.5, Math.random()-0.5).normalize();
     const spinSpeed = 0.2 + Math.random() * 0.8;
-    const delay     = Math.random() * 0.3;        // up to 0.3s ripple delay
+    const delay     = Math.random() * 0.4;        // up to 0.3s ripple delay
 
     voxels.push({ shape, pos, scale, spinAxis, spinSpeed, delay });
   }
@@ -47,78 +47,70 @@ export default function SolSoulCloud({ pulse }) {
     if (pulse) pulseTimeRef.current = 0;
   }, [pulse]);
 
-  useFrame((_, delta) => {
-    // advance idle clock
-    idleTimeRef.current += delta;
-    const tIdle     = idleTimeRef.current;
-    const idleScale = Math.sin(tIdle * 0.5) * 0.02;
+ useFrame((_, delta) => {
+  // 1) advance idle clock
+  idleTimeRef.current += delta;
+  const tIdle     = idleTimeRef.current;
+  const idleScale = Math.sin(tIdle * 0.5) * 0.02;
 
-    console.log('pulseTime', pulseTimeRef.current.toFixed(2));
+  // 2) advance global pulse timer
+  if (pulseTimeRef.current >= 0) {
+    pulseTimeRef.current += delta;
+    if (pulseTimeRef.current > 0.6) pulseTimeRef.current = -1;
+  }
+  const dur = 0.6;
 
-    // advance global pulse clock
+  // 3) update group (global breathe + pulse scale)
+  if (groupRef.current) {
+    const globalPulse = pulseTimeRef.current >= 0
+      ? Math.sin(Math.PI * Math.min(pulseTimeRef.current / dur, 1))
+      : 0;
+    const gS = 1 + idleScale + 0.6 * globalPulse;
+    groupRef.current.scale.set(gS, gS, gS);
+    groupRef.current.rotation.y = tIdle * 0.08;
+    groupRef.current.position.set(0, Math.sin(tIdle * 0.3) * 0.08, -2);
+  }
+
+  // 4) per-voxel update
+  voxels.forEach((v, i) => {
+    const mesh = meshRefs.current[i];
+    if (!mesh) return;
+
+    // ─ smoothstep ripple logic ─
+    let localPulse = 0;
     if (pulseTimeRef.current >= 0) {
-      pulseTimeRef.current += delta;
-      if (pulseTimeRef.current > 0.6) {
-        pulseTimeRef.current = -1;
+      const t0 = pulseTimeRef.current - v.delay;
+      if (t0 > 0) {
+        const raw   = Math.min(t0 / dur, 1);
+        const eased = raw * raw * (3 - 2 * raw);
+        localPulse  = Math.sin(Math.PI * eased);
       }
     }
-    const dur = 0.6;
+    // ─ end ripple logic ─
 
-    // update group (global breathe + pulse)
-    if (groupRef.current) {
-      // global pulse amplitude for visuals only; 
-      // per-voxel ripple handled below in time domain
-      const globalPulse = (pulseTimeRef.current >= 0)
-        ? Math.sin(Math.PI * Math.min(pulseTimeRef.current / dur, 1))
-        : 0;
+    // position + noise jitter
+    const dist = 0.65 + idleScale + 0.3 * localPulse;
+    const jb   = noise.noise3d(v.pos.x + tIdle, v.pos.y + tIdle, tIdle * 0.3) * 0.02;
+    mesh.position.set(
+      v.pos.x * dist + jb,
+      v.pos.y * dist + jb,
+      v.pos.z * dist + jb
+    );
 
-      const gS = 1 + idleScale + 0.6 * globalPulse;
-      groupRef.current.scale.set(gS, gS, gS);
-      groupRef.current.rotation.y = tIdle * 0.08;
-      groupRef.current.position.set(0, Math.sin(tIdle * 0.3) * 0.08, -2);
-    }
+    // scale
+    const s = v.scale * (1 + Math.abs(idleScale) + 0.3 * localPulse);
+    mesh.scale.set(s, s, s);
 
-    // update each voxel
-    voxels.forEach((v, i) => {
-      const mesh = meshRefs.current[i];
-      if (!mesh) return;
+    // spin
+    mesh.rotateOnAxis(v.spinAxis, v.spinSpeed * delta);
 
-      // --- new ripple logic: offset the *time* each voxel uses ---
-      let localPulse = 0;
-      if (pulseTimeRef.current >= 0) {
-        const t0 = pulseTimeRef.current - v.delay;       // apply per-voxel delay in seconds
-        if (t0 > 0) {
-          const norm = Math.min(t0 / dur, 1);
-          localPulse = Math.sin(Math.PI * norm);
-        }
-      }
-
-      // distance from center
-      const dist = 0.65 + idleScale + 0.3 * localPulse;
-
-      // noise jitter
-      const jb = noise.noise3d(v.pos.x + tIdle, v.pos.y + tIdle, tIdle * 0.3) * 0.02;
-
-      mesh.position.set(
-        v.pos.x * dist + jb,
-        v.pos.y * dist + jb,
-        v.pos.z * dist + jb
-      );
-
-      // scale breathing + ripple
-      const s = v.scale * (1 + Math.abs(idleScale) + 0.3 * localPulse);
-      mesh.scale.set(s, s, s);
-
-      // spin
-      mesh.rotateOnAxis(v.spinAxis, v.spinSpeed * delta);
-
-      // material glow
-      const mat = mesh.material;
-      mat.emissive.set(localPulse > 0 ? 0x00ffff : 0xffdfa0);
-      mat.emissiveIntensity = 1 + 2 * localPulse;
-      mat.clearcoat = 1 + 0.5 * localPulse;
-    });
+    // glow
+    const mat = mesh.material;
+    mat.emissive.set(localPulse > 0 ? 0x00ffff : 0xffdfa0);
+    mat.emissiveIntensity = 1 + 2 * localPulse;
+    mat.clearcoat         = 1 + 0.5 * localPulse;
   });
+});
 
   return (
     <group ref={groupRef}>
