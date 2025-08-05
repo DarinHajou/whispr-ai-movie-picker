@@ -2,7 +2,6 @@ import { motion } from 'framer-motion';
 import EmotionalPulseWavesBackground from './EmotionalPulseWavesBackground';
 import SolOrbCanvas from './SolOrbCanvas';
 import React, { useState, useEffect, useRef } from 'react';
-import SolSoulCloud from './SolSoulCloud';
 
 export default function IntroSpringboard({ onStart }) {
   // Controls black overlay (fades out)
@@ -16,7 +15,7 @@ export default function IntroSpringboard({ onStart }) {
 
   const [typingStarted, setTypingStarted] = useState(false);
 
-  const fullText = "Hi, I’m Sol. How’s your heart feeling tonight? Hi, I’m Sol. How’s your heart feeling tonight? Hi, I’m Sol. How’s your heart feeling tonight?";
+  const fullText = "Hi, I’m Sol. How’s your heart feeling tonightHi, I’m Sol. How’s your heart feeling tonightHi, I’m Sol. How’s your heart feeling tonightHi, I’m Sol. How’s your heart feeling tonightHi, I’m Sol. How’s your heart feeling tonight? Hi, I’m Sol. How’s your heart feeling tonight? Hi, I’m Sol. How’s your heart feeling tonight?";
 
   const lastPulse = useRef(Date.now());
 
@@ -45,29 +44,36 @@ export default function IntroSpringboard({ onStart }) {
   // Typewriter effect & pulse
    useEffect(() => {
   if (!showContent) return;
-  setTypingStarted(true); // <-- this line
   let i = 0;
+
+  // Only pulse on vowels (a, e, i, o, u), with a short debounce so we still get bursts
+  const isVowel = (c) => /[aeiouAEIOU]/.test(c);
+
+  // Minimum 200ms between actual pulses (so we can get quick double/triple bursts)
+  const minInterval = 200;
+
   const iv = setInterval(() => {
+    const now = Date.now();
     const nextChar = fullText[i];
     setGreetText(fullText.slice(0, ++i));
+
+    // Pulse only when the new char is a vowel and enough time has passed
     if (
-      i > 1 && (
-        nextChar === " " ||
-        nextChar === "." ||
-        nextChar === "," ||
-        nextChar === "!" ||
-        nextChar === "?" ||
-        i === fullText.length
-      )
+      nextChar &&
+      isVowel(nextChar) &&
+      now - lastPulse.current > minInterval
     ) {
-      tryPulse();
+      setPulse(p => !p);
+      lastPulse.current = now;
     }
-    if (i >= fullText.length) clearInterval(iv);
+
+    if (i >= fullText.length) {
+      clearInterval(iv);
+    }
   }, 80);
+
   return () => clearInterval(iv);
 }, [showContent]);
-
-  
 
   return (
     <div className="fixed inset-0 flex items-center justify-center overflow-hidden">
