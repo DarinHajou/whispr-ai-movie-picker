@@ -37,9 +37,9 @@ export default function SolOrbCanvas({ pulse }) {
       {/* BLOOM POSTPROCESSING */}
       <EffectComposer>
         <Bloom
-          intensity={0.03}
+          intensity={0.13}
           luminanceThreshold={0.12}
-          luminanceSmoothing={0.95}
+          luminanceSmoothing={2.95}
           mipmapBlur
         />
       </EffectComposer>
