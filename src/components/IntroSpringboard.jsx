@@ -57,7 +57,7 @@ export default function IntroSpringboard({ onStart }) {
     const nextChar = fullText[i];
     setGreetText(fullText.slice(0, ++i));
 
-    // Pulse only when the new char is a vowel and enough time has passed
+    // Pulse only when the new char is a vowel and enough time has passed 
     if (
       nextChar &&
       isVowel(nextChar) &&
