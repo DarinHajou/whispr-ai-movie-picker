@@ -35,14 +35,7 @@ export default function SolOrbCanvas({ pulse }) {
         <SolSoulCloud pulse={pulse} />
       </group>
       {/* BLOOM POSTPROCESSING */}
-      <EffectComposer>
-        <Bloom
-          intensity={0.13}
-          luminanceThreshold={0.012}
-          luminanceSmoothing={0.15}
-          mipmapBlur
-        />
-      </EffectComposer>
+    
     </Canvas>
   );
 }
