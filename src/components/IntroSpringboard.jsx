@@ -15,7 +15,7 @@ export default function IntroSpringboard({ onStart }) {
 
   const [typingStarted, setTypingStarted] = useState(false);
 
-  const fullText = "Hi, I’m Sol. How’s your heart feeling tonightHi, I’m Sol. How’s your heart feeling tonightHi, I’m Sol. How’s your heart feeling tonightHi, I’m Sol. How’s your heart feeling tonightHi, I’m Sol. How’s your heart feeling tonight? Hi, I’m Sol. How’s your heart feeling tonight? Hi, I’m Sol. How’s your heart feeling tonight?";
+  const fullText = "Hi, I’m Sol. How’s your heart feeling tonightHi, I’m Sol. How’s your heart feeling tonightHi";
 
   const lastPulse = useRef(Date.now());
 
