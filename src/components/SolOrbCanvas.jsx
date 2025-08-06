@@ -32,14 +32,14 @@ export default function SolOrbCanvas({ pulse }) {
       <ambientLight intensity={0.17} />
       {/* The orb */}
       <group>
-        <SolSoulCloud pulse={pulse}  />
+        <SolSoulCloud pulse={pulse} />
       </group>
       {/* BLOOM POSTPROCESSING */}
       <EffectComposer>
         <Bloom
-          intensity={0.13}
-          luminanceThreshold={0.12}
-          luminanceSmoothing={1.95}
+          intensity={0.03}
+          luminanceThreshold={0.012}
+          luminanceSmoothing={0.095}
           mipmapBlur
         />
       </EffectComposer>
