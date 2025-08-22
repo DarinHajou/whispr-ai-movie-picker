@@ -1,36 +1,20 @@
 import { motion } from 'framer-motion';
 import EmotionalPulseWavesBackground from './EmotionalPulseWavesBackground';
-import SolOrbCanvas from './SolOrbCanvas';
 import React, { useState, useEffect, useRef } from 'react';
 
 export default function IntroSpringboard({ onStart }) {
-  // Controls black overlay (fades out)
   const [fade, setFade] = useState(true);
-  // Controls when to show typewriter text/button
   const [showContent, setShowContent] = useState(false);
-  // Typewriter state
   const [greetText, setGreetText] = useState('');
-  // Pulse state for orb
   const [pulse, setPulse] = useState(false);
 
-  const [typingStarted, setTypingStarted] = useState(false);
-
-  const fullText = "Hi, I’m Sol. How’s your heart feeling tonightHi, I’m Sol. How’s your heart feeling tonightHi";
-
+  const fullText = "Hi, I’m Sol. How’s your heart feeling tonight?";
   const lastPulse = useRef(Date.now());
 
-  function tryPulse() {
-    const now = Date.now();
-    if (now - lastPulse.current > 380) { // Adjust ms to taste
-      setPulse(p => !p);
-      lastPulse.current = now;
-    }
-  }
-
   useEffect(() => {
-    const fadeStart = 1000;              // 1s: how long the black stays
-    const orbFadeDuration = 3500;        // 2.5s: orb intro fade
-    const contentDelay = fadeStart + orbFadeDuration; // total wait before text/button
+    const fadeStart = 1000;
+    const orbFadeDuration = 3500;
+    const contentDelay = fadeStart + orbFadeDuration;
 
     const fadeTimer = setTimeout(() => setFade(false), fadeStart);
     const contentTimer = setTimeout(() => setShowContent(true), contentDelay);
@@ -41,43 +25,34 @@ export default function IntroSpringboard({ onStart }) {
     };
   }, []);
 
-  // Typewriter effect & pulse
-   useEffect(() => {
-  if (!showContent) return;
-  let i = 0;
+  useEffect(() => {
+    if (!showContent) return;
+    let i = 0;
+    const isVowel = (c) => /[aeiouAEIOU]/.test(c);
+    const minInterval = 200;
 
-  // Only pulse on vowels (a, e, i, o, u), with a short debounce so we still get bursts
-  const isVowel = (c) => /[aeiouAEIOU]/.test(c);
+    const iv = setInterval(() => {
+      const now = Date.now();
+      const nextChar = fullText[i];
+      setGreetText(fullText.slice(0, ++i));
 
-  // Minimum 200ms between actual pulses (so we can get quick double/triple bursts)
-  const minInterval = 200;
+      if (nextChar && isVowel(nextChar) && now - lastPulse.current > minInterval) {
+        setPulse(p => !p);
+        lastPulse.current = now;
+      }
 
-  const iv = setInterval(() => {
-    const now = Date.now();
-    const nextChar = fullText[i];
-    setGreetText(fullText.slice(0, ++i));
+      if (i >= fullText.length) {
+        clearInterval(iv);
+      }
+    }, 80);
 
-    // Pulse only when the new char is a vowel and enough time has passed 
-    if (
-      nextChar &&
-      isVowel(nextChar) &&
-      now - lastPulse.current > minInterval
-    ) {
-      setPulse(p => !p);
-      lastPulse.current = now;
-    }
-
-    if (i >= fullText.length) {
-      clearInterval(iv);
-    }
-  }, 80);
-
-  return () => clearInterval(iv);
-}, [showContent]);
+    return () => clearInterval(iv);
+  }, [showContent]);
 
   return (
     <div className="fixed inset-0 flex items-center justify-center overflow-hidden">
-      {/* Gradient Background */}
+
+      {/* Background Gradient */}
       <div
         className="absolute inset-0"
         style={{
@@ -86,19 +61,29 @@ export default function IntroSpringboard({ onStart }) {
         }}
       />
 
-      {/* Blobs/ambient animation */}
+      {/* Background Blobs/Waves */}
       <div className="absolute inset-0 -z-10 pointer-events-none">
         <EmotionalPulseWavesBackground />
       </div>
 
-      
+      {/* Mist Orb */}
+      <motion.video
+        autoPlay
+        loop
+        muted
+        playsInline
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{
+          opacity: pulse ? 0.25 : 0.15,
+          scale: pulse ? 1.08 : 1.02,
+        }}
+        transition={{ duration: 4, ease: 'easeInOut' }}
+        className="absolute inset-0 w-full h-full object-cover pointer-events-none z-0"
+      >
+        <source src="/assets/sol-mist-orb.webm" type="video/webm" />
+      </motion.video>
 
-      {/* --- 3D ORB: Always visible but reacts only when showContent is true --- */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        <SolOrbCanvas pulse={pulse} />
-      </div>
-
-      {/* --- Black overlay that fades out --- */}
+      {/* Fade from black */}
       <div
         className="absolute inset-0 bg-black"
         style={{
@@ -107,7 +92,7 @@ export default function IntroSpringboard({ onStart }) {
         }}
       />
 
-      {/* --- Content (text & button): Only appears after full intro --- */}
+      {/* Typewriter and Start */}
       {showContent && (
         <div className="relative z-10 flex flex-col items-center justify-center h-full p-4 text-center">
           <p
