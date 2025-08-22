@@ -6,7 +6,7 @@ import SolSoulCloud from "./SolSoulCloud";
 
 export default function SolOrbCanvas({ pulse }) {
   return (
-    <Canvas camera={{ position: [0, 0, 8], fov: 60 }}>
+    <Canvas camera={{ position: [0, 0, 3], fov: 60 }}>
       {/* Key light: main source, a bit warm */}
       <directionalLight
         position={[2, 4, 6]}
@@ -35,7 +35,14 @@ export default function SolOrbCanvas({ pulse }) {
         <SolSoulCloud pulse={pulse} />
       </group>
       {/* BLOOM POSTPROCESSING */}
-    
+      <EffectComposer>
+        <Bloom
+          intensity={0.10}
+          luminanceThreshold={0.012}
+          luminanceSmoothing={0.15}
+          mipmapBlur
+        />
+      </EffectComposer>
     </Canvas>
   );
 }

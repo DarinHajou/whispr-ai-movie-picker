@@ -3,12 +3,12 @@ import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { SimplexNoise } from 'three/examples/jsm/math/SimplexNoise.js';
 
-function generateVoxels(count = 300, radius = 1) {
+function generateVoxels(count = 100, radius = 1.1) {
   const voxels = [];
   for (let i = 0; i < count; i++) {
     const phi   = Math.acos(-1 + (2 * i) / count) + (Math.random() - 0.5) * 0.14;
     const theta = Math.PI * (1 + Math.sqrt(5)) * i + (Math.random() - 0.5) * 0.1;
-    const r0    = radius * (0.62 + Math.random() * 0.66);
+    const r0    = radius * (0.92 + Math.random() * 0.16);
     const pos   = new THREE.Vector3(
       r0 * Math.cos(theta) * Math.sin(phi),
       r0 * Math.sin(theta) * Math.sin(phi),
@@ -51,8 +51,8 @@ const fragmentShader = `
       float rim = pow(1.0 - abs(dot(normalize(vNormal), vec3(0.0,0.0,1.0))), 1.6);
       rim *= rimStrength;
       vec3 base = mix(colorA, colorB, vPulse);
-      vec3 final = base + rim * vec3(0.4, 1.0, 1.0);
-      gl_FragColor = vec4(final, 0.85);
+      vec3 final = base + rim * vec3(0.25, 0.8, 0.1); // LESS INTENSE
+      gl_FragColor = vec4(final, 0.65);
     }
 `;
 
@@ -106,7 +106,7 @@ export default function SolSoulCloud({ pulse }) {
     uniforms: {
       colorA: { value: new THREE.Color('#FFC542') },
       colorB: { value: new THREE.Color('#41fff9') }, 
-      rimStrength: { value: 0.3 },
+      rimStrength: { value: 0.6 },
     },
     transparent: true,
     depthWrite: false,
@@ -137,7 +137,7 @@ export default function SolSoulCloud({ pulse }) {
   useFrame((_, delta) => {
     idleTimeRef.current += delta;
     const tIdle = idleTimeRef.current;
-    const idleScale = Math.sin(tIdle * 0.5) * 0.10;
+    const idleScale = Math.sin(tIdle * 0.7) * 0.10;
 
     // Pulse logic
     if (pulseTimeRef.current >= 0) {
@@ -153,8 +153,8 @@ export default function SolSoulCloud({ pulse }) {
         : 0;
       const gS = 1 + idleScale + 1.2 * globalPulse;
       groupRef.current.scale.set(gS, gS, gS);
-      groupRef.current.rotation.y = tIdle * 0.38;
-      groupRef.current.position.set(0, Math.sin(tIdle * 3.6) * 0.08, -2);
+      groupRef.current.rotation.y = tIdle * 0.08;
+      groupRef.current.position.set(0, Math.sin(tIdle * 0.3) * 0.08, -2);
     }
 
     // === UPDATE INSTANCES (position + pulse) ===
