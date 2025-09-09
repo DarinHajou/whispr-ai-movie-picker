@@ -73,8 +73,7 @@ export default function App() {
         <div className="fixed inset-0 -z-10 pointer-events-none overflow-hidden">
           <EmotionalPulseWavesBackground />
         </div>
-        
-
+  
         {/* Main app flow */}
         <main
           className="
@@ -130,7 +129,7 @@ export default function App() {
         <footer className="w-full border-t border-[rgba(255,255,255,0.1)] pt-4 mt-6">
           <div className="text-center text-xs sm:text-sm text-[rgba(166,177,196,0.5)]">
             Built by Darin · Powered by{" "}
-            <span className="font-semibold text-[#FFC542] drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]">
+            <span className="font-semibold text-[#FFC542]">
               Sol
             </span>
           </div>
