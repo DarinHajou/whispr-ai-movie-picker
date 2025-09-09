@@ -183,8 +183,9 @@ export default function IntroSpringboard({ onStart }) {
       {/* Black fade overlay */}
       <div
         className="absolute inset-0 z-10"
-        style={{ background: 'rgba(0,0,0,0.92)', transition: 'opacity 0.8s ease-out' }}
+        style={{ background: 'rgba(0,0,0,0.65)', transition: 'opacity 0.8s ease-out' }}
       />
+
 
 
       {/* Subtle vignette for text readability */}
