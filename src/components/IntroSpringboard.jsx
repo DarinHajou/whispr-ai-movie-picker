@@ -108,14 +108,15 @@ function SolSequence({ typeDelay, typeStep, className, onDone }) {
 
 /* ===================== IntroSpringboard ===================== */
 export default function IntroSpringboard({ onStart }) {
-  const [fade, setFade] = useState(true);
+  const [bgAlpha, setBgAlpha] = useState(1);       // 1.0 = full black at load
+  const [orbOn, setOrbOn] = useState(false);       // orb hidden until we flip this
   const [showContent, setShowContent] = useState(false);
-  const [showButton, setShowButton] = useState(false); // button waits for sequence
+  const [showButton, setShowButton] = useState(false);
 
   // ===== TUNING KNOBS (unchanged) =====
   const ORB_SIZE   = '65vmin';
   const MASK_INNER = '80%';
-  const FILTER     = 'brightness(0.65) contrast(0.85) saturate(0.65) blur(0.4px)';
+  const FILTER     = 'brightness(0.35) contrast(0.85) saturate(0.65) blur(0.4px)';
   const PLAYBACK   = 1;    // video speed
   const TYPE_DELAY = 1.2;    // when sequence starts (s)
   const TYPE_STEP  = 0.045;  // per-char delay (s)
@@ -123,12 +124,25 @@ export default function IntroSpringboard({ onStart }) {
 
   // Fade schedule (unchanged)
   useEffect(() => {
-    const fadeStart = 800;
-    const contentDelay = fadeStart;
-    const t1 = setTimeout(() => setFade(false), fadeStart);
-    const t2 = setTimeout(() => setShowContent(true), contentDelay);
-    return () => { clearTimeout(t1); clearTimeout(t2); };
-  }, []);
+  const fadeStart = 800;     // start fade
+  const orbLagMs  = 1000;    // orb after fade
+  const textLag   = 1200;    // text after orb
+
+  // background fade trigger
+  const t1 = setTimeout(() => {
+    setBgAlpha(0.6);   // triggers framer-motion animate
+  }, fadeStart);
+
+  const t2 = setTimeout(() => {
+    setOrbOn(true);
+  }, fadeStart + orbLagMs);
+
+  const t3 = setTimeout(() => {
+    setShowContent(true);
+  }, fadeStart + orbLagMs + textLag);
+
+  return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
+}, []);
 
   return (
     <div className="fixed inset-0 flex items-center justify-center overflow-hidden">
@@ -141,8 +155,11 @@ export default function IntroSpringboard({ onStart }) {
         }}
       />
 
-      {/* ORB */}
-      <div className="absolute inset-0 grid place-items-center z-0">
+    {/* ORB */}
+     <div
+        className="absolute inset-0 grid place-items-center z-0"
+        style={{ opacity: orbOn ? 0.7 : 0, transition: 'opacity 900ms ease-out' }}
+      >
         <div
           className="relative rounded-full overflow-hidden flex items-center justify-center"
           style={{
@@ -179,17 +196,19 @@ export default function IntroSpringboard({ onStart }) {
           </video>
         </div>
       </div>
-
-      {/* Black fade overlay */}
-     <div
-        className="absolute inset-0 z-10"
-        style={{ background: 'rgba(0,0,0,0.58)', transition: 'background 0.6s ease-in-out' }}
+  
+      {/* Black overlay that fades out */}
+      <motion.div
+        className="absolute inset-0 z-50"
+        style={{ backgroundColor: "black" }}   // start color
+        initial={{ opacity: 1 }}
+        animate={{ opacity: 0 }}
+        transition={{ duration: 1.5, ease: "easeOut" }}
       />
       <div
         className="absolute inset-x-0 bottom-0 h-24 z-20 pointer-events-none"
         style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.5), transparent)' }}
       />
-
 
       {/* Subtle vignette for text readability */}
       <div
@@ -214,8 +233,8 @@ export default function IntroSpringboard({ onStart }) {
               aria-hidden
             />
             <SolSequence
-              typeDelay={2.3}
-              typeStep={0.045}
+              typeDelay={TYPE_DELAY}
+              typeStep={TYPE_STEP}
               className="font-display italic text-[28px] sm:text-[36px] leading-[1.15] sm:leading-[1.1]
                          tracking-[-0.01em] text-[#FFC542] drop-shadow-[0_2px_6px_rgba(0,0,0,0.55)]"
               onDone={() => setShowButton(true)}
