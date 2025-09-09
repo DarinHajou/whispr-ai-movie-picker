@@ -48,6 +48,7 @@ function SolSequence({ typeDelay, typeStep, className, onDone }) {
   const HI_MS  = 1200;
   const SOL_MS = 1800;
 
+  
   useEffect(() => {
   document.documentElement.classList.add('overflow-hidden');
   return () => document.documentElement.classList.remove('overflow-hidden');
@@ -114,8 +115,8 @@ export default function IntroSpringboard({ onStart }) {
   // ===== TUNING KNOBS (unchanged) =====
   const ORB_SIZE   = '65vmin';
   const MASK_INNER = '80%';
-  const FILTER     = 'brightness(1.05) contrast(0.9) saturate(0.75) blur(0.8px)';
-  const PLAYBACK   = 1.35;    // video speed
+  const FILTER     = 'brightness(0.25) contrast(0.85) saturate(0.65) blur(0.4px)';
+  const PLAYBACK   = 1;    // video speed
   const TYPE_DELAY = 2.3;    // when sequence starts (s)
   const TYPE_STEP  = 0.045;  // per-char delay (s)
   // ====================================
@@ -181,10 +182,9 @@ export default function IntroSpringboard({ onStart }) {
 
       {/* Black fade overlay */}
       <div
-  className="absolute inset-0 z-10"
-  style={{ background: 'rgba(0,0,0,0.65)', transition: 'opacity 0.8s ease-out' }}
-/>
-
+        className="absolute inset-0 z-10"
+        style={{ background: 'rgba(0,0,0,0.92)', transition: 'opacity 0.8s ease-out' }}
+      />
 
 
       {/* Subtle vignette for text readability */}
