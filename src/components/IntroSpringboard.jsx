@@ -107,7 +107,7 @@ export default function IntroSpringboard({ onStart }) {
   const [showButton, setShowButton] = useState(false); // button waits for sequence
 
   // ===== TUNING KNOBS (unchanged) =====
-  const ORB_SIZE   = '40vmin';
+  const ORB_SIZE   = '65vmin';
   const MASK_INNER = '80%';
   const FILTER     = 'brightness(0.25) contrast(0.85) saturate(0.65) blur(0.4px)';
   const PLAYBACK   = 1;    // video speed
