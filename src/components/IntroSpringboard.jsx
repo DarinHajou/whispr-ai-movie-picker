@@ -117,7 +117,7 @@ export default function IntroSpringboard({ onStart }) {
   const MASK_INNER = '80%';
   const FILTER     = 'brightness(0.25) contrast(0.85) saturate(0.65) blur(0.4px)';
   const PLAYBACK   = 1;    // video speed
-  const TYPE_DELAY = 2.3;    // when sequence starts (s)
+  const TYPE_DELAY = 1.2;    // when sequence starts (s)
   const TYPE_STEP  = 0.045;  // per-char delay (s)
   // ====================================
 
