@@ -115,7 +115,7 @@ export default function IntroSpringboard({ onStart }) {
   // ===== TUNING KNOBS (unchanged) =====
   const ORB_SIZE   = '65vmin';
   const MASK_INNER = '80%';
-  const FILTER     = 'brightness(0.25) contrast(0.85) saturate(0.65) blur(0.4px)';
+  const FILTER     = 'brightness(0.65) contrast(0.85) saturate(0.65) blur(0.4px)';
   const PLAYBACK   = 1;    // video speed
   const TYPE_DELAY = 1.2;    // when sequence starts (s)
   const TYPE_STEP  = 0.045;  // per-char delay (s)
@@ -228,10 +228,11 @@ export default function IntroSpringboard({ onStart }) {
                 transition={{ duration: 0.35, ease: 'easeOut' }}
                 onClick={onStart}
                 className="inline-flex items-center justify-center h-11 sm:h-12 px-6 sm:px-7 rounded-full font-semibold
-                          bg-[#FFC542] text-zinc-900 shadow-[0_6px_24px_rgba(255,197,66,0.15)]
-                          hover:brightness-110 active:brightness-95
-                          focus:outline-none focus:ring-2 focus:ring-[#FFC542]/60 focus:ring-offset-2 focus:ring-offset-black"
-              >
+                            bg-[#FFC542] text-zinc-900 shadow-[0_8px_28px_rgba(255,197,66,0.18)]
+                            hover:brightness-110 active:brightness-95
+                            focus:outline-none focus:ring-2 focus:ring-[#FFC542]/60 focus:ring-offset-2 focus:ring-offset-black"
+
+                                >
                 ▶ Start
               </motion.button>
             )}
