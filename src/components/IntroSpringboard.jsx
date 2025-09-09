@@ -202,26 +202,40 @@ export default function IntroSpringboard({ onStart }) {
 
       {/* TEXT + CTA */}
       {showContent && (
-        <div className="relative z-20 flex flex-col items-center justify-center h-full p-4 text-center">
-          {/* Old sequence restored; sizes/speed unchanged */}
-          <SolSequence
-            typeDelay={TYPE_DELAY}
-            typeStep={TYPE_STEP}
-            className="font-mono text-2xl sm:text-3xl text-[#FFC542] drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]"
-            onDone={() => setShowButton(true)}     // ✅ show button after typing finishes
-          />
-
-          {showButton && (
-            <motion.button
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.45, ease: 'easeOut' }} // no fixed delay
-              onClick={onStart}
-              className="mt-6 px-6 py-3 rounded-full font-semibold bg-amber-300/90 text-zinc-900 hover:bg-amber-300 transition focus:outline-none focus:ring-2 focus:ring-amber-300/60"
-            >
-              ▶ Start
-            </motion.button>
-          )}
+        <div className="relative z-30 h-full w-full grid place-items-center px-6 text-center pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]">
+          <div className="relative max-w-xl w-full space-y-6">
+            <div
+              className="absolute -inset-x-6 -inset-y-4 -z-10 rounded-2xl"
+              style={{
+                background:
+                  'radial-gradient(120% 120% at 50% 50%, rgba(0,0,0,0.35), rgba(0,0,0,0.0))',
+                filter: 'blur(2px)',
+              }}
+              aria-hidden
+            />
+            <SolSequence
+              typeDelay={2.3}
+              typeStep={0.045}
+              className="font-display italic text-[28px] sm:text-[36px] leading-[1.15] sm:leading-[1.1]
+                         tracking-[-0.01em] text-[#FFC542] drop-shadow-[0_2px_6px_rgba(0,0,0,0.55)]"
+              onDone={() => setShowButton(true)}
+            />
+            {showButton && (
+              <motion.button
+                initial={{ opacity: 0, y: 8, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ duration: 0.35, ease: 'easeOut' }}
+                onClick={onStart}
+                className="inline-flex items-center justify-center h-11 sm:h-12 px-6 sm:px-7 rounded-full font-semibold
+                          bg-[#FFC542] text-zinc-900 shadow-[0_6px_24px_rgba(255,197,66,0.15)]
+                          hover:brightness-110 active:brightness-95
+                          focus:outline-none focus:ring-2 focus:ring-[#FFC542]/60 focus:ring-offset-2 focus:ring-offset-black"
+              >
+                ▶ Start
+              </motion.button>
+            )}
+          </div>
         </div>
       )}
     </div>
