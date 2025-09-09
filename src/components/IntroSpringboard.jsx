@@ -19,7 +19,7 @@ function SmoothType({ text, delay = 1.6, step = 0.05, className = '', onComplete
       variants={sentence}
       initial="hidden"
       animate="visible"
-      onAnimationComplete={onComplete}           // ✅ fires when last letter finishes
+      onAnimationComplete={onComplete}           // fires when last letter finishes
       className={`${className} mx-auto text-center`}
       style={{ whiteSpace: 'normal', wordBreak: 'break-word' }}
       aria-live="polite"
@@ -29,7 +29,7 @@ function SmoothType({ text, delay = 1.6, step = 0.05, className = '', onComplete
         <motion.span
           key={i}
           variants={letter}
-          style={{ display: 'inline' }}   // ✅ let text flow naturally
+          style={{ display: 'inline' }}   // let text flow naturally
         >
           {ch}
         </motion.span>
@@ -104,13 +104,13 @@ function SolSequence({ typeDelay, typeStep, className, onDone }) {
 export default function IntroSpringboard({ onStart }) {
   const [fade, setFade] = useState(true);
   const [showContent, setShowContent] = useState(false);
-  const [showButton, setShowButton] = useState(false); // ✅ button waits for sequence
+  const [showButton, setShowButton] = useState(false); // button waits for sequence
 
   // ===== TUNING KNOBS (unchanged) =====
   const ORB_SIZE   = '40vmin';
-  const MASK_INNER = '88%';
-  const FILTER     = 'brightness(0.15) contrast(0.85) saturate(0.65) blur(0.4px)';
-  const PLAYBACK   = 0.5;    // video speed
+  const MASK_INNER = '80%';
+  const FILTER     = 'brightness(0.25) contrast(0.85) saturate(0.65) blur(0.4px)';
+  const PLAYBACK   = 1;    // video speed
   const TYPE_DELAY = 2.3;    // when sequence starts (s)
   const TYPE_STEP  = 0.045;  // per-char delay (s)
   // ====================================
