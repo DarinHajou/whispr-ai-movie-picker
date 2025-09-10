@@ -45,7 +45,7 @@ function SolSequence({ typeDelay, typeStep, className, onDone }) {
   const [step, setStep] = useState(-1);
 
   // readable dwell per transient line (ms)
-  const HI_MS  = 1200;
+  const HI_MS  = 1000;
   const SOL_MS = 1800;
 
   useEffect(() => {
@@ -110,8 +110,8 @@ export default function IntroSpringboard({ onStart }) {
   // ===== TUNING KNOBS (unchanged) =====
   const ORB_SIZE   = '65vmin';
   const MASK_INNER = '80%';
-  const FILTER     = 'brightness(0.15) contrast(0.85) saturate(0.65) blur(0.4px)';
-  const PLAYBACK   = 1;    // video speed
+  const FILTER     = 'brightness(0.35) contrast(0.86) saturate(0.55) blur(0.4px)';
+  const PLAYBACK   = 0.95;    // video speed
   const TYPE_DELAY = 1.2;    // when sequence starts (s)
   const TYPE_STEP  = 0.035;  // per-char delay (s)
   // ====================================
@@ -119,7 +119,7 @@ export default function IntroSpringboard({ onStart }) {
   // Fade schedule (unchanged)
   useEffect(() => {
   const fadeStart = 800;     // start fade
-  const orbLagMs  = 2000;    // orb after fade
+  const orbLagMs  = 1700;    // orb after fade
   const textLag   = 1200;    // text after orb
 
   // background fade trigger
@@ -159,14 +159,6 @@ export default function IntroSpringboard({ onStart }) {
           style={{
             width: ORB_SIZE,
             height: ORB_SIZE,
-            WebkitMaskImage: `radial-gradient(circle, #ffffffff ${MASK_INNER}, transparent 100%)`,
-            WebkitMaskRepeat: 'no-repeat',
-            WebkitMaskPosition: 'center',
-            WebkitMaskSize: 'cover',
-            maskImage:    `radial-gradient(circle, #fff ${MASK_INNER}, transparent 100%)`,
-            maskRepeat:   'no-repeat',
-            maskPosition: 'center',
-            maskSize:     'cover',
           }}
         >
           <video
@@ -186,7 +178,7 @@ export default function IntroSpringboard({ onStart }) {
             onLoadedMetadata={(e) => { e.currentTarget.playbackRate = PLAYBACK; }}
             onError={(e) => console.error('❌ VIDEO LOAD FAILED', e)}
           >
-            <source src="/images/orbz2.mp4" type="video/mp4" />
+            <source src="/images/orbz-3.mp4" type="video/mp4" />
           </video>
         </div>
       </div>
@@ -196,7 +188,7 @@ export default function IntroSpringboard({ onStart }) {
         className="absolute inset-0 z-50 pointer-events-none"
         initial={{ opacity: 1, backgroundColor: "#000" }}
         animate={{ opacity: 0 }}
-        transition={{ duration: 1.5, ease: "easeOut", delay: 0.5 }}
+        transition={{ duration: 1.5, ease: "easeOut", delay: 0.65 }}
       />
 
       <div
@@ -217,14 +209,16 @@ export default function IntroSpringboard({ onStart }) {
       {showContent && (
         <div className="relative z-30 h-full w-full grid place-items-center px-6 text-center pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]">
           <div className="relative max-w-xl w-full space-y-6">
-            <div
+            <motion.div
               className="absolute -inset-x-6 -inset-y-4 -z-10 rounded-2xl"
               style={{
                 background:
-                  'radial-gradient(50% 120% at 50% 50%, rgba(0,0,0,0.35), rgba(0,0,0,0.0))',
+                  'radial-gradient(50% 80% at 50% 50%, rgba(0,0,0,0.35), rgba(0,0,0,0.0))',
                 filter: 'blur(2px)',
               }}
-              aria-hidden
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: TYPE_DELAY, duration: 0.5, ease: "easeOut" }}
             />
             <SolSequence
               typeDelay={TYPE_DELAY}
