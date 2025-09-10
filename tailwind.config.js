@@ -11,9 +11,10 @@ export default {
         'mood-hover': '#F8E7D1',          // soft warm hover
       },
       fontFamily: {
-        sans: ['"DM Sans"', 'system-ui', 'sans-serif'],   // UI, headings, buttons
-        display: ['Newsreader', 'serif'],                  // Sol’s voice lines
+        sans: ['"Inter"', 'system-ui', 'sans-serif'],   // UI, body, buttons
+        display: ['"Cinzel"', 'serif'],                 // Sol’s lines, big headers
       },
+
       fontSize: {
         xs: '0.75rem',    // 12px
         sm: '0.875rem',   // 14px
