@@ -92,7 +92,7 @@ function SolSequence({ typeDelay, typeStep, className, onDone }) {
             delay={0}                          // start typing immediately at step 2
             step={typeStep}                    // keep your typing speed
             className={className + " leading-snug"}
-            onComplete={onDone}               // ✅ call parent when typing finishes
+            onComplete={onDone}               // call parent when typing finishes
           />
         )}
       </AnimatePresence>
@@ -113,7 +113,7 @@ export default function IntroSpringboard({ onStart }) {
   const FILTER     = 'brightness(0.15) contrast(0.85) saturate(0.65) blur(0.4px)';
   const PLAYBACK   = 1;    // video speed
   const TYPE_DELAY = 1.2;    // when sequence starts (s)
-  const TYPE_STEP  = 0.045;  // per-char delay (s)
+  const TYPE_STEP  = 0.035;  // per-char delay (s)
   // ====================================
 
   // Fade schedule (unchanged)
