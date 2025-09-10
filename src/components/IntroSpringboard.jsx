@@ -48,12 +48,6 @@ function SolSequence({ typeDelay, typeStep, className, onDone }) {
   const HI_MS  = 1200;
   const SOL_MS = 1800;
 
-  
-  useEffect(() => {
-  document.documentElement.classList.add('overflow-hidden');
-  return () => document.documentElement.classList.remove('overflow-hidden');
-}, []);
-
   useEffect(() => {
     const start = typeDelay * 1000;
     const t0 = setTimeout(() => setStep(0), start);               // "👋 Hi"
