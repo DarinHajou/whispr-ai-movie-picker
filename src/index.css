@@ -3,8 +3,13 @@
 @tailwind utilities;
 
 body {
-    @apply font-sans;
-    background-color: #1E1E1E;
-    color: white;
+  @apply font-sans;
+  background-color: #1E1E1E;
+  color: white;
+}
+
+@layer utilities {
+  .font-display {
+    text-transform: uppercase;
   }
-  
+}
