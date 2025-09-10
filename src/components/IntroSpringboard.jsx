@@ -63,7 +63,7 @@ function SolSequence({ typeDelay, typeStep, className, onDone }) {
   }, [typeDelay]);
 
   return (
-    <div className="w-full max-w-xl px-6 text-center">
+    <div className="w-full max-w-xl px-2 text-center">
       <AnimatePresence mode="wait">
         {step === 0 && (
           <motion.p
@@ -116,7 +116,7 @@ export default function IntroSpringboard({ onStart }) {
   // ===== TUNING KNOBS (unchanged) =====
   const ORB_SIZE   = '65vmin';
   const MASK_INNER = '80%';
-  const FILTER     = 'brightness(0.35) contrast(0.85) saturate(0.65) blur(0.4px)';
+  const FILTER     = 'brightness(0.15) contrast(0.85) saturate(0.65) blur(0.4px)';
   const PLAYBACK   = 1;    // video speed
   const TYPE_DELAY = 1.2;    // when sequence starts (s)
   const TYPE_STEP  = 0.045;  // per-char delay (s)
@@ -125,7 +125,7 @@ export default function IntroSpringboard({ onStart }) {
   // Fade schedule (unchanged)
   useEffect(() => {
   const fadeStart = 800;     // start fade
-  const orbLagMs  = 1000;    // orb after fade
+  const orbLagMs  = 2000;    // orb after fade
   const textLag   = 1200;    // text after orb
 
   // background fade trigger
@@ -199,12 +199,12 @@ export default function IntroSpringboard({ onStart }) {
   
       {/* Black overlay that fades out */}
       <motion.div
-        className="absolute inset-0 z-50"
-        style={{ backgroundColor: "black" }}   // start color
-        initial={{ opacity: 1 }}
+        className="absolute inset-0 z-50 pointer-events-none"
+        initial={{ opacity: 1, backgroundColor: "#000" }}
         animate={{ opacity: 0 }}
-        transition={{ duration: 1.5, ease: "easeOut" }}
+        transition={{ duration: 1.5, ease: "easeOut", delay: 0.5 }}
       />
+
       <div
         className="absolute inset-x-0 bottom-0 h-24 z-20 pointer-events-none"
         style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.5), transparent)' }}
@@ -227,7 +227,7 @@ export default function IntroSpringboard({ onStart }) {
               className="absolute -inset-x-6 -inset-y-4 -z-10 rounded-2xl"
               style={{
                 background:
-                  'radial-gradient(120% 120% at 50% 50%, rgba(0,0,0,0.35), rgba(0,0,0,0.0))',
+                  'radial-gradient(50% 120% at 50% 50%, rgba(0,0,0,0.35), rgba(0,0,0,0.0))',
                 filter: 'blur(2px)',
               }}
               aria-hidden
@@ -235,7 +235,7 @@ export default function IntroSpringboard({ onStart }) {
             <SolSequence
               typeDelay={TYPE_DELAY}
               typeStep={TYPE_STEP}
-              className="font-display italic text-[28px] sm:text-[36px] leading-[1.15] sm:leading-[1.1]
+              className="font-display italic text-[20px] sm:text-[36px] leading-[1.15] sm:leading-[1.1]
                          tracking-[-0.01em] text-[#FFC542] drop-shadow-[0_2px_6px_rgba(0,0,0,0.55)]"
               onDone={() => setShowButton(true)}
             />
