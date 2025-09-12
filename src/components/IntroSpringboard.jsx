@@ -3,8 +3,7 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import SolIntroText from './SolIntroText';
-import { motion } from 'framer-motion';
-import SolIntroText from './SolIntroText'; 
+
 /* ===================== IntroSpringboard ===================== */
 export default function IntroSpringboard({ onStart }) {
   const [orbOn, setOrbOn] = useState(false);
@@ -77,7 +76,7 @@ export default function IntroSpringboard({ onStart }) {
         className="absolute inset-0 z-50 pointer-events-none"
         initial={{ opacity: 1, backgroundColor: "#000" }}
         animate={{ opacity: 0 }}
-        transition={{ duration: 0.5, ease: "easeOut", delay: 0.95 }}
+        transition={{ duration: 0.9, ease: "easeOut", delay: 0.95 }}
       />
 
       {/* Subtle vignette */}
