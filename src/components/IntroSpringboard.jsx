@@ -1,142 +1,33 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-
-/* ---------- Smooth, cinematic letter reveal (no jank) ---------- */
-function SmoothType({ text, delay = 1.6, step = 0.05, className = '', onComplete }) {
-  const sentence = {
-    hidden: { opacity: 1 },
-    visible: { opacity: 1, transition: { delay, staggerChildren: step } },
-  };
-  const letter = {
-    hidden: { opacity: 0, y: '0.25em', filter: 'blur(4px)' },
-    visible: { opacity: 1, y: 0, filter: 'blur(0px)' },
-  };
-
-  return (
-    <motion.p
-      variants={sentence}
-      initial="hidden"
-      animate="visible"
-      onAnimationComplete={onComplete}           // fires when last letter finishes
-      className={`${className} mx-auto text-center`}
-      style={{ whiteSpace: 'normal', wordBreak: 'break-word' }}
-      aria-live="polite"
-      aria-atomic="true"
-    >
-      {text.split('').map((ch, i) => (
-        <motion.span
-          key={i}
-          variants={letter}
-          style={{ display: 'inline' }}   // let text flow naturally
-        >
-          {ch}
-        </motion.span>
-      ))}
-
-    </motion.p>
-  );
-}
-
-/* ---------- Old sequence: "Hi" → "I’m Sol." → final typed line ---------- */
-function SolSequence({ typeDelay, typeStep, className, onDone }) {
-  // steps: -1 (waiting), 0 ('Hi'), 1 ('I’m Sol.'), 2 (final typed)
-  const [step, setStep] = useState(-1);
-
-  // readable dwell per transient line (ms)
-  const HI_MS  = 1000;
-  const SOL_MS = 1800;
-
-  useEffect(() => {
-    const start = typeDelay * 1000;
-    const t0 = setTimeout(() => setStep(0), start);               // "👋 Hi"
-    const t1 = setTimeout(() => setStep(1), start + HI_MS);       // "I’m Sol."
-    const t2 = setTimeout(() => setStep(2), start + HI_MS + SOL_MS); // final line
-    return () => { clearTimeout(t0); clearTimeout(t1); clearTimeout(t2); };
-  }, [typeDelay]);
-
-  return (
-    <div className="w-full max-w-xl px-2 text-center">
-      <AnimatePresence mode="wait">
-        {step === 0 && (
-          <motion.p
-            key="hi"
-            initial={{ opacity: 0, y: 8, filter: 'blur(6px)' }}
-            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-            exit={{ opacity: 0, y: -8, filter: 'blur(6px)' }}
-            transition={{ duration: 0.45, ease: 'easeOut' }}
-            className={className}
-          >
-            👋 Hi
-          </motion.p>
-        )}
-
-        {step === 1 && (
-          <motion.p
-            key="sol"
-            initial={{ opacity: 0, y: 8, filter: 'blur(6px)' }}
-            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-            exit={{ opacity: 0, y: -8, filter: 'blur(6px)' }}
-            transition={{ duration: 0.45, ease: 'easeOut' }}
-            className={className}
-          >
-            I’m Sol.
-          </motion.p>
-        )}
-
-        {step === 2 && (
-          <SmoothType
-            key="final"
-            text={"Tell me how you want to feel, and I'll whisper something worth watching."}
-            delay={0}                          // start typing immediately at step 2
-            step={typeStep}                    // keep your typing speed
-            className={className + " leading-snug"}
-            onComplete={onDone}               // call parent when typing finishes
-          />
-        )}
-      </AnimatePresence>
-    </div>
-  );
-}
+import { motion } from 'framer-motion';
+import SolIntroText from './SolIntroText';   // ✅ import the new component
 
 /* ===================== IntroSpringboard ===================== */
 export default function IntroSpringboard({ onStart }) {
-  const [bgAlpha, setBgAlpha] = useState(1);       // 1.0 = full black at load
-  const [orbOn, setOrbOn] = useState(false);       // orb hidden until we flip this
+  const [orbOn, setOrbOn] = useState(false);
   const [showContent, setShowContent] = useState(false);
   const [showButton, setShowButton] = useState(false);
 
-  // ===== TUNING KNOBS (unchanged) =====
+  // ===== TUNING KNOBS =====
   const ORB_SIZE   = '75vmin';
-  const MASK_INNER = '80%';
-  const FILTER     = 'brightness(0.7) contrast(0.86) saturate(0.5) blur(2.4px)';
-  const PLAYBACK   = 0.95;    // video speed
-  const TYPE_DELAY = 1.2;    // when sequence starts (s)
-  const TYPE_STEP  = 0.035;  // per-char delay (s)
-  // ====================================
+  const FILTER     = 'brightness(0.6) contrast(0.86) saturate(0.5) blur(2.4px)';
+  const PLAYBACK   = 0.95;
+  const TYPE_DELAY = 1.2;   // ⬅️ Pass to SolIntroText
+  const TYPE_STEP  = 0.035; // ⬅️ Pass to SolIntroText
+  // ========================
 
-  // Fade schedule (unchanged)
   useEffect(() => {
-  const fadeStart = 800;     // start fade
-  const orbLagMs  = 1400;    // orb after fade
-  const textLag   = 1000;    // text after orb
+    const fadeStart = 800;
+    const orbLagMs  = 1400;
+    const textLag   = 1000;
 
-  // background fade trigger
-  const t1 = setTimeout(() => {
-    setBgAlpha(0.6);   // triggers framer-motion animate
-  }, fadeStart);
+    const t1 = setTimeout(() => setOrbOn(true), fadeStart + orbLagMs);
+    const t2 = setTimeout(() => setShowContent(true), fadeStart + orbLagMs + textLag);
 
-  const t2 = setTimeout(() => {
-    setOrbOn(true);
-  }, fadeStart + orbLagMs);
-
-  const t3 = setTimeout(() => {
-    setShowContent(true);
-  }, fadeStart + orbLagMs + textLag);
-
-  return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
-}, []);
+    return () => { clearTimeout(t1); clearTimeout(t2); };
+  }, []);
 
   return (
     <div className="fixed inset-0 flex items-center justify-center overflow-hidden">
@@ -149,17 +40,14 @@ export default function IntroSpringboard({ onStart }) {
         }}
       />
 
-    {/* ORB */}
-     <div
+      {/* ORB */}
+      <div
         className="absolute inset-0 grid place-items-center z-0"
         style={{ opacity: orbOn ? 0.7 : 0, transition: 'opacity 900ms ease-out' }}
       >
         <div
           className="relative rounded-full overflow-hidden flex items-center justify-center"
-          style={{
-            width: ORB_SIZE,
-            height: ORB_SIZE,
-          }}
+          style={{ width: ORB_SIZE, height: ORB_SIZE }}
         >
           <video
             autoPlay
@@ -182,7 +70,7 @@ export default function IntroSpringboard({ onStart }) {
           </video>
         </div>
       </div>
-  
+
       {/* Black overlay that fades out */}
       <motion.div
         className="absolute inset-0 z-50 pointer-events-none"
@@ -191,12 +79,7 @@ export default function IntroSpringboard({ onStart }) {
         transition={{ duration: 0.5, ease: "easeOut", delay: 0.95 }}
       />
 
-      <div
-        className="absolute inset-x-0 bottom-0 h-24 z-20 pointer-events-none"
-        style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.5), transparent)' }}
-      />
-
-      {/* Subtle vignette for text readability */}
+      {/* Subtle vignette */}
       <div
         className="absolute inset-0 pointer-events-none z-10"
         style={{
@@ -220,13 +103,16 @@ export default function IntroSpringboard({ onStart }) {
               animate={{ opacity: 1 }}
               transition={{ delay: TYPE_DELAY, duration: 0.5, ease: "easeOut" }}
             />
-            <SolSequence
+
+            {/* ✅ Use SolIntroText instead of inline SolSequence */}
+            <SolIntroText
               typeDelay={TYPE_DELAY}
               typeStep={TYPE_STEP}
               className="font-display italic text-[20px] sm:text-[36px] leading-[1.15] sm:leading-[1.1]
                          tracking-[-0.01em] text-[#FFC542] drop-shadow-[0_2px_6px_rgba(0,0,0,0.55)]"
               onDone={() => setShowButton(true)}
             />
+
             {showButton && (
               <motion.button
                 initial={{ opacity: 0, y: 8, scale: 0.98 }}
@@ -238,8 +124,7 @@ export default function IntroSpringboard({ onStart }) {
                             bg-[#FFC542] text-zinc-900 shadow-[0_8px_28px_rgba(255,197,66,0.18)]
                             hover:brightness-110 active:brightness-95
                             focus:outline-none focus:ring-2 focus:ring-[#FFC542]/60 focus:ring-offset-2 focus:ring-offset-black"
-
-                                >
+              >
                 ▶ Start
               </motion.button>
             )}
