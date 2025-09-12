@@ -3,7 +3,8 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import SolIntroText from './SolIntroText';
-
+import { motion } from 'framer-motion';
+import SolIntroText from './SolIntroText'; 
 /* ===================== IntroSpringboard ===================== */
 export default function IntroSpringboard({ onStart }) {
   const [orbOn, setOrbOn] = useState(false);

@@ -9,7 +9,11 @@ function SmoothType({ text, delay = 1.6, step = 0.05, className = '', onComplete
   };
 
   const letter = {
+<<<<<<< HEAD
     // VOICE: Sol *always* animates letters like this (blur + slide in)
+=======
+    // 🔒 VOICE: Sol *always* animates letters like this (blur + slide in)
+>>>>>>> 3dfe0f9a5f5d505d715be3af492cea68ceab556b
     hidden: { opacity: 0, y: '0.25em', filter: 'blur(4px)' },
     visible: { opacity: 1, y: 0, filter: 'blur(0px)' },
   };
@@ -19,7 +23,11 @@ function SmoothType({ text, delay = 1.6, step = 0.05, className = '', onComplete
       variants={sentence}
       initial="hidden"
       animate="visible"
+<<<<<<< HEAD
       onAnimationComplete={onComplete}   // VOICE: always signal when done
+=======
+      onAnimationComplete={onComplete}   // 🔒 VOICE: always signal when done
+>>>>>>> 3dfe0f9a5f5d505d715be3af492cea68ceab556b
       className={`${className} mx-auto text-center`}
       style={{ whiteSpace: 'normal', wordBreak: 'break-word' }}
       aria-live="polite"
@@ -28,7 +36,11 @@ function SmoothType({ text, delay = 1.6, step = 0.05, className = '', onComplete
       {text.split('').map((ch, i) => (
         <motion.span
           key={i}
+<<<<<<< HEAD
           variants={letter}              
+=======
+          variants={letter}               // 🔒 VOICE: always apply letter animation
+>>>>>>> 3dfe0f9a5f5d505d715be3af492cea68ceab556b
           style={{ display: 'inline' }}
         >
           {ch}
@@ -68,6 +80,10 @@ export default function SolIntroText({ typeDelay, typeStep, className, onDone })
             animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
             exit={{ opacity: 0, y: -8, filter: 'blur(6px)' }}
             transition={{ duration: 0.45, ease: 'easeOut' }}
+<<<<<<< HEAD
+=======
+            className={className}         // 🎭 COSTUME: parent decides font/size/color
+>>>>>>> 3dfe0f9a5f5d505d715be3af492cea68ceab556b
           >
             👋 Hi
           </motion.p>
@@ -80,6 +96,10 @@ export default function SolIntroText({ typeDelay, typeStep, className, onDone })
             animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
             exit={{ opacity: 0, y: -8, filter: 'blur(6px)' }}
             transition={{ duration: 0.45, ease: 'easeOut' }}
+<<<<<<< HEAD
+=======
+            className={className}         // 🎭 COSTUME
+>>>>>>> 3dfe0f9a5f5d505d715be3af492cea68ceab556b
           >
             I’m Sol.
           </motion.p>
@@ -89,6 +109,13 @@ export default function SolIntroText({ typeDelay, typeStep, className, onDone })
           <SmoothType
             key="final"
             text={"Tell me how you want to feel, and I'll whisper something worth watching."}
+<<<<<<< HEAD
+=======
+            delay={0}                     // 🎭 COSTUME: parent can change pacing
+            step={typeStep}               // 🎭 COSTUME: parent controls typing speed
+            className={className + " leading-snug"} // 🎭 COSTUME
+            onComplete={onDone}
+>>>>>>> 3dfe0f9a5f5d505d715be3af492cea68ceab556b
           />
         )}
       </AnimatePresence>
