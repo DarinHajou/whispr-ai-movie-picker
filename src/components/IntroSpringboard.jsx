@@ -11,8 +11,8 @@ export default function IntroSpringboard({ onStart }) {
   const [showButton, setShowButton] = useState(false);
 
   // ===== TUNING KNOBS =====
-  const ORB_SIZE   = '75vmin';
-  const FILTER     = 'brightness(0.4) contrast(0.86) saturate(0.5) blur(2.4px)';
+  const ORB_SIZE   = '65vmin';
+  const FILTER     = 'brightness(0.7) contrast(0.86) saturate(0.7) blur(0.4px)';
   const PLAYBACK   = 0.95;
   const TYPE_DELAY = 1.2;   // Pass to SolIntroText
   const TYPE_STEP  = 0.035; // Pass to SolIntroText
@@ -21,7 +21,7 @@ export default function IntroSpringboard({ onStart }) {
   useEffect(() => {
     const fadeStart = 800;
     const orbLagMs  = 1400;
-    const textLag   = 1000;
+    const textLag   = 800;
 
     const t1 = setTimeout(() => setOrbOn(true), fadeStart + orbLagMs);
     const t2 = setTimeout(() => setShowContent(true), fadeStart + orbLagMs + textLag);
@@ -66,7 +66,7 @@ export default function IntroSpringboard({ onStart }) {
             onLoadedMetadata={(e) => { e.currentTarget.playbackRate = PLAYBACK; }}
             onError={(e) => console.error('VIDEO LOAD FAILED', e)}
           >
-            <source src="/images/orbzy.mp4" type="video/mp4" />
+            <source src="/images/orb-4.mp4" type="video/mp4" />
           </video>
         </div>
       </div>
@@ -104,7 +104,7 @@ export default function IntroSpringboard({ onStart }) {
               transition={{ delay: TYPE_DELAY, duration: 0.5, ease: "easeOut" }}
             />
 
-            {/* ✅ Use SolIntroText instead of inline SolSequence */}
+            {/*Use SolIntroText instead of inline SolSequence */}
             <SolIntroText
               typeDelay={TYPE_DELAY}
               typeStep={TYPE_STEP}
