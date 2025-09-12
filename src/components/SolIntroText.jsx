@@ -40,17 +40,14 @@ function SmoothType({ text, delay = 1.6, step = 0.05, className = '', onComplete
 
 /* ---------- “Hi” → “I’m Sol.” → final typed line ---------- */
 export default function SolIntroText({ typeDelay, typeStep, className, onDone }) {
-  // steps: -1 (waiting), 0 ('Hi'), 1 ('I’m Sol.'), 2 (final typed)
   const [step, setStep] = useState(-1);
 
-  // 🔒 VOICE: Sol always has “beats” between lines
   const HI_MS  = 1200;
   const SOL_MS = 1800;
 
   useEffect(() => {
     const start = typeDelay * 1000;
 
-    // ⬇️ These delays are PROPS (parent controls timing per scene)
     const t0 = setTimeout(() => setStep(0), start);
     const t1 = setTimeout(() => setStep(1), start + HI_MS);
     const t2 = setTimeout(() => setStep(2), start + HI_MS + SOL_MS);
@@ -68,6 +65,7 @@ export default function SolIntroText({ typeDelay, typeStep, className, onDone })
             animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
             exit={{ opacity: 0, y: -8, filter: 'blur(6px)' }}
             transition={{ duration: 0.45, ease: 'easeOut' }}
+            className={className}
           >
             👋 Hi
           </motion.p>
@@ -80,6 +78,7 @@ export default function SolIntroText({ typeDelay, typeStep, className, onDone })
             animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
             exit={{ opacity: 0, y: -8, filter: 'blur(6px)' }}
             transition={{ duration: 0.45, ease: 'easeOut' }}
+            className={className}
           >
             I’m Sol.
           </motion.p>
@@ -89,6 +88,10 @@ export default function SolIntroText({ typeDelay, typeStep, className, onDone })
           <SmoothType
             key="final"
             text={"Tell me how you want to feel, and I'll whisper something worth watching."}
+            delay={0}
+            step={typeStep}
+            className={className + " leading-snug"}
+            onComplete={onDone}
           />
         )}
       </AnimatePresence>

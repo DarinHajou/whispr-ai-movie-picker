@@ -12,7 +12,7 @@ export default function IntroSpringboard({ onStart }) {
 
   // ===== TUNING KNOBS =====
   const ORB_SIZE   = '75vmin';
-  const FILTER     = 'brightness(0.6) contrast(0.86) saturate(0.5) blur(2.4px)';
+  const FILTER     = 'brightness(0.4) contrast(0.86) saturate(0.5) blur(2.4px)';
   const PLAYBACK   = 0.95;
   const TYPE_DELAY = 1.2;   // Pass to SolIntroText
   const TYPE_STEP  = 0.035; // Pass to SolIntroText
