@@ -12,7 +12,8 @@ export default function IntroSpringboard({ onStart }) {
 
   // ===== TUNING KNOBS =====
   const ORB_SIZE   = '65vmin';
-  const FILTER     = 'brightness(0.7) contrast(0.86) saturate(0.7) blur(0.4px)';
+  const FILTER     = 'brightness(0.7) contrast(0.92) saturate(0.4) blur(0.4px)';
+  const ORB_OPACITY = 0.6; 
   const PLAYBACK   = 0.95;
   const TYPE_DELAY = 1.2;   // Pass to SolIntroText
   const TYPE_STEP  = 0.035; // Pass to SolIntroText
@@ -41,36 +42,49 @@ export default function IntroSpringboard({ onStart }) {
       />
 
       {/* ORB */}
-      <div
+      <motion.div
         className="absolute inset-0 grid place-items-center z-0"
-        style={{ opacity: orbOn ? 0.7 : 0, transition: 'opacity 900ms ease-out' }}
+        initial={{ opacity: 0, scale: 0.92, filter: "blur(8px)" }}
+        animate={orbOn ? { opacity: 0.7, scale: 1, filter: "blur(0px)" } : {}}
+        transition={{ duration: 1.2, ease: "easeOut" }}
       >
         <div
-          className="relative rounded-full overflow-hidden flex items-center justify-center"
-          style={{ width: ORB_SIZE, height: ORB_SIZE }}
+          className="absolute inset-0 grid place-items-center z-0"
+          style={{
+            opacity: orbOn ? ORB_OPACITY : 0,
+            transition: 'opacity 1200ms ease-out',
+          }}
         >
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            aria-hidden
-            className="absolute"
-            style={{
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              objectPosition: 'center',
-              filter: FILTER,
-            }}
-            onLoadedMetadata={(e) => { e.currentTarget.playbackRate = PLAYBACK; }}
-            onError={(e) => console.error('VIDEO LOAD FAILED', e)}
+          <div
+            className="relative rounded-full overflow-hidden flex items-center justify-center"
+            style={{ width: ORB_SIZE, height: ORB_SIZE }}
           >
-            <source src="/images/orb-4.mp4" type="video/mp4" />
-          </video>
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              aria-hidden
+              className="absolute"
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                objectPosition: 'center',
+                filter: FILTER,
+                mixBlendMode: 'screen', // ✨ holographic glow
+              }}
+              onLoadedMetadata={(e) => { e.currentTarget.playbackRate = PLAYBACK; }}
+              onError={(e) => console.error('VIDEO LOAD FAILED', e)}
+            >
+              <source src="/images/orb-4.mp4" type="video/mp4" />
+            </video>
+          </div>
         </div>
-      </div>
 
+      </motion.div>
+
+          
       {/* Black overlay that fades out */}
       <motion.div
         className="absolute inset-0 z-50 pointer-events-none"
