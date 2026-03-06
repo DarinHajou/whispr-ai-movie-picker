@@ -1,5 +1,5 @@
-import FadeOnly from "./FadeOnly";
 import React from "react";
+import { AnimatePresence } from "framer-motion";
 import IntroSpringboard from "./IntroSpringboard";
 import EmotionPicker from "./EmotionPicker";
 import IntensityPicker from "./IntensityPicker";
@@ -26,29 +26,65 @@ export default function GuideFlow({
   pulse,
   onPulse
 }) {
-  switch (flowMode) {
-    case FLOW.INTRO:
-      return (
-        <IntroSpringboard
-          onStart={() => setFlowMode(FLOW.EMOTION)}
-          onPulse={onPulse}
-          pulse={pulse}
-        />
-      );
+  
+  // We extract the switch statement into a helper function so AnimatePresence can animate it
+  const renderStep = () => {
+    switch (flowMode) {
+      case FLOW.INTRO:
+        return (
+          <IntroSpringboard
+            key="intro" // Keys are required for AnimatePresence to know what is changing!
+            onStart={() => setFlowMode(FLOW.EMOTION)}
+            onPulse={onPulse}
+            pulse={pulse}
+          />
+        );
 
-    case FLOW.EMOTION:
-      return <EmotionPicker onNext={() => setFlowMode(FLOW.INTENSITY)} />;
+      case FLOW.EMOTION:
+        return (
+          <EmotionPicker 
+            key="emotion"
+            emotion={emotion} 
+            setEmotion={setEmotion} // <-- THIS FIXES YOUR ERROR!
+            onNext={() => setFlowMode(FLOW.INTENSITY)} 
+          />
+        );
 
-    case FLOW.INTENSITY:
-      return <IntensityPicker onNext={() => setFlowMode(FLOW.INTENT)} />;
+      case FLOW.INTENSITY:
+        return (
+          <IntensityPicker 
+            key="intensity"
+            emotion={emotion} // <-- Passes the chosen color to the giant orb
+            intensity={intensity} 
+            setIntensity={setIntensity} // <-- Saves your pinch gesture
+            onNext={() => setFlowMode(FLOW.INTENT)} 
+          />
+        );
 
-    case FLOW.INTENT:
-      return <IntentPicker onNext={() => setFlowMode(FLOW.RESULTS)} />;
+      case FLOW.INTENT:
+        return (
+          <IntentPicker 
+            key="intent"
+            intent={intent} 
+            setIntent={setIntent} 
+            onNext={() => setFlowMode(FLOW.RESULTS)} 
+          />
+        );
 
-    case FLOW.RESULTS:
-      return null;
+      case FLOW.RESULTS:
+        return null;
 
-    default:
-      return null;
-  }
+      default:
+        return null;
+    }
+  };
+
+  return (
+    // AnimatePresence allows components to smoothly exit before the new one enters.
+    // Notice we do NOT use mode="wait" here, because for the shared "layoutId" orb morph 
+    // to work, Framer Motion needs both screens to exist for a split second!
+    <AnimatePresence>
+      {renderStep()}
+    </AnimatePresence>
+  );
 }
