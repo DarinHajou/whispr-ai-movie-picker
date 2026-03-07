@@ -10,21 +10,20 @@ export default function App() {
     INTRO: 0,
     EMOTION: 1,
     INTENSITY: 2,
-    INTENT: 3,
-    RESULTS: 4,
+    RESULTS: 4, // 3 (INTENT) is officially retired
   };
 
   const [flowMode, setFlowMode] = useState(FLOW.INTRO);
+  const [mode, setMode] = useState("guided"); // Required for GPTResults "chat" feature
   const [emotion, setEmotion] = useState(null);
   const [intensity, setIntensity] = useState(null);
-  const [intent, setIntent] = useState(null);
   const [chatMetadata, setChatMetadata] = useState(null);
 
   const resetAll = () => {
     setFlowMode(FLOW.INTRO);
+    setMode("guided");
     setEmotion(null);
     setIntensity(null);
-    setIntent(null);
     reset();
   };
 
@@ -40,8 +39,9 @@ export default function App() {
     reset,
     retryCount,
   } = useGPTFetcher({
-    mood: emotion,
-    intent,
+    // IMPORTANT: We only send the text label (e.g., "Thrill") to the AI!
+    mood: emotion?.label || emotion, 
+    intent: "", // Intent is gone, we pass an empty string so your backend doesn't crash
     energy: intensity,
     step: fetchStep,
   });
@@ -50,7 +50,7 @@ export default function App() {
     if (retryCount < 2) {
       retry();
     } else {
-      setFlowMode(FLOW.INTENT);
+      setFlowMode(FLOW.EMOTION); // Fallback to step 1 if out of retries
     }
   };
 
@@ -80,21 +80,27 @@ export default function App() {
   
         {/* Main app flow */}
         <main className="w-full max-w-lg sm:max-w-xl md:max-w-2xl mx-auto flex-grow flex flex-col justify-start px-2 sm:px-4 md:px-6 py-4 sm:py-6 md:py-8 text-[15px] sm:text-[15px] md:text-[14px]">
-          <GuideFlow
-            flowMode={flowMode}
-            setFlowMode={setFlowMode}
-            emotion={emotion}
-            setEmotion={setEmotion}
-            intensity={intensity}
-            setIntensity={setIntensity}
-            intent={intent}
-            setIntent={setIntent}
-          />
+          
+          {/* 
+            Notice how GuideFlow only shows when we AREN'T in the results step.
+            This prevents the layout from breaking! 
+          */}
+          {flowMode !== FLOW.RESULTS && (
+            <GuideFlow
+              flowMode={flowMode}
+              setFlowMode={setFlowMode}
+              emotion={emotion}
+              setEmotion={setEmotion}
+              intensity={intensity}
+              setIntensity={setIntensity}
+            />
+          )}
 
           {flowMode === FLOW.RESULTS && (
             <GPTResults
-              mood={emotion}
-              intent={intent}
+              mode={mode} // Passes the mode down!
+              setMode={setMode}
+              mood={emotion} // We pass the WHOLE object here so GPTResults can show the Orb!
               energy={intensity}
               gptResult={gptResult}
               parsedMovies={parsedMovies}
