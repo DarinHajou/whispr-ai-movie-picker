@@ -4,14 +4,15 @@ export default function EmotionalPulseWavesBackground() {
 
      <div
       className="
-        absolute left-1/2 top-[8%]
+        absolute left-1/2 top-[0%]
         w-[29vw] h-[26vw]
-        sm:left-[65%] sm:top-[6%] sm:w-[18vw] sm:h-[16vw]
+        left-[65%]
+        sm:left-[65%] sm:top-[8%] sm:w-[18vw] sm:h-[16vw]
         -translate-x-1/2
         bg-[#FFC542]
-        opacity-70 sm:opacity-45   /* only down 5% on mobile, 5% on desktop */
-        blur-[55px]
-        rounded-[100%/60%]
+        opacity-60 sm:opacity-45   /* only down 5% on mobile, 5% on desktop */
+        blur-[60px]
+        rounded-[100%/90%]
         animate-blob1
       "
     />
@@ -19,11 +20,11 @@ export default function EmotionalPulseWavesBackground() {
       {/* Blue blob – nudge it in */}
       <div
         className="
-          absolute right-[-2vw] bottom-[20vw] 
+          absolute right-[2vw] bottom-[20vw] 
           w-[20vw] h-[14vw]                   
-          opacity-18 sm:right-[18%] top-[80%] sm:top-[85%] sm:w-[8vw] sm:h-[6vw]
+          opacity-65 sm:right-[18%] top-[80%] sm:top-[85%] sm:w-[8vw] sm:h-[6vw]
           bg-mist-blue
-          blur-[40px]                    
+          blur-[30px]                    
           rounded-[40%/100%]
           animate-blob2
         "
@@ -32,11 +33,11 @@ export default function EmotionalPulseWavesBackground() {
       {/* Sage blob – pull in and shrink */}
       <div
         className="
-          absolute left-[-8vw] bottom-[14vw]   
+          absolute left-[2vw] bottom-[14vw]   
           w-[28vw] h-[10vw]                  
           sm:left-[6%] top-[60%] sm:top-[70%] sm:w-[10vw] sm:h-[8vw] 
           bg-pale-sage opacity-28
-          blur-[55px]                     
+          blur-[60px]                     
           rounded-[100%/40%]
           animate-blob3
         "
