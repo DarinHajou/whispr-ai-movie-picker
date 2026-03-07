@@ -3,14 +3,14 @@ import { AnimatePresence } from "framer-motion";
 import IntroSpringboard from "./IntroSpringboard";
 import EmotionPicker from "./EmotionPicker";
 import IntensityPicker from "./IntensityPicker";
-import IntentPicker from "./IntentPicker";
+// IntentPicker is officially DEAD! Import removed.
 
 // Match this to your App.jsx FLOW enum
 const FLOW = {
   INTRO: 0,
   EMOTION: 1,
   INTENSITY: 2,
-  INTENT: 3,
+  INTENT: 3, // We leave the number here so it matches App.jsx, but we never use it
   RESULTS: 4,
 };
 
@@ -27,13 +27,12 @@ export default function GuideFlow({
   onPulse
 }) {
   
-  // We extract the switch statement into a helper function so AnimatePresence can animate it
   const renderStep = () => {
     switch (flowMode) {
       case FLOW.INTRO:
         return (
           <IntroSpringboard
-            key="intro" // Keys are required for AnimatePresence to know what is changing!
+            key="intro" 
             onStart={() => setFlowMode(FLOW.EMOTION)}
             onPulse={onPulse}
             pulse={pulse}
@@ -45,7 +44,7 @@ export default function GuideFlow({
           <EmotionPicker 
             key="emotion"
             emotion={emotion} 
-            setEmotion={setEmotion} // <-- THIS FIXES YOUR ERROR!
+            setEmotion={setEmotion} 
             onNext={() => setFlowMode(FLOW.INTENSITY)} 
           />
         );
@@ -54,22 +53,15 @@ export default function GuideFlow({
         return (
           <IntensityPicker 
             key="intensity"
-            emotion={emotion} // <-- Passes the chosen color to the giant orb
+            emotion={emotion} 
             intensity={intensity} 
-            setIntensity={setIntensity} // <-- Saves your pinch gesture
-            onNext={() => setFlowMode(FLOW.INTENT)} 
-          />
-        );
-
-      case FLOW.INTENT:
-        return (
-          <IntentPicker 
-            key="intent"
-            intent={intent} 
-            setIntent={setIntent} 
+            setIntensity={setIntensity} 
+            // THE ROUTING FIX: Go straight to RESULTS!
             onNext={() => setFlowMode(FLOW.RESULTS)} 
           />
         );
+
+      // We completely deleted the FLOW.INTENT case!
 
       case FLOW.RESULTS:
         return null;
@@ -80,9 +72,6 @@ export default function GuideFlow({
   };
 
   return (
-    // AnimatePresence allows components to smoothly exit before the new one enters.
-    // Notice we do NOT use mode="wait" here, because for the shared "layoutId" orb morph 
-    // to work, Framer Motion needs both screens to exist for a split second!
     <AnimatePresence>
       {renderStep()}
     </AnimatePresence>
