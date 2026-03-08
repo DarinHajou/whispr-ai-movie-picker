@@ -64,13 +64,10 @@ export default function App() {
       <div className="flex flex-col min-h-screen px-4 bg-[rgba(18,18,18,0.4)] backdrop-brightness-75 rounded-3xl shadow-lg p-8 sm:p-10 md:p-16 max-w-4xl w-full">
         
         {/* Header */}
-        <div className="text-center mt-8 sm:mt-16 md:mt-20 mb-8 sm:mb-10">
-          <h1 className="text-6xl sm:text-7xl font-extrabold tracking-tight text-warm-white flex justify-center items-center gap-2 whitespace-nowrap transition-colors duration-300 hover:text-[#FFC542]">
-            <span className="text-4xl sm:text-5xl">🎬</span> Whispr
+        <div className="text-center mt-8 sm:mt-12 mb-20 sm:mb-24">
+          <h1 className="text-4xl sm:text-5xl font-bold  tracking-tight text-warm-white flex justify-center items-center gap-2 whitespace-nowrap transition-colors duration-300 hover:text-[#FFC542]">
+            Whispr
           </h1>
-          <p className="text-lg sm:text-xl text-[rgba(250,249,246,0.9)] italic leading-snug tracking-wide mt-4 mb-14">
-            Your emotionally intelligent movie picker
-          </p>
         </div>
 
         {/* Animated background blobs */}
