@@ -4,147 +4,134 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import SolIntroText from './SolIntroText';
 
-/* ===================== IntroSpringboard ===================== */
 export default function IntroSpringboard({ onStart }) {
   const [orbOn, setOrbOn] = useState(false);
   const [showContent, setShowContent] = useState(false);
-  const [showButton, setShowButton] = useState(false);
+  const [showHint, setShowHint] = useState(false);
 
   // ===== TUNING KNOBS =====
-  const ORB_SIZE   = '65vmin';
-  const FILTER     = 'brightness(0.7) contrast(0.92) saturate(0.4) blur(0.4px)';
-  const ORB_OPACITY = 0.6; 
-  const PLAYBACK   = 0.95;
-  const TYPE_DELAY = 1.2;   // Pass to SolIntroText
-  const TYPE_STEP  = 0.035; // Pass to SolIntroText
+  const ORB_SIZE = '60vmin';
+  const FILTER = 'brightness(0.3) contrast(0.92) saturate(0.4) blur(0.9px)';
+  const ORB_OPACITY = 0.4;
+  const PLAYBACK = 0.75;
+  const TYPE_DELAY = 1.0;
+  const TYPE_STEP = 0.028;
   // ========================
 
   useEffect(() => {
-    const fadeStart = 800;
-    const orbLagMs  = 1400;
-    const textLag   = 800;
+    // First let the screen sit in black, then reveal orb, then text
+    const t1 = setTimeout(() => setOrbOn(true), 1400);
+    const t2 = setTimeout(() => setShowContent(true), 1700);
 
-    const t1 = setTimeout(() => setOrbOn(true), fadeStart + orbLagMs);
-    const t2 = setTimeout(() => setShowContent(true), fadeStart + orbLagMs + textLag);
-
-    return () => { clearTimeout(t1); clearTimeout(t2); };
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+    };
   }, []);
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center overflow-hidden">
-      {/* Base radial background */}
+    <div
+      className="fixed inset-0 overflow-hidden bg-black"
+      onClick={showHint ? onStart : undefined}
+      style={{ cursor: showHint ? 'pointer' : 'default' }}
+    >
+      {/* Base dark-room background */}
       <div
         className="absolute inset-0 z-0"
         style={{
           background:
-            'radial-gradient(circle at 50% 30%, rgba(18,18,18,1) 40%, rgba(18,18,18,0.75) 90%)',
+            'radial-gradient(circle at 50% 46%, rgba(24,24,24,0.92) 0%, rgba(10,10,10,0.96) 42%, rgba(0,0,0,1) 82%)',
         }}
       />
 
-      {/* ORB */}
+      {/* Orb */}
       <motion.div
-        className="absolute inset-0 grid place-items-center z-0"
-        initial={{ opacity: 0, scale: 0.92, filter: "blur(8px)" }}
-        animate={orbOn ? { opacity: 0.7, scale: 1, filter: "blur(0px)" } : {}}
-        transition={{ duration: 1.2, ease: "easeOut" }}
+        className="absolute inset-0 z-10 grid place-items-center pointer-events-none"
+        initial={{ opacity: 0, scale: 0.96, filter: 'blur(10px)' }}
+        animate={orbOn ? { opacity: 1, scale: 1, filter: 'blur(0px)' } : {}}
+        transition={{ duration: 1.6, ease: 'easeOut' }}
       >
         <div
-          className="absolute inset-0 grid place-items-center z-0"
+          className="relative rounded-full overflow-hidden flex items-center justify-center"
           style={{
-            opacity: orbOn ? ORB_OPACITY : 0,
-            transition: 'opacity 1200ms ease-out',
+            width: ORB_SIZE,
+            height: ORB_SIZE,
+            opacity: ORB_OPACITY,
           }}
         >
-          <div
-            className="relative rounded-full overflow-hidden flex items-center justify-center"
-            style={{ width: ORB_SIZE, height: ORB_SIZE }}
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            aria-hidden
+            className="absolute inset-0"
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              objectPosition: 'center',
+              filter: FILTER,
+              mixBlendMode: 'screen',
+            }}
+            onLoadedMetadata={(e) => {
+              e.currentTarget.playbackRate = PLAYBACK;
+            }}
           >
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              aria-hidden
-              className="absolute"
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-                objectPosition: 'center',
-                filter: FILTER,
-                mixBlendMode: 'screen', // ✨ holographic glow
-              }}
-              onLoadedMetadata={(e) => { e.currentTarget.playbackRate = PLAYBACK; }}
-              onError={(e) => console.error('VIDEO LOAD FAILED', e)}
-            >
-              <source src="/images/orb-4.mp4" type="video/mp4" />
-            </video>
-          </div>
+            <source src="/images/orb-4.mp4" type="video/mp4" />
+          </video>
         </div>
-
       </motion.div>
 
-          
-      {/* Black overlay that fades out */}
+      {/* Real black fade overlay */}
       <motion.div
-        className="absolute inset-0 z-50 pointer-events-none"
-        initial={{ opacity: 1, backgroundColor: "#000" }}
+        className="absolute inset-0 z-50 pointer-events-none bg-black"
+        initial={{ opacity: 1 }}
         animate={{ opacity: 0 }}
-        transition={{ duration: 0.9, ease: "easeOut", delay: 0.95 }}
+        transition={{ duration: 1.8, ease: 'easeOut' }}
       />
 
-      {/* Subtle vignette */}
-      <div
-        className="absolute inset-0 pointer-events-none z-10"
-        style={{
-          background:
-            'linear-gradient(to bottom, rgba(0, 0, 0, 0.22), transparent 35%, transparent 65%, rgba(0,0,0,0.22))',
-        }}
-      />
-
-      {/* TEXT + CTA */}
+      {/* Text */}
       {showContent && (
-        <div className="relative z-30 h-full w-full grid place-items-center px-6 text-center pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]">
-          <div className="relative max-w-xl w-full space-y-8">
-            <motion.div
-              className="absolute -inset-x-6 -inset-y-4 -z-10 rounded-2xl"
-              style={{
-                background:
-                  'radial-gradient(50% 80% at 50% 50%, rgba(0,0,0,0.35), rgba(0,0,0,0.0))',
-                filter: 'blur(2px)',
-              }}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: TYPE_DELAY, duration: 0.5, ease: "easeOut" }}
-            />
+        <div className="absolute inset-0 z-30 flex items-center justify-center px-6">
+          <motion.div
+            className="pointer-events-none absolute left-1/2 top-1/2 h-[460px] w-[140%] -translate-x-1/2 -translate-y-1/2 rounded-[50%]"
+            style={{
+              background:
+                'radial-gradient(ellipse at center, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.26) 92%, rgba(0,0,0,0) 72%)',
+              filter: 'blur(24px)',
+            }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: TYPE_DELAY, duration: 1 }}
+          />
 
-            {/*Use SolIntroText instead of inline SolSequence */}
+          <div className="relative w-full max-w-lg flex items-center justify-center -translate-y-12 sm:-translate-y-16">
             <SolIntroText
               typeDelay={TYPE_DELAY}
               typeStep={TYPE_STEP}
-              className="font-display italic text-[20px] sm:text-[36px] leading-[1.15] sm:leading-[1.1]
-                         tracking-[-0.01em] text-[#FFC542] drop-shadow-[0_2px_6px_rgba(0,0,0,0.55)]"
-              onDone={() => setShowButton(true)}
+              treatment="warmProjection"
+              onDone={() => setShowHint(true)}
             />
-
-            {showButton && (
-              <motion.button
-                initial={{ opacity: 0, y: 8, scale: 0.98 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                whileTap={{ scale: 0.98 }}
-                transition={{ duration: 0.35, ease: 'easeOut' }}
-                onClick={onStart}
-                className="inline-flex items-center justify-center h-11 sm:h-12 px-6 sm:px-7 rounded-full font-semibold
-                            bg-[#FFC542] text-zinc-900 shadow-[0_8px_28px_rgba(255,197,66,0.18)]
-                            hover:brightness-110 active:brightness-95
-                            focus:outline-none focus:ring-2 focus:ring-[#FFC542]/60 focus:ring-offset-2 focus:ring-offset-black"
-              >
-                ▶ Start
-              </motion.button>
-            )}
           </div>
         </div>
       )}
+
+      {/* Bottom hint */}
+      {showHint && (
+      <motion.p
+        initial={{ opacity: 0 }}
+        animate={{ opacity: [0.18, 0.75, 0.18] }}
+        transition={{ duration: 2.6, repeat: Infinity, ease: 'easeInOut' }}
+        className="absolute left-1/2 bottom-28 sm:bottom-32 z-40 -translate-x-1/2 whitespace-nowrap text-[14px] sm:text-[13px] uppercase tracking-[0.32em]"
+        style={{
+          color: 'rgba(198, 166, 124, 0.92)',
+          textShadow: '0 0 6px rgba(255,244,226,0.06)',
+        }}
+      >
+        TAP ANYWHERE TO BEGIN
+      </motion.p>
+    )}
     </div>
   );
 }
