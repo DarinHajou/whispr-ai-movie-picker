@@ -1,12 +1,16 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-// The Locked 6-Orb Spec with Emotional Physics
+// The Final "Extreme Physics" Spec
+// The Final "Extreme Physics" Spec (Hover Floor Fixed!)
 const CRAVINGS = [
   { 
     id: "comfort", label: "Comfort", sub: "warm / steady", color: "#FFE7C2",
     animDuration: 6, ease: "easeInOut",
-    scaleAnim: [1, 1.02, 1], // Barely moves, very plush
+    scaleAnim: [1, 1.02, 1],
+    // FIXED: Now it hovers between 4px and 10px UP. It never drops to 0.
+    yAnim: [-4, -10, -4], 
+    times: [0, 0.5, 1], 
     shadowAnim: [
       "inset -5px -5px 15px rgba(0,0,0,0.5), 0 0 20px rgba(255,231,194,0.3)",
       "inset -5px -5px 15px rgba(0,0,0,0.5), 0 0 40px rgba(255,231,194,0.5)",
@@ -15,21 +19,29 @@ const CRAVINGS = [
   },
   { 
     id: "escape", label: "Escape", sub: "drifting / outward", color: "#25D0C5",
-    animDuration: 5, ease: "easeOut",
-    scaleAnim: [1, 1.05, 1], // Soft tidal pull
+    animDuration: 3, ease: "linear",
+    scaleAnim: [1, 1.02, 1, 1.02],
+    // FIXED: Starts at 0 (baseline) and goes way up to -20. No dropping down.
+    yAnim: [0, -20], 
+    opacityAnim: [0, 1, 1, 0], 
+    times: [0, 0.2, 0.8, 1], 
     shadowAnim: [
       "inset -5px -5px 15px rgba(0,0,0,0.5), 0 0 15px rgba(37,208,197,0.4)",
-      "inset -5px -5px 15px rgba(0,0,0,0.5), 0 0 60px rgba(37,208,197,0.6)", // Drifts far outward
+      "inset -5px -5px 15px rgba(0,0,0,0.5), 0 0 40px rgba(37,208,197,0.6)",
+      "inset -5px -5px 15px rgba(0,0,0,0.5), 0 0 40px rgba(37,208,197,0.6)",
       "inset -5px -5px 15px rgba(0,0,0,0.5), 0 0 15px rgba(37,208,197,0.4)"
     ]
   },
   { 
     id: "thrill", label: "Thrill", sub: "charged / alive", color: "#FF2E2E",
-    animDuration: 1.5, ease: "circInOut",
-    scaleAnim: [1, 1.08, 1, 1.03, 1], // Actual heartbeat double-pump
+    animDuration: 1.5, ease: "linear",
+    scaleAnim: [1, 1.06, 1, 1.02, 1],
+    // FIXED: All negative numbers now. It twitches UP and settles slightly above the text.
+    yAnim: [-2, -5, -1, -4, -2, -6, -1, -3, -2, -2], 
+    xAnim: [0, 1, -2, 2, -1, 1, 0, -2, 1, 0],
     shadowAnim: [
       "inset -5px -5px 15px rgba(0,0,0,0.6), 0 0 10px rgba(255,46,46,0.6)",
-      "inset -5px -5px 15px rgba(0,0,0,0.6), 0 0 35px rgba(255,46,46,0.9)", // Tight, hot glow
+      "inset -5px -5px 15px rgba(0,0,0,0.6), 0 0 35px rgba(255,46,46,0.9)",
       "inset -5px -5px 15px rgba(0,0,0,0.6), 0 0 10px rgba(255,46,46,0.6)",
       "inset -5px -5px 15px rgba(0,0,0,0.6), 0 0 20px rgba(255,46,46,0.7)",
       "inset -5px -5px 15px rgba(0,0,0,0.6), 0 0 10px rgba(255,46,46,0.6)"
@@ -38,36 +50,41 @@ const CRAVINGS = [
   { 
     id: "longing", label: "Longing", sub: "tender / reaching", color: "#F472B6",
     animDuration: 4, ease: "easeInOut",
-    scaleAnim: [1, 1.04, 1],
+    scaleAnim: [1, 1.03, 1],
+    // Shifted floor up slightly
+    yAnim: [-2, -6, -2], 
     shadowAnim: [
       "inset -5px -5px 15px rgba(0,0,0,0.5), 0 0 15px rgba(244,114,182,0.4), 0 0 15px rgba(244,114,182,0.1)",
-      "inset -5px -5px 15px rgba(0,0,0,0.5), 0 0 25px rgba(244,114,182,0.6), 0 0 50px rgba(244,114,182,0.3)", // Double ring bloom
+      "inset -5px -5px 15px rgba(0,0,0,0.5), 0 0 25px rgba(244,114,182,0.6), 0 0 50px rgba(244,114,182,0.3)",
       "inset -5px -5px 15px rgba(0,0,0,0.5), 0 0 15px rgba(244,114,182,0.4), 0 0 15px rgba(244,114,182,0.1)"
     ]
   },
   { 
     id: "release", label: "Release", sub: "heavy / deep", color: "#8B1020",
-    animDuration: 3, ease: "easeIn", // easeIn gives it that heavy "falling" weight
-    scaleAnim: [1, 1.05, 0.98, 1], // Dips slightly below 1 to feel dense and heavy
+    animDuration: 3, ease: "linear",
+    scaleAnim: [1, 1.05, 1.05, 1],
+    yAnim: [0, -12, -12, 0], 
+    times: [0, 0.15, 0.85, 1], 
     shadowAnim: [
       "inset -5px -5px 15px rgba(0,0,0,0.8), 0 0 10px rgba(139,16,32,0.8)",
-      "inset -5px -5px 15px rgba(0,0,0,0.8), 0 0 40px rgba(139,16,32,0.4)", // Darker, lower halo
-      "inset -5px -5px 15px rgba(0,0,0,0.8), 0 0 8px rgba(139,16,32,0.9)",
+      "inset -5px -5px 15px rgba(0,0,0,0.8), 0 0 40px rgba(139,16,32,0.6)",
+      "inset -5px -5px 15px rgba(0,0,0,0.8), 0 0 40px rgba(139,16,32,0.6)",
       "inset -5px -5px 15px rgba(0,0,0,0.8), 0 0 10px rgba(139,16,32,0.8)"
     ]
   },
   { 
     id: "wonder", label: "Wonder", sub: "shimmering / cosmic", color: "#7C3AED",
-    animDuration: 3.5, ease: "linear",
-    scaleAnim: [1, 1.02, 1, 1.03, 1, 1.01, 1], // Erratic, shivering scale
+    animDuration: 5, ease: "easeInOut",
+    scaleAnim: [1, 1.02, 1.02, 1.05, 1.05, 1],
+    yAnim: [0, -4, -4, -12, -12, 0], 
+    times: [0, 0.25, 0.35, 0.6, 0.7, 1], 
     shadowAnim: [
-      "inset -5px -5px 15px rgba(0,0,0,0.5), 0 0 20px rgba(124,58,237,0.4)",
-      "inset -5px -5px 15px rgba(0,0,0,0.5), 0 0 45px rgba(124,58,237,0.7)", // Bright shimmers
-      "inset -5px -5px 15px rgba(0,0,0,0.5), 0 0 15px rgba(124,58,237,0.3)",
-      "inset -5px -5px 15px rgba(0,0,0,0.5), 0 0 35px rgba(124,58,237,0.6)",
-      "inset -5px -5px 15px rgba(0,0,0,0.5), 0 0 25px rgba(124,58,237,0.5)",
-      "inset -5px -5px 15px rgba(0,0,0,0.5), 0 0 40px rgba(124,58,237,0.6)",
-      "inset -5px -5px 15px rgba(0,0,0,0.5), 0 0 20px rgba(124,58,237,0.4)"
+      "inset -5px -5px 15px rgba(0,0,0,0.5), 0 0 15px rgba(124,58,237,0.3)", 
+      "inset -5px -5px 15px rgba(0,0,0,0.5), 0 0 30px rgba(124,58,237,0.5)", 
+      "inset -5px -5px 15px rgba(0,0,0,0.5), 0 0 30px rgba(124,58,237,0.5)", 
+      "inset -5px -5px 15px rgba(0,0,0,0.5), 0 0 60px rgba(124,58,237,0.8)", 
+      "inset -5px -5px 15px rgba(0,0,0,0.5), 0 0 60px rgba(124,58,237,0.8)", 
+      "inset -5px -5px 15px rgba(0,0,0,0.5), 0 0 15px rgba(124,58,237,0.3)"  
     ]
   },
 ];
@@ -79,15 +96,21 @@ export default function EmotionPicker({ emotion, setEmotion, onNext }) {
     onNext();
   };
 
-  return (
+     return (
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
-      className="flex flex-col items-center justify-center w-full h-full pt-4 z-10 relative"
+      // CRITICAL FIX: Changed justify-center to justify-start
+      className="flex flex-col items-center justify-start w-full h-full z-10 relative"
     >
-      <h2 className="text-2xl sm:text-3xl font-light text-warm-white/90 mb-12 tracking-wide text-center drop-shadow-sm">
-        What are you craving?
+      {/* 
+        The Prompt
+        mb-16 (64px) pushes the orbs safely away from the text.
+        leading-snug gives the two lines of text room to breathe.
+      */}
+      <h2 className="text-[18px] sm:text-[22px] font-light text-[rgba(250,249,246,0.82)] mb-24 tracking-wide text-center leading-snug max-w-[300px] sm:max-w-[420px] mx-auto text-balance">
+        Start with the feeling.<br/>We'll do the rest.
       </h2>
 
       <div className="grid grid-cols-2 gap-x-12 gap-y-12 w-full max-w-sm px-4">
@@ -103,14 +126,18 @@ export default function EmotionPicker({ emotion, setEmotion, onNext }) {
               style={{
                 background: `radial-gradient(circle at 35% 35%, ${craving.color} 0%, rgba(0,0,0,0.85) 90%)`,
               }}
-              // Here is where the unique emotional physics are applied!
+              // We inject X and Opacity tracks here to support the complex ones!
               animate={{
                 scale: craving.scaleAnim,
-                boxShadow: craving.shadowAnim
+                boxShadow: craving.shadowAnim,
+                y: craving.yAnim,
+                x: craving.xAnim || 0,
+                opacity: craving.opacityAnim || 1
               }}
               transition={{
                 duration: craving.animDuration,
                 ease: craving.ease,
+                times: craving.times, // THIS is the superpower engine!
                 repeat: Infinity,
               }}
             />
