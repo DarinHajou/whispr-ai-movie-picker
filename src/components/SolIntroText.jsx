@@ -127,7 +127,7 @@ export default function SolIntroText({
   const [phase, setPhase] = useState('idle');
   const look = TREATMENTS[treatment];
     useEffect(() => {
-      const typeDelayMs = typeDelay * 1000 + 220; // delay intro slightly
+      const typeDelayMs = typeDelay * 1000 + 520; // delay intro slightly
       const introVisibleMs = 1250;                // let it breathe a bit longer
       const introFadeMs = 100;                    // softer fade out
       const gapMs = 180;
@@ -162,14 +162,14 @@ export default function SolIntroText({
           {(phase === 'intro' || phase === 'intro-out') && (
           <motion.div
             key="sol"
-            initial={{ opacity: 0, y: 8, filter: 'blur(8px)' }}
+            initial={{ opacity: 0, y: 14, scale: 0.985, filter: 'blur(12px)' }}
             animate={
               phase === 'intro'
-                ? { opacity: 1, y: 0, filter: 'blur(0px)' }
+                ? { opacity: 1, y: 0, scale: 1, filter: 'blur(0.4px)' }
                 : { opacity: 0, y: -4, filter: 'blur(6px)' }
             }
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 1.05, ease: [0.16, 1, 0.3, 1] }}
             className="absolute inset-x-0 top-[22%] -translate-y-1/2 flex justify-center"
           >
             <div

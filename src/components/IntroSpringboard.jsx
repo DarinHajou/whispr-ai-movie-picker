@@ -10,7 +10,7 @@ export default function IntroSpringboard({ onStart }) {
   const [showHint, setShowHint] = useState(false);
 
   // ===== TUNING KNOBS =====
-  const ORB_SIZE = '60vmin';
+  const ORB_SIZE = '70vmin';
   const FILTER = 'brightness(0.3) contrast(0.92) saturate(0.4) blur(0.9px)';
   const ORB_OPACITY = 0.4;
   const PLAYBACK = 0.75;
@@ -20,7 +20,7 @@ export default function IntroSpringboard({ onStart }) {
 
   useEffect(() => {
     // First let the screen sit in black, then reveal orb, then text
-    const t1 = setTimeout(() => setOrbOn(true), 1400);
+    const t1 = setTimeout(() => setOrbOn(true), 1900);
     const t2 = setTimeout(() => setShowContent(true), 1700);
 
     return () => {
@@ -36,11 +36,34 @@ export default function IntroSpringboard({ onStart }) {
       style={{ cursor: showHint ? 'pointer' : 'default' }}
     >
       {/* Base dark-room background */}
-      <div
+      <motion.div
         className="absolute inset-0 z-0"
-        style={{
+        initial={{
+          opacity: 0,
           background:
-            'radial-gradient(circle at 50% 46%, rgba(24,24,24,0.92) 0%, rgba(10,10,10,0.96) 42%, rgba(0,0,0,1) 82%)',
+            'radial-gradient(circle at 50% 46%, rgba(6,6,6,1) 0%, rgba(0,0,0,1) 58%, rgba(0,0,0,1) 100%)',
+        }}
+        animate={{
+          opacity: 1,
+          background:
+            'radial-gradient(circle at 50% 46%, rgba(34,30,26,0.95) 0%, rgba(12,12,12,0.98) 44%, rgba(0,0,0,1) 84%)',
+        }}
+        transition={{
+          delay: 0.55,
+          duration: 2.4,
+          ease: [0.22, 1, 0.36, 1],
+        }}
+      />
+
+      {/* Real black fade overlay */}
+      <motion.div
+        className="absolute inset-0 z-50 pointer-events-none bg-black"
+        initial={{ opacity: 1 }}
+        animate={{ opacity: 0 }}
+        transition={{
+          delay: 0.35,
+          duration: 2.2,
+          ease: [0.22, 1, 0.36, 1],
         }}
       />
 
@@ -78,7 +101,7 @@ export default function IntroSpringboard({ onStart }) {
               e.currentTarget.playbackRate = PLAYBACK;
             }}
           >
-            <source src="/images/orb-4.mp4" type="video/mp4" />
+            <source src="/images/3825869373-preview.mp4" type="video/mp4" />
           </video>
         </div>
       </motion.div>
