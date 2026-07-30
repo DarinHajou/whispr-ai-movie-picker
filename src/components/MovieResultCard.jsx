@@ -65,7 +65,7 @@ const solCommentaryByTone = {
         className="w-20 sm:w-24 rounded-md object-cover"
       />
 
-      <div className="absolute top-2 right-2 flex items-center bg-black/70 px-1 py-0.5 rounded-md text-yellow-400 text-xs font-semibold gap-1">
+      <div className="absolute top-2 right-2 flex items-center bg-black/70 px-1 py-0.5 rounded-md text-yellow-400 text-xs  font-semibold gap-1">
         <img
           src="/images/imdb_logo.png"
           alt="IMDb"
