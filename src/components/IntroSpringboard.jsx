@@ -138,7 +138,7 @@ export default function IntroSpringboard({ onStart }) {
   className="absolute inset-0 z-[1] pointer-events-none"
   style={{
     background:
-      'radial-gradient(circle at 50% 35%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.18) 10%, rgba(0,0,0,0.58) 44%, rgba(0,0,0,0.96) 66%)',
+      'radial-gradient(circle at 50% 35%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.18) 20%, rgba(0,0,0,0.58) 44%, rgba(0,0,0,0.96) 66%)',
   }}
 />
 
