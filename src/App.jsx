@@ -14,14 +14,11 @@ export default function App() {
   };
 
   const [flowMode, setFlowMode] = useState(FLOW.INTRO);
-  const [mode, setMode] = useState("guided"); // Required for GPTResults "chat" feature
   const [emotion, setEmotion] = useState(null);
   const [intensity, setIntensity] = useState(null);
-  const [chatMetadata, setChatMetadata] = useState(null);
 
   const resetAll = () => {
     setFlowMode(FLOW.INTRO);
-    setMode("guided");
     setEmotion(null);
     setIntensity(null);
     reset();
@@ -36,12 +33,12 @@ export default function App() {
     parsedMovies,
     hasMovies,
     retry,
+    refine,
     reset,
     retryCount,
   } = useGPTFetcher({
     // IMPORTANT: We only send the text label (e.g., "Thrill") to the AI!
     mood: emotion?.label || emotion, 
-    intent: "", // Intent is gone, we pass an empty string so your backend doesn't crash
     energy: intensity,
     step: fetchStep,
   });
@@ -95,20 +92,16 @@ export default function App() {
 
           {flowMode === FLOW.RESULTS && (
             <GPTResults
-              mode={mode} // Passes the mode down!
-              setMode={setMode}
-              mood={emotion} // We pass the WHOLE object here so GPTResults can show the Orb!
+              mood={emotion}
               energy={intensity}
               gptResult={gptResult}
               parsedMovies={parsedMovies}
               hasMovies={hasMovies}
               loading={loading}
               error={error}
-              retryCount={retryCount}
               onRetry={handleRetry}
+              onRefine={refine}
               resetAll={resetAll}
-              chatMetadata={chatMetadata}
-              setChatMetadata={setChatMetadata}
             />
           )}
         </main>
