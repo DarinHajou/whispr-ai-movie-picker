@@ -115,7 +115,7 @@ export default function App() {
 
         {/* Footer quote */}
         <p className="text-center text-xs sm:text-xs text-gray-500 max-w-md mx-auto mt-12 px-4 leading-relaxed">
-          "Whispr is a calm companion built with soul — built for real connection, one story at a time."
+          "Whispr is a calm companion built with soul — Choose the experience you want, and let Sol curate the night.."
           <br />
           <span className="not-italic text-[rgba(166,177,196,0.7)]">— Sol</span>
         </p>
