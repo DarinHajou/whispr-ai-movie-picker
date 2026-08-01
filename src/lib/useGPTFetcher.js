@@ -10,6 +10,7 @@ export function useGPTFetcher({ mood, energy, step }) {
   const [error, setError] = useState("");
   const [hasFetched, setHasFetched] = useState(false);
   const [retryCount, setRetryCount] = useState(0);
+  const [refinement, setRefinement] = useState("");
 
   const abortRef = useRef(null);
 
@@ -30,7 +31,7 @@ export function useGPTFetcher({ mood, energy, step }) {
       setError("");
 
       try {
-        const prompt = buildPrompt(mood, energy);
+        const prompt = buildPrompt(mood, energy, refinement);
 
         const result = await callOpenAI(prompt, {
           signal: controller.signal,
@@ -61,7 +62,7 @@ export function useGPTFetcher({ mood, energy, step }) {
       cancelled = true;
       controller.abort();
     };
-  }, [step, mood, energy, hasFetched]);
+  }, [step, mood, energy, refinement, hasFetched]);
 
   function retry() {
     if (retryCount >= 2) return;
@@ -73,6 +74,17 @@ export function useGPTFetcher({ mood, energy, step }) {
     setHasFetched(false);
   }
 
+  function refine(direction) {
+    if (!direction) return;
+
+    setRefinement(direction);
+    setGptResult("");
+    setParsedMovies([]);
+    setError("");
+    setHasFetched(false);
+    setRetryCount(0);
+  }
+
   function reset() {
     abortRef.current?.abort();
 
@@ -82,6 +94,7 @@ export function useGPTFetcher({ mood, energy, step }) {
     setHasFetched(false);
     setRetryCount(0);
     setLoading(false);
+    setRefinement("");
   }
 
   return {
@@ -91,6 +104,7 @@ export function useGPTFetcher({ mood, energy, step }) {
     loading,
     error,
     retry,
+    refine,
     reset,
     retryCount,
   };
