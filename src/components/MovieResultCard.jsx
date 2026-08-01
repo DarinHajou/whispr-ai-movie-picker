@@ -1,7 +1,14 @@
 import { useEffect, useState } from "react";
 import { fetchMovieMeta } from "../lib/fetchPosterUrl";
 
-export default function MovieResultCard({ title, year, tone, imdb, plot }) {
+export default function MovieResultCard({
+  title,
+  year,
+  tone,
+  imdb,
+  plot,
+  featured = false,
+}) {
   const [poster, setPoster] = useState("/poster-placeholder.jpg");
   const [imdbId, setImdbId] = useState(null);
   const [tmdbId, setTmdbId] = useState(null);
@@ -57,12 +64,28 @@ const solCommentaryByTone = {
       });
   }, [tmdbId]);
 
+const cardClassName = featured
+  ? "relative flex flex-col sm:flex-row bg-[rgba(255,197,66,0.07)] border border-[#FFC542]/30 rounded-2xl shadow-xl p-5 sm:p-6 gap-5 sm:gap-6 items-start"
+  : "relative flex bg-gray-800/80 rounded-xl shadow-lg p-4 gap-4 sm:gap-5 items-start";
+
+const posterClassName = featured
+  ? "w-full max-w-[220px] sm:w-36 aspect-[2/3] self-center rounded-lg object-cover shadow-xl"
+  : "w-20 sm:w-24 aspect-[2/3] rounded-md object-cover";
+
+const contentClassName = featured
+  ? "flex flex-col space-y-3 text-left w-full sm:flex-1"
+  : "flex flex-col space-y-2 text-left max-w-[calc(100%-6rem)]";
+
+const titleClassName = featured
+  ? "text-xl sm:text-2xl font-semibold text-warm-white hover:underline leading-snug"
+  : "text-lg sm:text-xl font-semibold text-warm-white hover:underline leading-snug";
+
   return (
-    <div className="relative flex bg-gray-800/80 rounded-xl shadow-lg p-4 gap-4 sm:gap-5 items-start">
+    <div className={cardClassName}>
       <img
         src={poster}
         alt={`${title} poster`}
-        className="w-20 sm:w-24 rounded-md object-cover"
+        className={posterClassName}
       />
 
       <div className="absolute top-2 right-2 flex items-center bg-black/70 px-1 py-0.5 rounded-md text-yellow-400 text-xs  font-semibold gap-1">
@@ -71,21 +94,20 @@ const solCommentaryByTone = {
           alt="IMDb"
           className="w-5 h-4 object-contain"
         />
-        <span>{imdb}</span>
       </div>
 
-      <div className="flex flex-col space-y-2 text-left max-w-[calc(100%-6rem)]">
+      <div className={contentClassName}>
         {imdbId ? (
           <a
             href={`https://www.imdb.com/title/${imdbId}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-lg sm:text-xl font-semibold text-warm-white hover:underline leading-snug"
+            className={titleClassName}
           >
             {title} ({year})
           </a>
         ) : (
-          <h3 className="text-lg sm:text-xl font-semibold text-warm-white leading-snug">
+          <h3 className={titleClassName}>
             {title} ({year})
           </h3>
         )}
