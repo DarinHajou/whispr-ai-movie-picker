@@ -17,11 +17,11 @@ export default function IntroSpringboard({ onStart }) {
   // When the orb begins entering the scene.
   // Increase = orb appears later.
   // Decrease = orb appears sooner.8
-  const ORB_START_MS = 1950;
+  const ORB_START_MS = 2250;
 
   // When the Sol text component appears.
   // SolIntroText still has its own internal timing after this.
-  const TEXT_START_MS = 2650;
+  const TEXT_START_MS = 2250;
 
   // =========================================================
   // ORB VISUAL KNOBS
@@ -30,33 +30,33 @@ export default function IntroSpringboard({ onStart }) {
   // Overall size of the Sol orb.
   // 60vmin = smaller / calmer.
   // 70vmin = more cinematic / present.
-  const ORB_SIZE = '32vmin';
+  const ORB_SIZE = '38vmin';
 
   // Video treatment for the orb.
   // brightness = how visible/luminous the orb is.
   // contrast = how sharp/punchy the inner motion feels.
   // saturate = how colorful the orb feels.
   // blur = how soft/dreamlike the orb texture feels.
-  const FILTER = 'brightness(1.3) contrast(0.55) saturate(0.7) blur(7.9px)';
+  const FILTER = 'brightness(1.9) contrast(0.30) saturate(0.6) blur(8.9px)';
 
   // Overall opacity of the orb video.
   // Lower = ghostlier, more atmospheric.
   // Higher = more obvious, more “AI presence”.
-  const ORB_OPACITY = 0.9;
+  const ORB_OPACITY = 1.6;
 
   // Video playback speed.
   // 1 = normal.
   // 0.75 = slower / calmer.
   // 1.25 = more active.
-  const PLAYBACK = 1.25;
+  const PLAYBACK = 1.85;
 
   // Orb entrance motion.
   // Starts lower and smaller, then grows and floats upward.
   const ORB_INITIAL_SCALE = 0;
   const ORB_FINAL_SCALE = 1;
-  const ORB_START_Y = 118;
-  const ORB_END_Y = -118;
-  const ORB_ENTRY_BLUR = 'blur(30px)';
+  const ORB_START_Y = 18;
+  const ORB_END_Y = -104;
+  const ORB_ENTRY_BLUR = 'blur(60px)';
   const ORB_ENTRY_DURATION = 1.1;
 
   // =========================================================
@@ -65,7 +65,7 @@ export default function IntroSpringboard({ onStart }) {
 
   // Passed into SolIntroText.
   // Controls when SolIntroText begins its internal type sequence.
-  const TYPE_DELAY = 1.2;
+  const TYPE_DELAY = 1.0;
 
   // Passed into SolIntroText.
   // Controls character stagger speed for the running sentence.
@@ -81,7 +81,7 @@ export default function IntroSpringboard({ onStart }) {
   const FINAL_BLACK_VEIL = 0.62;
 
   // How long the intro sits in full black before the reveal starts.
-  const BLACK_HOLD_DELAY = 1;
+  const BLACK_HOLD_DELAY = 1.0;
 
   // How slowly black reveals the background.
   const BLACK_REVEAL_DURATION = 1.6;
@@ -94,7 +94,7 @@ export default function IntroSpringboard({ onStart }) {
   const STATIC_AURA_OPACITY = 0.16;
 
   // Active speaking aura. Only pulses when SolIntroText says Sol is speaking.
-  const SPEAKING_AURA_DURATION = 0.98;
+  const SPEAKING_AURA_DURATION = 0.78;
 
   useEffect(() => {
     const t1 = setTimeout(() => {
@@ -113,7 +113,7 @@ export default function IntroSpringboard({ onStart }) {
 
   return (
     <motion.div
-      className="fixed inset-0 overflow-hidden bg-[#121212] "
+      className="fixed inset-0 overflow-hidden bg-[#1E1E1E] "
       onClick={showHint ? onStart : undefined}
       style={{ cursor: showHint ? 'pointer' : 'default' }}
     >
@@ -138,7 +138,7 @@ export default function IntroSpringboard({ onStart }) {
   className="absolute inset-0 z-[1] pointer-events-none"
   style={{
     background:
-      'radial-gradient(circle at 50% 35%, rgba(255, 255, 255, 0) 0%, rgba(246, 30, 30, 0.08) 20%, rgba(0,0,0,0.58) 44%, rgba(0,0,0,0.96) 66%)',
+      'radial-gradient(circle at 50% 35%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.18) 30%, rgba(0,0,0,0.58) 44%, rgba(0,0,0,0.96) 96%)',
   }}
 />
 
@@ -158,16 +158,16 @@ export default function IntroSpringboard({ onStart }) {
         animate={
           orbOn
             ? {
-                opacity: 0.5,
+                opacity: 1,
                 scale: ORB_FINAL_SCALE,
                 y: ORB_END_Y,
-                filter: 'blur(1.5px)',
+                filter: 'blur(1px)',
               }
             : {}
         }
         transition={{
           duration: ORB_ENTRY_DURATION,
-          ease: [0.96, 1.3, 0.8, 1],
+          ease: [0.16, 1, 0.3, 1],
         }}
       >
         {/* 
@@ -257,7 +257,7 @@ export default function IntroSpringboard({ onStart }) {
               e.currentTarget.playbackRate = PLAYBACK;
             }}
           >
-            <source src="/images/orbz2.mp4" type="video/mp4" />
+            <source src="/images/orbz-003.mp4" type="video/mp4" />
           </video>
         </div>
       </motion.div>
