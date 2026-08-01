@@ -1,18 +1,38 @@
 import MovieResultCard from "./MovieResultCard";
-import buildPrompt from "../lib/buildPrompt";
-import { callOpenAI } from "../lib/callOpenAI";
-import { useState } from "react";
-import { TypeAnimation } from "react-type-animation";
 import { motion } from "framer-motion";
 
 // --- THE SOL WHISPER DICTIONARY ---
 export const SOL_LINES = {
-  comfort: { soft: "Something gentle tonight.", balanced: "Warm, with a little depth.", deep: "Comfort… the kind that lands." },
-  escape: { soft: "A soft exit.", balanced: "Take you somewhere else.", deep: "Disappear into it." },
-  thrill: { soft: "Just a spark.", balanced: "Tight pulse. Clean adrenaline.", deep: "No looking back." },
-  longing: { soft: "A quiet ache.", balanced: "Bittersweet and close.", deep: "Let it break open." },
-  release: { soft: "A gentle exhale.", balanced: "Let it move through you.", deep: "A full cleanse." },
-  wonder: { soft: "A little shimmer.", balanced: "Open the sky.", deep: "Awe, unapologetically." }
+  comfort: {
+    soft: "Something gentle tonight.",
+    balanced: "Warm, with a little depth.",
+    deep: "Comfort… the kind that lands.",
+  },
+  escape: {
+    soft: "A soft exit.",
+    balanced: "Take you somewhere else.",
+    deep: "Disappear into it.",
+  },
+  thrill: {
+    soft: "Just a spark.",
+    balanced: "Tight pulse. Clean adrenaline.",
+    deep: "No looking back.",
+  },
+  longing: {
+    soft: "A quiet ache.",
+    balanced: "Bittersweet and close.",
+    deep: "Let it break open.",
+  },
+  release: {
+    soft: "A gentle exhale.",
+    balanced: "Let it move through you.",
+    deep: "A full cleanse.",
+  },
+  wonder: {
+    soft: "A little shimmer.",
+    balanced: "Open the sky.",
+    deep: "Awe, unapologetically.",
+  },
 };
 
 export const intensityKeyFromLabel = (label) => {
@@ -21,61 +41,98 @@ export const intensityKeyFromLabel = (label) => {
   return "balanced";
 };
 
-export default function GPTResults({
-  mode, setMode,
-  mood, energy, // 'intent' is officially dead and removed!
-  followup, setFollowup,
-  gptResult, setGptResult,
-  parsedMovies, hasMovies,
-  retryCount, onRetry,
-  loading, setLoading,
-  error, setError,
-  setHasFetched,
-  setStep,
-  resetAll,
-  chatMetadata,
-  setChatMetadata,
-}) {
+const REFINEMENT_OPTIONS = [
+  {
+    label: "More surprising",
+    direction:
+      "Make the recommendations more surprising and less obvious while preserving the emotional fit.",
+  },
+  {
+    label: "Lighter",
+    direction:
+      "Shift the recommendations toward lighter and easier viewing without losing the selected craving.",
+  },
+  {
+    label: "Darker",
+    direction:
+      "Shift the recommendations toward darker, heavier, or more intense films while preserving the selected craving.",
+  },
+  {
+    label: "More recent",
+    direction:
+      "Prioritize strong films released within approximately the last ten years.",
+  },
+  {
+    label: "More obscure",
+    direction:
+      "Prioritize lesser-known films and avoid obvious mainstream recommendations.",
+  },
+  {
+    label: "Surprise me",
+    direction:
+      "Take a bold and unexpected direction while still respecting the craving and intensity.",
+    featured: true,
+  },
+];
 
-  const [step, setSteps] = useState(0);
+export default function GPTResults({
+  mood,
+  energy,
+  gptResult,
+  parsedMovies,
+  hasMovies,
+  loading,
+  error,
+  onRetry,
+  onRefine,
+  resetAll,
+}) {
   const primaryMovie = parsedMovies?.[0] || null;
   const otherMovies = parsedMovies?.slice(1) || [];
+  const cravingLabel = mood?.label || mood || "this feeling";
+  const intensityLabel = energy || "your chosen intensity";
+  const accentColor = mood?.color || "#FFC542";
 
   // ==========================================
-  // SCREEN 2.5: THE MAGIC LOADING STATE
+  // CINEMATIC LOADING STATE
   // ==========================================
-  if (loading && !gptResult && mode === "guided") {
-    // Safely look up Sol's whisper based on the mood object and intensity label
-    const solWhisper = mood && energy 
-      ? SOL_LINES[mood.id]?.[intensityKeyFromLabel(energy)] 
-      : "Listening...";
+  if (loading && !gptResult) {
+    const solWhisper =
+      mood && energy
+        ? SOL_LINES[mood.id]?.[intensityKeyFromLabel(energy)]
+        : "Listening...";
 
     return (
-      <motion.div 
-        initial={{ opacity: 0 }} 
-        animate={{ opacity: 1 }} 
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         className="flex flex-col items-center mb-12 justify-center w-full h-full min-h-[60vh]"
       >
-        {/* The Orb stays on screen, still breathing perfectly! */}
         {mood && (
           <motion.div
-            layoutId={`orb-${mood.id}`} 
+            layoutId={`orb-${mood.id}`}
             className="w-40 h-40 rounded-full mb-16"
             style={{
               background: `radial-gradient(circle at 35% 35%, ${mood.color} 0%, rgba(0,0,0,0.85) 90%)`,
             }}
-            animate={{ scale: mood.scaleAnim, boxShadow: mood.shadowAnim }}
-            transition={{ duration: mood.animDuration, ease: mood.ease, repeat: Infinity }}
+            animate={{
+              scale: mood.scaleAnim,
+              boxShadow: mood.shadowAnim,
+            }}
+            transition={{
+              duration: mood.animDuration,
+              ease: mood.ease,
+              repeat: Infinity,
+            }}
           />
         )}
 
-        {/* Sol's Whisper */}
-        <motion.p 
+        <motion.p
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 1.5 }} // Fades in slowly and cinematically
-          className="text-xl sm:text-2xl font-light italic text-warm-white/80 tracking-wide text-center px-6 drop-shadow-md border-red"
+          transition={{ delay: 0.5, duration: 1.5 }}
+          className="text-xl sm:text-2xl font-light italic text-warm-white/80 tracking-wide text-center px-6 drop-shadow-md"
         >
           "{solWhisper}"
         </motion.p>
@@ -83,184 +140,124 @@ export default function GPTResults({
     );
   }
 
-  // ==========================================
-  // MAIN RESULTS SCREEN
-  // ==========================================
   return (
-    <>
-      {mode === "guided" ? (
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
-          {gptResult !== "" && (
-            hasMovies ? (
-              <div className="space-y-12">
-                {primaryMovie && (
-                  <section>
-                    <div className="text-center mb-5">
-                      <p className="text-xs uppercase tracking-[0.3em] text-[#FFC542]/70 mb-2">
-                        Sol’s pick for tonight
-                      </p>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1 }}
+    >
+      {gptResult !== "" &&
+        (hasMovies ? (
+          <div className="space-y-12">
+            {primaryMovie && (
+              <section>
+                <div className="text-center mb-5">
+                 <p className="text-xs uppercase tracking-[0.28em] text-warm-white/45 mb-3">
+                    Your night, curated by{" "}
+                    <span className="text-[#FFC542]">Sol</span>
+                  </p>
 
-                      <p className="text-sm italic text-warm-white/50">
-                        The strongest match for your craving.
-                      </p>
-                    </div>
+                 <h2 className="mt-7 text-center text-2xl sm:text-3xl font-light leading-relaxed text-warm-white/90">
+                  You picked{" "}
 
+                  <span style={{ color: accentColor }}>
+                    {cravingLabel}
+                  </span>
+
+                  {" "}with{" "}
+
+                  <span className="whitespace-nowrap text-warm-white/70">
+                  {intensityLabel}
+                </span>
+
+                  {" "}intensity
+                </h2>
+
+                  <p className="text-sm text-gray-500 mt-3">
+                    Six films shaped around the experience you chose.
+                  </p>
+                </div>
+
+                <MovieResultCard {...primaryMovie} featured />
+              </section>
+            )}
+
+            {otherMovies.length > 0 && (
+              <section>
+                <h2 className="text-sm uppercase tracking-[0.25em] text-warm-white/50 text-center mb-5">
+                  Other films that fit
+                </h2>
+
+                <div className="space-y-4">
+                  {otherMovies.map((movie, index) => (
                     <MovieResultCard
-                      {...primaryMovie}
-                      featured
+                      key={`${movie.title}-${movie.year}-${index}`}
+                      {...movie}
                     />
-                  </section>
-                )}
+                  ))}
+                </div>
+              </section>
+            )}
+          </div>
+        ) : (
+          <pre className="text-sm text-red-400 whitespace-pre-wrap">
+            Could not parse GPT result. Here’s the raw text:
+            {"\n\n" + gptResult}
+          </pre>
+        ))}
 
-                {otherMovies.length > 0 && (
-                  <section>
-                    <h2 className="text-sm uppercase tracking-[0.25em] text-warm-white/50 text-center mb-5">
-                      Other films that fit
-                    </h2>
+      {gptResult && hasMovies && (
+        <div className="mt-10 bg-[rgba(18,18,18,0.6)] rounded-xl px-5 sm:px-6 py-8 shadow-lg text-center border border-[rgba(255,255,255,0.05)]">
+          <p className="text-xl sm:text-2xl font-light text-warm-white/90">
+            Want{" "}
+            <span className="text-[#FFC542]">Sol</span>
+            {" "}to adjust the direction?
+          </p>
 
-                    <div className="space-y-4">
-                      {otherMovies.map((movie, index) => (
-                        <MovieResultCard
-                          key={`${movie.title}-${movie.year}-${index}`}
-                          {...movie}
-                        />
-                      ))}
-                    </div>
-                  </section>
-                )}
-              </div>
-            ) : (
-              <pre className="text-sm text-red-400 whitespace-pre-wrap">
-                Could not parse GPT result. Here’s the raw text:
-                {"\n\n" + gptResult}
-              </pre>
-            )
-          )}
+          <p className="text-sm text-gray-500 mt-2">
+            Keep the craving. Shift the direction.
+          </p>
 
-          {/* Bottom Actions Panel */}
-          {gptResult && (
-            <div className="mt-8 bg-[rgba(18,18,18,0.6)] rounded-xl px-6 py-8 shadow-lg text-center space-y-8 border border-[rgba(255,255,255,0.05)]">
-              <p className="text-xl sm:text-2xl font-light text-warm-white/90">
-                Tell me what didn’t quite land — Sol’s still listening.
-              </p>
-
-              <div className="flex justify-center gap-4 mt-8">
-                <button
-                  onClick={onRetry}
-                  disabled={retryCount >= 2}
-                  className={`px-6 py-3 rounded-full text-sm tracking-wider uppercase transition duration-300
-                    ${retryCount < 2
-                      ? "bg-[rgba(255,255,255,0.1)] hover:bg-[rgba(255,255,255,0.2)] border border-[rgba(255,255,255,0.2)] text-warm-white shadow-md"
-                      : "bg-gray-800 text-gray-500 cursor-not-allowed border-transparent"
-                    }`}
-                >
-                  🔄 Try a fresh 6
-                </button>
-                <button
-                  onClick={() => {
-                    setChatMetadata({ mood, energy });
-                    setMode("chat");
-                  }}
-                  className="px-6 py-3 rounded-full text-sm tracking-wider uppercase bg-[#FFC542]/10 text-[#FFC542] border border-[#FFC542]/30 hover:bg-[#FFC542]/20 shadow transition"
-                >
-                  💬 Chat with Sol
-                </button>
-              </div>
-
-              <div className="flex justify-center gap-8 mt-12">
-                <button onClick={resetAll} className="text-sm text-gray-500 uppercase tracking-widest hover:text-white transition">
-                  ↻ Start over
-                </button>
-              </div>
-            </div>
-          )}
-        </motion.div>
-      ) : (
-        
-        // ==========================================
-        // CHAT WITH SOL SCREEN
-        // ==========================================
-        <div className="bg-[rgba(18,18,18,0.6)] border border-[rgba(255,255,255,0.05)] rounded-2xl px-8 py-10 max-w-lg mx-auto text-center mt-12">
-          {mode === "chat" && chatMetadata && (
-            <div className="text-center text-lg italic mb-16 min-h-[120px] text-[#FFC542]">
-              {step === 0 && (
-                <TypeAnimation
-                  sequence={["Didn’t find what you were looking for?", 1200, () => setSteps(1)]}
-                  speed={65} wrapper="p" cursor={false} repeat={0} className="font-medium"
-                />
-              )}
-              {step === 1 && (
-                <TypeAnimation
-                  sequence={["No worries.", 1000, () => setSteps(2)]}
-                  speed={65} wrapper="p" cursor={false} repeat={0} className="font-medium"
-                />
-              )}
-              {step === 2 && (
-                <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8 }} className="font-medium text-[#FFC542]/80">
-                  You’re craving <span className="text-white font-semibold">{chatMetadata.mood?.label || "something special"}</span> at a <span className="text-white font-semibold">{chatMetadata.energy}</span> intensity.
-                </motion.p>
-              )}
-            </div>
-          )}
-
-          <textarea
-            rows={4}
-            value={followup}
-            onChange={(e) => setFollowup(e.target.value)}
-            className="w-full bg-[rgba(0,0,0,0.3)] text-warm-white p-4 rounded-xl text-sm shadow-inner focus:outline-none focus:ring-1 focus:ring-[#FFC542]/50 border border-[rgba(255,255,255,0.1)] transition resize-none placeholder:text-gray-600"
-            placeholder="e.g. I want something with a female lead, or set in space..."
-          />
-        
-          <div className="flex flex-col sm:flex-row justify-center items-center gap-3 mt-8">
-            <button
-              onClick={async () => {
-                setLoading(true);
-                setError("");
-                try {
-                  // Make sure your buildPrompt function handles mood as an object now! 
-                  // E.g. buildPrompt(mood.label, energy)
-                  const prompt = buildPrompt(mood?.label || mood, "", energy) + `\n\nUser added: ${followup}`;
-                  const result = await callOpenAI(prompt);
-                  setGptResult(result);
-                  setFollowup("");
-                } catch (err) {
-                  setError(err.message);
-                } finally {
-                  setLoading(false);
+          <div className="flex flex-wrap justify-center gap-3 mt-7">
+            {REFINEMENT_OPTIONS.map(({ label, direction, featured }) => (
+              <button
+                key={label}
+                type="button"
+                onClick={() => onRefine(direction)}
+                className={
+                  featured
+                    ? "px-5 py-2.5 rounded-full text-xs sm:text-sm tracking-wide bg-[#FFC542]/15 text-[#FFC542] border border-[#FFC542]/40 hover:bg-[#FFC542]/25 transition shadow-[0_0_20px_rgba(255,197,66,0.08)]"
+                    : "px-4 py-2.5 rounded-full text-xs sm:text-sm tracking-wide bg-white/5 text-warm-white border border-white/10 hover:bg-white/10 hover:border-white/20 transition"
                 }
-              }}
-              className="px-8 py-3 text-sm tracking-wider uppercase font-semibold rounded-full bg-[#FFC542]/10 text-[#FFC542] border border-[#FFC542]/30 hover:bg-[#FFC542]/20 transition shadow"
-            >
-              ✏️ Refine Suggestions
-            </button>
+              >
+                {label}
+              </button>
+            ))}
           </div>
 
-          <div className="flex justify-center gap-8 mt-12">
-            <button onClick={() => setMode("guided")} className="text-sm text-gray-500 tracking-widest uppercase hover:text-white transition">
-              ← Back to results
-            </button>
-            <button onClick={resetAll} className="text-sm text-gray-500 tracking-widest uppercase hover:text-white transition">
-              ↻ Start over
-            </button>
-          </div>
-        </div>         
-      )}
-
-      {/* CHAT MODE LOADING OVERLAY */}
-      {loading && mode === "chat" && (
-        <div className="flex justify-center items-center my-10" role="status">
-          <div className="w-10 h-10 rounded-full border-2 border-[#FFC542]/30 border-t-[#FFC542] animate-spin" />
+          <button
+            type="button"
+            onClick={resetAll}
+            className="mt-10 text-xs text-gray-500 uppercase tracking-widest hover:text-white transition"
+          >
+            ↻ Change craving or intensity
+          </button>
         </div>
       )}
 
       {error && (
-        <div className="text-center text-red-400 my-4">
+        <div className="text-center text-red-400 my-6">
           <p className="text-base">{error}</p>
-          <button onClick={() => { setGptResult(""); setError(""); setHasFetched(false); }} className="mt-2 underline hover:text-white">
+
+          <button
+            type="button"
+            onClick={onRetry}
+            className="mt-2 underline hover:text-white"
+          >
             Retry
           </button>
         </div>
       )}
-    </>
+    </motion.div>
   );
 }
