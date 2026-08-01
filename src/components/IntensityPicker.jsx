@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef,useState } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { usePinch } from "@use-gesture/react";
 
@@ -35,6 +35,20 @@ export default function IntensityPicker({ emotion, setIntensity, onNext }) {
     damping: 30,
   });
 
+  const updateIntensityFromScale = (scale) => {
+  const nextScale = Math.max(0.6, Math.min(scale, 1.5));
+
+  rawScale.set(nextScale);
+
+  if (nextScale < 0.85) {
+    setIntensityLabel("Soft & Gentle");
+  } else if (nextScale > 1.25) {
+    setIntensityLabel("Deep & Intense");
+  } else {
+    setIntensityLabel("Balanced");
+  }
+};
+
   // 2. The Massive Responsive Glow
   const dynamicGlow = useTransform(
     smoothScale,
@@ -47,24 +61,84 @@ export default function IntensityPicker({ emotion, setIntensity, onNext }) {
   );
 
   const handleIntensitySelect = (option) => {
-  setIntensityLabel(option.label);
-  rawScale.set(option.scale);
-};
+    updateIntensityFromScale(option.scale);
+  };
 
   // 3. The Pinch Math
-  const bind = usePinch(({ offset: [s], event }) => {
-    if (event && event.cancelable) event.preventDefault();
+  const bind = usePinch(
+    ({ offset: [scale], event }) => {
+      if (event?.cancelable) {
+        event.preventDefault();
+      }
 
-    const newScale = Math.max(0.6, Math.min(s, 1.5));
-    rawScale.set(newScale);
+      updateIntensityFromScale(scale);
+    },
+    {
+      from: () => [rawScale.get(), 0],
+      pointer: { touch: true },
+    }
+  );
 
-    if (newScale < 0.85) setIntensityLabel("Soft & Gentle");
-    else if (newScale > 1.25) setIntensityLabel("Deep & Intense");
-    else setIntensityLabel("Balanced");
-  }, {
-    from: () => [rawScale.get(), 0],
-    pointer: { touch: true }
-  });
+  const mouseDragRef = useRef({
+  active: false,
+  pointerId: null,
+  startY: 0,
+  startScale: DEFAULT_INTENSITY.scale,
+});
+
+const handleMouseDragStart = (event) => {
+  if (event.pointerType !== "mouse" || event.button !== 0) {
+    return;
+  }
+
+  event.preventDefault();
+
+  mouseDragRef.current = {
+    active: true,
+    pointerId: event.pointerId,
+    startY: event.clientY,
+    startScale: rawScale.get(),
+  };
+
+  event.currentTarget.setPointerCapture(event.pointerId);
+};
+
+const handleMouseDragMove = (event) => {
+  const drag = mouseDragRef.current;
+
+  if (
+    !drag.active ||
+    event.pointerType !== "mouse" ||
+    event.pointerId !== drag.pointerId
+  ) {
+    return;
+  }
+
+  event.preventDefault();
+
+  // Up creates a positive value; down creates a negative value.
+  const verticalDistance = drag.startY - event.clientY;
+
+  const nextScale =
+    drag.startScale + verticalDistance / 220;
+
+  updateIntensityFromScale(nextScale);
+};
+
+const handleMouseDragEnd = (event) => {
+  const drag = mouseDragRef.current;
+
+    if (!drag.active || event.pointerId !== drag.pointerId) {
+      return;
+    }
+
+    mouseDragRef.current.active = false;
+    mouseDragRef.current.pointerId = null;
+
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
+  };
 
   const handleConfirm = () => {
     setIntensity(intensityLabel);
@@ -96,7 +170,15 @@ export default function IntensityPicker({ emotion, setIntensity, onNext }) {
       {/* THE GIANT ORB (Pure 1-to-1 Gesture Control) */}
       <div className="flex-grow flex items-center justify-center relative w-full min-h-[260px] my-6">
         <motion.div
-          layoutId={`orb-${emotion.id}`} 
+          layoutId={`orb-${emotion.id}`}
+          onPointerDown={handleMouseDragStart}
+          onPointerMove={handleMouseDragMove}
+          onPointerUp={handleMouseDragEnd}
+          onPointerCancel={handleMouseDragEnd}
+          onLostPointerCapture={() => {
+            mouseDragRef.current.active = false;
+            mouseDragRef.current.pointerId = null;
+          }}
           className="w-40 h-40 rounded-full cursor-grab active:cursor-grabbing"
           style={{
             scale: smoothScale,
@@ -107,7 +189,7 @@ export default function IntensityPicker({ emotion, setIntensity, onNext }) {
       </div>
 
       {/* Bottom Controls */}
-      <div className="flex flex-col items-center h-28 justify-end relative z-10">
+      <div className="flex flex-col items-center h-28 mb-8 justify-end relative z-10">
         <motion.span 
           key={intensityLabel} 
           initial={{ opacity: 0, y: 10 }}
