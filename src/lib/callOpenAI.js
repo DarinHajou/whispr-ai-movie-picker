@@ -23,7 +23,10 @@ export async function callOpenAI(prompt, { signal } = {}) {
 
     return data.content?.trim() || "No recommendations were returned.";
   } catch (error) {
-    console.error("Recommendation request failed:", error);
+    if (error.name !== "AbortError") {
+      console.error("Recommendation request failed:", error);
+    }
+
     throw error;
   }
 }
