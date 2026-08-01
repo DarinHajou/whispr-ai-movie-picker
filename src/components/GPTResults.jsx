@@ -126,7 +126,7 @@ export default function GPTResults({
                       : "bg-gray-800 text-gray-500 cursor-not-allowed border-transparent"
                     }`}
                 >
-                  🔄 Try a fresh 10
+                  🔄 Try a fresh 6
                 </button>
                 <button
                   onClick={() => {
