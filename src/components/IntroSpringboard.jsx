@@ -72,21 +72,6 @@ export default function IntroSpringboard({ onStart }) {
   const TYPE_STEP = 0.028;
 
   // =========================================================
-  // BACKGROUND / CINEMATIC ROOM KNOBS
-  // =========================================================
-
-  // Final opacity of the black veil after the intro reveal.
-  // Higher = darker / more cinematic.
-  // Lower = reveals more of #1E1E1E.
-  const FINAL_BLACK_VEIL = 0.62;
-
-  // How long the intro sits in full black before the reveal starts.
-  const BLACK_HOLD_DELAY = 1.0;
-
-  // How slowly black reveals the background.
-  const BLACK_REVEAL_DURATION = 1.6;
-
-  // =========================================================
   // SPEAKING AURA KNOBS
   // =========================================================
 
