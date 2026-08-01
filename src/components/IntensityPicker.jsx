@@ -2,10 +2,38 @@ import React, { useState } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { usePinch } from "@use-gesture/react";
 
+const INTENSITY_OPTIONS = [
+  {
+    shortLabel: "Soft",
+    label: "Soft & Gentle",
+    scale: 0.6,
+  },
+  {
+    shortLabel: "Balanced",
+    label: "Balanced",
+    scale: 1,
+  },
+  {
+    shortLabel: "Deep",
+    label: "Deep & Intense",
+    scale: 1.5,
+  },
+];
+
+const DEFAULT_INTENSITY = INTENSITY_OPTIONS[0];
+
 export default function IntensityPicker({ emotion, setIntensity, onNext }) {
   // 1. The Pinch Scale
-  const rawScale = useMotionValue(0.6); 
-  const smoothScale = useSpring(rawScale, { stiffness: 500, damping: 30 });
+  const rawScale = useMotionValue(DEFAULT_INTENSITY.scale);
+
+  const [intensityLabel, setIntensityLabel] = useState(
+    DEFAULT_INTENSITY.label
+  );
+
+  const smoothScale = useSpring(rawScale, {
+    stiffness: 500,
+    damping: 30,
+  });
 
   // 2. The Massive Responsive Glow
   const dynamicGlow = useTransform(
@@ -18,7 +46,10 @@ export default function IntensityPicker({ emotion, setIntensity, onNext }) {
     ]
   );
 
-  const [intensityLabel, setIntensityLabel] = useState("Soft & Gentle");
+  const handleIntensitySelect = (option) => {
+  setIntensityLabel(option.label);
+  rawScale.set(option.scale);
+};
 
   // 3. The Pinch Math
   const bind = usePinch(({ offset: [s], event }) => {
@@ -93,7 +124,55 @@ export default function IntensityPicker({ emotion, setIntensity, onNext }) {
           Confirm
         </button>
       </div>
+{/* Three-step intensity selector */}
+<div className="relative z-10 w-full max-w-md px-5 mb-5">
+  <div className="relative">
+    {/* Connecting line */}
+    <div className="absolute left-[16.66%] right-[16.66%] top-[35px] h-px bg-white/20" />
 
+    <div className="relative grid grid-cols-3">
+      {INTENSITY_OPTIONS.map((option) => {
+        const isSelected = intensityLabel === option.label;
+
+        return (
+          <button
+            key={option.label}
+            type="button"
+            onClick={() => handleIntensitySelect(option)}
+            aria-pressed={isSelected}
+            className="flex flex-col items-center gap-3 text-center"
+          >
+            <span
+              className={`text-xs sm:text-sm transition-colors duration-300 ${
+                isSelected
+                  ? "text-warm-white"
+                  : "text-warm-white/40 hover:text-warm-white/70"
+              }`}
+            >
+              {option.shortLabel}
+            </span>
+
+            <span
+              className="relative z-10 h-3.5 w-3.5 rounded-full border transition-all duration-300"
+              style={
+                isSelected
+                  ? {
+                      backgroundColor: emotion.color,
+                      borderColor: emotion.color,
+                      boxShadow: `0 0 14px ${emotion.color}`,
+                    }
+                  : {
+                      backgroundColor: "#121212",
+                      borderColor: "rgba(255,255,255,0.35)",
+                    }
+              }
+            />
+          </button>
+        );
+      })}
+    </div>
+  </div>
+</div>
     </motion.div>
   );
 }
