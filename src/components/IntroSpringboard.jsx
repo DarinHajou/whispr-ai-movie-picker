@@ -37,7 +37,7 @@ export default function IntroSpringboard({ onStart }) {
   // contrast = how sharp/punchy the inner motion feels.
   // saturate = how colorful the orb feels.
   // blur = how soft/dreamlike the orb texture feels.
-  const FILTER = 'brightness(1.9) contrast(0.30) saturate(0.6) blur(8.9px)';
+  const FILTER = 'brightness(9.9) contrast(0.25) saturate(1.6) blur(8.9px)';
 
   // Overall opacity of the orb video.
   // Lower = ghostlier, more atmospheric.
@@ -120,12 +120,12 @@ export default function IntroSpringboard({ onStart }) {
         This avoids stacking too many separate vignette layers.
       */}
       <div
-  className="absolute inset-0 z-[1] pointer-events-none"
-  style={{
-    background:
-  "radial-gradient(ellipse at 50% 35%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.16) 32%, rgba(0,0,0,0.62) 62%, rgba(0,0,0,0.98) 100%)",
-  }}
-/>
+        className="absolute inset-0 z-[1] pointer-events-none"
+        style={{
+          background:
+        "radial-gradient(ellipse at 50% 35%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.16) 32%, rgba(0,0,0,0.62) 62%, rgba(0,0,0,0.98) 100%)",
+        }}
+      />
 
       {/* 
         Orb:
