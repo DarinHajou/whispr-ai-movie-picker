@@ -1,33 +1,109 @@
-export default function buildPrompt(mood, intent, energy) {
+const CRAVING_GUIDES = {
+  comfort:
+    "Warmth, reassurance, emotional safety, tenderness, or the feeling of being held by the story.",
+
+  escape:
+    "A sense of leaving ordinary life behind through atmosphere, adventure, immersion, another world, or a strong change of perspective.",
+
+  thrill:
+    "Tension, momentum, anticipation, danger, excitement, or the feeling of being alert and fully engaged.",
+
+  longing:
+    "Yearning, intimacy, nostalgia, distance, missed connection, romantic ache, or reaching for something just out of grasp.",
+
+  release:
+    "Catharsis, emotional confrontation, grief, pressure breaking, transformation, or finally letting something move through you.",
+
+  wonder:
+    "Awe, curiosity, imagination, beauty, discovery, mystery, scale, or the feeling that the world is larger than expected.",
+};
+
+const INTENSITY_GUIDES = {
+  "soft & gentle":
+    "Deliver the craving lightly. Favor restraint, breathing room, approachable pacing, and emotional subtlety. Avoid overwhelming tension, cruelty, or emotional exhaustion.",
+
+  balanced:
+    "Deliver the craving clearly without making the experience either too mild or relentless. Balance accessibility with emotional depth.",
+
+  "deep & intense":
+    "Fully immerse the viewer in the craving. Strong emotional weight, sustained atmosphere, difficult themes, or heightened tension are welcome when they genuinely fit.",
+};
+
+function normalizeSelection(value) {
+  if (typeof value === "string") {
+    return value.trim();
+  }
+
+  if (value && typeof value === "object") {
+    return value.label || value.id || "";
+  }
+
+  return "";
+}
+
+export default function buildPrompt(mood, energy) {
+  const craving = normalizeSelection(mood);
+  const intensity = normalizeSelection(energy);
+
+  if (!craving || !intensity) {
+    throw new Error("Craving and intensity are required.");
+  }
+
+  const cravingKey = craving.toLowerCase();
+  const intensityKey = intensity.toLowerCase();
+
+  const cravingMeaning =
+    CRAVING_GUIDES[cravingKey] ||
+    `A cinematic experience centered around ${craving}.`;
+
+  const intensityMeaning =
+    INTENSITY_GUIDES[intensityKey] ||
+    `Deliver the experience at a ${intensity} level.`;
+
   return `
-A user just shared a few things with you:
+You are curating films for Whisper, an emotion-led movie recommendation experience.
 
-- They’re currently feeling **${Array.isArray(mood) ? mood.join(", ") : mood}**
-- Their intention is to **${intent.toLowerCase()}** that feeling
-- Their mental energy right now is **${energy.toLowerCase()}**
+The user is not necessarily describing how they currently feel.
+They are choosing the emotional experience they want a film to create.
 
-Based on that emotional state, recommend a list of 10 films that truly meet them where they are.
+Their cinematic craving is: **${craving}**
 
-Don’t just focus on genre — consider emotional tone, pacing, themes, and the kind of story that might land gently with someone in this head-space.
+Within Whisper, this means:
+${cravingMeaning}
 
-Don’t over-rely on films like *Her*, *Inside Out*, *A Ghost Story*, or *Eternal Sunshine*. You can include one if it truly fits, but not by default.
+Their preferred intensity is: **${intensity}**
 
-Avoid over-recommending commonly cited films like *Her*, *Inside Out*, or *Eternal Sunshine*. Favor lesser-known, or emotionally rich titles that still resonate deeply.
+Within Whisper, this means:
+${intensityMeaning}
 
-Aim for a few surprises. Prioritize emotional fit, but include at least some lesser-known or unconventional picks. Vary the tone — not all 10 need to feel the same.
+Recommend exactly 6 real feature films that combine this craving and intensity.
 
-Speak like a thoughtful friend — warm, emotionally intuitive, someone who just gets it.
+Selection principles:
 
-✨ **For each film, return exactly this format:**
+- Emotional fit is more important than genre.
+- Interpret the craving and intensity together, not as separate filters.
+- Consider pacing, atmosphere, emotional weight, themes, tension, visual style, and the overall experience of watching the film.
+- Avoid defaulting to the same widely repeated mood-based recommendations.
+- Include a thoughtful mix of recognizable films and less-obvious discoveries.
+- Include at least three picks that feel unexpected but still clearly fit.
+- Do not fill the list with films that have nearly identical tones, premises, or genres.
+- Do not recommend multiple films from the same franchise.
+- Do not force variety when it weakens the emotional match.
+- Recommend films that genuinely exist. Do not invent titles, years, plots, or ratings.
+- Keep plot descriptions concise and free of major spoilers.
+
+Return every film using exactly this format:
 
 ---
-**Title:** Movie Title (Year)  
-**Tone:** Quiet & emotional  
-**IMDb Score:** 7.8  
-**Plot:** A short paragraph that describes the film’s premise. Don't explain why it fits — let the story speak for itself.
+**Title:** Movie Title (Year)
+**Tone:** A short description of the viewing experience
+**IMDb Score:** 7.8
+**Plot:** A concise paragraph describing the film’s premise without explaining why it was selected.
 ---
 
-Repeat this for all 10 films. Follow the exact format.  
-No numbered list, no extra commentary. Let the list feel soft, thoughtful, and deeply curated.
+Repeat this format for all 6 films.
+
+Do not number the films.
+Do not include an introduction, conclusion, explanation, or commentary outside the film entries.
 `.trim();
 }
