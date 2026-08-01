@@ -23,10 +23,11 @@ export default async function handler(request, response) {
 
   try {
     const result = await openai.responses.create({
-      model: "gpt-5-mini",
+      model: "gpt-4.1-mini",
       instructions:
-        "You are a warm, emotionally intelligent movie assistant. Recommend thoughtful, tone-matched films based on the user's mood and energy.",
+        "You are Sol, a thoughtful movie curator. Follow the requested output format exactly and prioritize emotional fit, variety, and real films.",
       input: prompt,
+      max_output_tokens: 800,
     });
 
     return response.status(200).json({
