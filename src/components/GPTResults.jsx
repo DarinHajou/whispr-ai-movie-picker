@@ -38,6 +38,8 @@ export default function GPTResults({
 }) {
 
   const [step, setSteps] = useState(0);
+  const primaryMovie = parsedMovies?.[0] || null;
+  const otherMovies = parsedMovies?.slice(1) || [];
 
   // ==========================================
   // SCREEN 2.5: THE MAGIC LOADING STATE
@@ -88,18 +90,44 @@ export default function GPTResults({
     <>
       {mode === "guided" ? (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
-          {!loading && gptResult !== "" && (
-            <p className="text-lg sm:text-xl font-medium italic text-[#FFC542] text-center mt-2 sm:mt-6 mb-12">
-              🎞️ Here’s what Sol recommends
-            </p>
-          )}
-
           {gptResult !== "" && (
             hasMovies ? (
-              <div className="space-y-4">
-                {parsedMovies.map((movie, i) => (
-                  <MovieResultCard key={i} {...movie} />
-                ))}
+              <div className="space-y-12">
+                {primaryMovie && (
+                  <section>
+                    <div className="text-center mb-5">
+                      <p className="text-xs uppercase tracking-[0.3em] text-[#FFC542]/70 mb-2">
+                        Sol’s pick for tonight
+                      </p>
+
+                      <p className="text-sm italic text-warm-white/50">
+                        The strongest match for your craving.
+                      </p>
+                    </div>
+
+                    <MovieResultCard
+                      {...primaryMovie}
+                      featured
+                    />
+                  </section>
+                )}
+
+                {otherMovies.length > 0 && (
+                  <section>
+                    <h2 className="text-sm uppercase tracking-[0.25em] text-warm-white/50 text-center mb-5">
+                      Other films that fit
+                    </h2>
+
+                    <div className="space-y-4">
+                      {otherMovies.map((movie, index) => (
+                        <MovieResultCard
+                          key={`${movie.title}-${movie.year}-${index}`}
+                          {...movie}
+                        />
+                      ))}
+                    </div>
+                  </section>
+                )}
               </div>
             ) : (
               <pre className="text-sm text-red-400 whitespace-pre-wrap">
