@@ -209,7 +209,76 @@ export default function GPTResults({
           </pre>
         ))}
 
-      {resetAll}
+      {gptResult && hasMovies && (
+        <>
+          <div className="mt-10 bg-[rgba(18,18,18,0.6)] rounded-xl px-5 sm:px-6 py-8 shadow-lg text-center border border-[rgba(255,255,255,0.05)]">
+            <p className="text-xl sm:text-2xl font-light text-warm-white/90">
+              Want{" "}
+              <span className="text-[#FFC542]">Sol</span>{" "}
+              to adjust the direction?
+            </p>
+
+            <p className="text-sm text-gray-500 mt-2">
+              Keep the craving. Shift the direction.
+            </p>
+
+            <div className="flex flex-wrap justify-center gap-3 mt-7">
+              {REFINEMENT_OPTIONS.map(({ label, direction, featured }) => (
+                <button
+                  key={label}
+                  type="button"
+                  onClick={() => {
+                    setShowSolChat(false);
+                    onRefine(direction);
+                  }}
+                  className={
+                    featured
+                      ? "px-5 py-2.5 rounded-full text-xs sm:text-sm tracking-wide bg-[#FFC542]/15 text-[#FFC542] border border-[#FFC542]/40 hover:bg-[#FFC542]/25 transition shadow-[0_0_20px_rgba(255,197,66,0.08)]"
+                      : "px-4 py-2.5 rounded-full text-xs sm:text-sm tracking-wide bg-white/5 text-warm-white border border-white/10 hover:bg-white/10 hover:border-white/20 transition"
+                  }
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+
+            <div className="mt-8 border-t border-white/10 pt-7">
+              <p className="text-sm text-warm-white/70">
+                Need something more specific?
+              </p>
+
+              <button
+                type="button"
+                onClick={() => setShowSolChat((current) => !current)}
+                className="mt-4 rounded-full border border-[#FFC542]/40 bg-[#FFC542]/10 px-6 py-3 text-sm font-medium tracking-wide text-[#FFC542] transition hover:border-[#FFC542]/60 hover:bg-[#FFC542]/20"
+              >
+                {showSolChat ? "Close Ask Sol" : "Ask Sol"}
+              </button>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => {
+                setShowSolChat(false);
+                resetAll();
+              }}
+              className="mt-10 text-xs text-gray-500 uppercase tracking-widest hover:text-white transition"
+            >
+              ↻ Change craving or intensity
+            </button>
+          </div>
+
+          {showSolChat && (
+            <SolChat
+              craving={mood}
+              intensity={energy}
+              recommendations={parsedMovies}
+              cravingColor={mood?.color}
+              onClose={() => setShowSolChat(false)}
+            />
+          )}
+        </>
+      )}
 
       {error && (
         <div className="text-center text-red-400 my-6">
