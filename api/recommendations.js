@@ -27,7 +27,7 @@ export default async function handler(request, response) {
       instructions:
         "You are Sol, a thoughtful movie curator. Follow the requested output format exactly and prioritize emotional fit, variety, and real films.",
       input: prompt,
-      max_output_tokens: 600,
+      max_output_tokens: 400,
     });
 
     return response.status(200).json({
