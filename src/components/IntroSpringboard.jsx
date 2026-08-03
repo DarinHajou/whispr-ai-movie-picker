@@ -279,6 +279,23 @@ export default function IntroSpringboard({ onStart }) {
         </div>
       )}
 
+      {/* Skip intro */}
+      {!showHint && (
+        <motion.button
+          type="button"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.8, duration: 0.5 }}
+          onClick={(event) => {
+            event.stopPropagation();
+            onStart();
+          }}
+          className="absolute top-6 right-6 sm:top-8 sm:right-8 z-[60] text-[11px] sm:text-xs uppercase tracking-[0.24em] text-white/45 hover:text-white/80 transition-colors"
+        >
+          Skip intro
+        </motion.button>
+      )}
+
       {/* Bottom hint */}
       {showHint && (
         <motion.p
