@@ -41,9 +41,10 @@ function normalizeSelection(value) {
   return "";
 }
 
-export default function buildPrompt(mood, energy) {
+export default function buildPrompt(mood, energy, refinement = "") {
   const craving = normalizeSelection(mood);
   const intensity = normalizeSelection(energy);
+  const refinementText = normalizeSelection(refinement);
 
   if (!craving || !intensity) {
     throw new Error("Craving and intensity are required.");
@@ -60,50 +61,63 @@ export default function buildPrompt(mood, energy) {
     INTENSITY_GUIDES[intensityKey] ||
     `Deliver the experience at a ${intensity} level.`;
 
+    const refinementDirection = refinementText
+      ? `
+    The user wants the next set adjusted in this direction:
+
+    **${refinementText}**
+
+    Apply this direction while preserving the original craving and intensity.
+    `
+  : "";
+
   return `
-You are curating films for Whisper, an emotion-led movie recommendation experience.
+    You are curating films for Whisper, an emotion-led movie recommendation experience.
 
-The user is not necessarily describing how they currently feel.
-They are choosing the emotional experience they want a film to create.
+    The user is not necessarily describing how they currently feel.
+    They are choosing the emotional experience they want a film to create.
 
-Their cinematic craving is: **${craving}**
+    Their cinematic craving is: **${craving}**
 
-Within Whisper, this means:
-${cravingMeaning}
+    Within Whisper, this means:
+    ${cravingMeaning}
 
-Their preferred intensity is: **${intensity}**
+    Their preferred intensity is: **${intensity}**
 
-Within Whisper, this means:
-${intensityMeaning}
+    Within Whisper, this means:
+    ${intensityMeaning}
 
-Recommend exactly 6 real feature films that combine this craving and intensity.
+    ${refinementDirection}
 
-Selection principles:
+    Recommend exactly 6 real feature films that combine this craving and intensity.
 
-- Emotional fit is more important than genre.
-- Interpret the craving and intensity together, not as separate filters.
-- Consider pacing, atmosphere, emotional weight, themes, tension, visual style, and the overall experience of watching the film.
-- Avoid defaulting to the same widely repeated mood-based recommendations.
-- Include a thoughtful mix of recognizable films and less-obvious discoveries.
-- Include at least three picks that feel unexpected but still clearly fit.
-- Do not fill the list with films that have nearly identical tones, premises, or genres.
-- Do not recommend multiple films from the same franchise.
-- Do not force variety when it weakens the emotional match.
-- Recommend films that genuinely exist. Do not invent titles, years, plots, or ratings.
-- Keep plot descriptions concise and free of major spoilers.
+    Selection principles:
 
-Return every film using exactly this format:
+    - Emotional fit is more important than genre.
+    - Interpret the craving and intensity together, not as separate filters.
+    - Consider pacing, atmosphere, emotional weight, themes, tension, visual style, and the overall experience of watching the film.
+    - Avoid defaulting to the same widely repeated mood-based recommendations.
+    - Include a thoughtful mix of recognizable films and less-obvious discoveries.
+    - Include at least three picks that feel unexpected but still clearly fit.
+    - Do not fill the list with films that have nearly identical tones, premises, or genres.
+    - Do not recommend multiple films from the same franchise.
+    - Do not force variety when it weakens the emotional match.
+    - Recommend films that genuinely exist. Do not invent titles, years, plots, or ratings.
+    - Keep plot descriptions concise and free of major spoilers.
+    - Place the strongest overall match first. The remaining five should offer distinct interpretations of the same craving and intensity.
 
----
-**Title:** Movie Title (Year)
-**Tone:** A short description of the viewing experience
-**IMDb Score:** 7.8
-**Plot:** A concise paragraph describing the film’s premise without explaining why it was selected.
----
+    Return every film using exactly this format:
 
-Repeat this format for all 6 films.
+    ---
+    **Title:** Movie Title (Year)
+    **Tone:** A short description of the viewing experience
+    **IMDb Score:** 7.8
+    **Plot:** A concise paragraph describing the film’s premise without explaining why it was selected.
+    ---
 
-Do not number the films.
-Do not include an introduction, conclusion, explanation, or commentary outside the film entries.
-`.trim();
-}
+    Repeat this format for all 6 films.
+
+    Do not number the films.
+    Do not include an introduction, conclusion, explanation, or commentary outside the film entries.
+    `.trim();
+    }
