@@ -102,17 +102,15 @@ export default function buildPrompt(mood, energy, refinement = "") {
     - Do not fill the list with films that have nearly identical tones, premises, or genres.
     - Do not recommend multiple films from the same franchise.
     - Do not force variety when it weakens the emotional match.
-    - Recommend films that genuinely exist. Do not invent titles, years, plots, or ratings.
-    - Keep plot descriptions concise and free of major spoilers.
+    - Recommend films that genuinely exist. Do not invent titles or release years.
+    - Keep each tone concise and focused on the emotional viewing experience, not the plot.
     - Place the strongest overall match first. The remaining five should offer distinct interpretations of the same craving and intensity.
 
     Return every film using exactly this format:
 
     ---
     **Title:** Movie Title (Year)
-    **Tone:** A short description of the viewing experience
-    **IMDb Score:** 7.8
-    **Plot:** A concise paragraph describing the film’s premise without explaining why it was selected.
+    **Tone:** A short description of the emotional viewing experience
     ---
 
     Repeat this format for all 6 films.
