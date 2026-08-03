@@ -1,4 +1,6 @@
+import { useState } from "react";
 import MovieResultCard from "./MovieResultCard";
+import SolChat from "./SolChat";
 import { motion } from "framer-motion";
 
 // --- THE SOL WHISPER DICTIONARY ---
@@ -92,6 +94,7 @@ export default function GPTResults({
   const cravingLabel = mood?.label || mood || "this feeling";
   const intensityLabel = energy || "your chosen intensity";
   const accentColor = mood?.color || "#FFC542";
+  const [showSolChat, setShowSolChat] = useState(false);
 
   // ==========================================
   // CINEMATIC LOADING STATE
@@ -206,44 +209,7 @@ export default function GPTResults({
           </pre>
         ))}
 
-      {gptResult && hasMovies && (
-        <div className="mt-10 bg-[rgba(18,18,18,0.6)] rounded-xl px-5 sm:px-6 py-8 shadow-lg text-center border border-[rgba(255,255,255,0.05)]">
-          <p className="text-xl sm:text-2xl font-light text-warm-white/90">
-            Want{" "}
-            <span className="text-[#FFC542]">Sol</span>
-            {" "}to adjust the direction?
-          </p>
-
-          <p className="text-sm text-gray-500 mt-2">
-            Keep the craving. Shift the direction.
-          </p>
-
-          <div className="flex flex-wrap justify-center gap-3 mt-7">
-            {REFINEMENT_OPTIONS.map(({ label, direction, featured }) => (
-              <button
-                key={label}
-                type="button"
-                onClick={() => onRefine(direction)}
-                className={
-                  featured
-                    ? "px-5 py-2.5 rounded-full text-xs sm:text-sm tracking-wide bg-[#FFC542]/15 text-[#FFC542] border border-[#FFC542]/40 hover:bg-[#FFC542]/25 transition shadow-[0_0_20px_rgba(255,197,66,0.08)]"
-                    : "px-4 py-2.5 rounded-full text-xs sm:text-sm tracking-wide bg-white/5 text-warm-white border border-white/10 hover:bg-white/10 hover:border-white/20 transition"
-                }
-              >
-                {label}
-              </button>
-            ))}
-          </div>
-
-          <button
-            type="button"
-            onClick={resetAll}
-            className="mt-10 text-xs text-gray-500 uppercase tracking-widest hover:text-white transition"
-          >
-            ↻ Change craving or intensity
-          </button>
-        </div>
-      )}
+      {resetAll}
 
       {error && (
         <div className="text-center text-red-400 my-6">
