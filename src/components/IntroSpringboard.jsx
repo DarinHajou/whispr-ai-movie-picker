@@ -5,7 +5,7 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import SolIntroText from './SolIntroText';
-
+import { Orb } from "./Orb";
 
 export default function IntroSpringboard({ onStart }) {
   const [orbOn, setOrbOn] = useState(false);
@@ -33,19 +33,19 @@ export default function IntroSpringboard({ onStart }) {
   // Overall size of the Sol orb.
   // 60vmin = smaller / calmer.
   // 70vmin = more cinematic / present.
-  const ORB_SIZE = '22vmin';
+  const ORB_SIZE = "38vmin";
 
   // Video treatment for the orb.
   // brightness = how visible/luminous the orb is.
   // contrast = how sharp/punchy the inner motion feels.
   // saturate = how colorful the orb feels.
   // blur = how soft/dreamlike the orb texture feels.
-  const FILTER = 'brightness(9.9) contrast(0.25) saturate(1.6) blur(8.9px)';
+  // const FILTER = 'brightness(9.9) contrast(0.25) saturate(1.6) blur(8.9px)';
 
   // Overall opacity of the orb video.
   // Lower = ghostlier, more atmospheric.
   // Higher = more obvious, more “AI presence”.
-  const ORB_OPACITY = 1.6;
+  // const ORB_OPACITY = 1.6;
 
   // Video playback speed.
   // 1 = normal.
@@ -55,8 +55,8 @@ export default function IntroSpringboard({ onStart }) {
 
   // Orb entrance motion.
   // Starts lower and smaller, then grows and floats upward.
-  const ORB_INITIAL_SCALE = 0.3;
-  const ORB_FINAL_SCALE = 1.7;
+  // const ORB_INITIAL_SCALE = 0.3;
+  const ORB_FINAL_SCALE = 1;
   const ORB_START_Y = 18;
   const ORB_END_Y = -104;
   const ORB_ENTRY_BLUR = 'blur(60px)';
@@ -139,7 +139,7 @@ export default function IntroSpringboard({ onStart }) {
         className="absolute inset-0 z-20 grid place-items-center pointer-events-none"
         initial={{
           opacity: 0,
-          scale: ORB_INITIAL_SCALE,
+          // scale: ORB_INITIAL_SCALE,
           y: ORB_START_Y,
           filter: ORB_ENTRY_BLUR,
         }}
@@ -209,7 +209,7 @@ export default function IntroSpringboard({ onStart }) {
             width: `calc(${ORB_SIZE} * 1.45)`,
             height: `calc(${ORB_SIZE} * 1.45)`,
             background:
-              'radial-gradient(circle, rgba(198,166,124,0.34) 0%, rgba(198,166,124,0.16) 38%, rgba(198,166,124,0.04) 62%, rgba(0,0,0,0) 78%)',
+              'radial-gradient(circle, rgba(198,166,124,0.34) 0%, rgba(198,166,124,0.16) 58%, rgba(198,166,124,0.04) 72%, rgba(0,0,0,0) 88%)',
           }}
         />
 
@@ -219,34 +219,18 @@ export default function IntroSpringboard({ onStart }) {
           The speaking activity should happen in the aura layer above.
         */}
         <div
-          className="relative rounded-full overflow-hidden flex items-center justify-center"
+          className="relative flex items-center justify-center"
           style={{
             width: ORB_SIZE,
             height: ORB_SIZE,
-            opacity: ORB_OPACITY,
           }}
         >
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            aria-hidden
-            className="absolute inset-0"
-            style={{
-              width: '100%',
-              height: '100%',
-              objectFit: 'none',
-              objectPosition: 'center',
-              filter: FILTER,
-              mixBlendMode: 'screen',
-            }}
-            onLoadedMetadata={(e) => {
-              e.currentTarget.playbackRate = PLAYBACK;
-            }}
-          >
-            <source src="/images/orbz-003.mp4" type="video/mp4" />
-          </video>
+          <Orb
+            colors={["#C6A67C", "#EAE4DC"]}
+            seed={42}
+            agentState={solSpeaking ? "talking" : null}
+            className="h-full w-full"
+          />
         </div>
       </motion.div>
 
