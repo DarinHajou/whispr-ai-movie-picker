@@ -122,7 +122,7 @@ export default function EmotionPicker({ emotion, setEmotion, onNext }) {
           >
             <motion.div
               layoutId={`orb-${craving.id}`}
-              className="w-20 h-20 rounded-full mb-4 relative"
+              className="w-20 h-20 sm:w-24 sm:h-24 rounded-full mb-4 relative"
               style={{
                 background: `radial-gradient(circle at 35% 35%, ${craving.color} 0%, rgba(0,0,0,0.85) 90%)`,
               }}
