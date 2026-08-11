@@ -40,40 +40,40 @@ export default function EmotionalPulseWavesBackground() {
         {/* Blob 1 — warm amber, top-right */}
         <div
           className="
-            absolute left-1/2 top-[0%]
-            w-[29vw] h-[26vw]
-            left-[65%]
-            sm:left-[65%] sm:top-[8%] sm:w-[18vw] sm:h-[16vw]
+            absolute left-1/2 top-[3%]
+            w-[29vw] h-[16vw]
+            left-[45%]
+            sm:left-[65%] sm:top-[3%] sm:w-[18vw] sm:h-[16vw]
             -translate-x-1/2
             bg-[#FFC542]
-            opacity-60 sm:opacity-45
-            blur-[60px]
+            opacity-90 sm:opacity-30
+            blur-[45px]
             rounded-[100%/90%]
             blob1-anim
           "
         />
 
         {/* Blob 2 — mist blue, lower-right */}
-        {/* <div
+        <div
           className="
             absolute right-[2vw] bottom-[20vw]
             w-[20vw] h-[14vw]
-            opacity-65 sm:right-[18%] top-[60%] sm:top-[85%] sm:w-[8vw] sm:h-[6vw]
+            opacity-65 sm:right-[8%] top-[60%] sm:top-[85%] sm:w-[8vw] sm:h-[6vw]
             bg-mist-blue
-            blur-[30px]
+            blur-[40px]
             rounded-[40%/100%]
             blob2-anim
           "
-        /> */}
+        />
 
         {/* Blob 3 — pale sage, lower-left */}
         <div
           className="
             absolute left-[2vw] bottom-[14vw]
             w-[28vw] h-[10vw]
-            sm:left-[6%] top-[90%] sm:top-[70%] sm:w-[10vw] sm:h-[8vw]
+            sm:left-[6%] top-[90%] sm:top-[70%] sm:w-[8vw] sm:h-[4vw]
             bg-pale-sage opacity-2
-            blur-[45px]
+            blur-[65px]
             rounded-[100%/40%]
             blob3-anim
           "
