@@ -1,8 +1,11 @@
+// IntroSpringboard.jsx  
+
 'use client';
 
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import SolIntroText from './SolIntroText';
+
 
 export default function IntroSpringboard({ onStart }) {
   const [orbOn, setOrbOn] = useState(false);
@@ -30,7 +33,7 @@ export default function IntroSpringboard({ onStart }) {
   // Overall size of the Sol orb.
   // 60vmin = smaller / calmer.
   // 70vmin = more cinematic / present.
-  const ORB_SIZE = '38vmin';
+  const ORB_SIZE = '22vmin';
 
   // Video treatment for the orb.
   // brightness = how visible/luminous the orb is.
@@ -52,8 +55,8 @@ export default function IntroSpringboard({ onStart }) {
 
   // Orb entrance motion.
   // Starts lower and smaller, then grows and floats upward.
-  const ORB_INITIAL_SCALE = 0;
-  const ORB_FINAL_SCALE = 1;
+  const ORB_INITIAL_SCALE = 0.3;
+  const ORB_FINAL_SCALE = 1.7;
   const ORB_START_Y = 18;
   const ORB_END_Y = -104;
   const ORB_ENTRY_BLUR = 'blur(60px)';
@@ -279,21 +282,26 @@ export default function IntroSpringboard({ onStart }) {
         </div>
       )}
 
-      {/* Skip intro */}
-      {!showHint && (
-        <motion.button
-          type="button"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8, duration: 0.5 }}
-          onClick={(event) => {
-            event.stopPropagation();
-            onStart();
-          }}
-          className="absolute top-6 right-6 sm:top-8 sm:right-8 z-[60] text-[11px] sm:text-xs uppercase tracking-[0.24em] text-white/45 hover:text-white/80 transition-colors"
-        >
-          Skip intro
-        </motion.button>
+      {orbOn && !showHint && (
+        <div className="absolute left-1/2 bottom-28 sm:bottom-40 z-[60] -translate-x-1/2">
+          <motion.button
+            type="button"
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              delay: 3.2,
+              duration: 0.9,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            onClick={(event) => {
+              event.stopPropagation();
+              onStart();
+            }}
+            className="whitespace-nowrap text-[11px] sm:text-xs uppercase tracking-[0.24em] text-white/45 hover:text-white/80 transition-colors"
+          >
+            Skip intro
+          </motion.button>
+        </div>
       )}
 
       {/* Bottom hint */}
@@ -302,7 +310,7 @@ export default function IntroSpringboard({ onStart }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: [0.18, 0.75, 0.18] }}
           transition={{ duration: 2.6, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute left-1/2 bottom-28 sm:bottom-32 z-40 -translate-x-1/2 whitespace-nowrap text-[14px] sm:text-[13px] uppercase tracking-[0.32em]"
+          className="absolute left-1/2 bottom-28 sm:bottom-42 z-40 -translate-x-1/2 whitespace-nowrap text-[11px] sm:text-[16px] uppercase tracking-[0.32em]"
           style={{
             color: 'rgba(198, 166, 124, 0.92)',
             textShadow: '0 0 6px rgba(255,244,226,0.06)',
