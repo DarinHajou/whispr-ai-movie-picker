@@ -33,7 +33,7 @@ export default function IntroSpringboard({ onStart }) {
   // Overall size of the Sol orb.
   // 60vmin = smaller / calmer.
   // 70vmin = more cinematic / present.
-  const ORB_SIZE = "38vmin";
+  const ORB_SIZE = "28vmin";
 
   // Video treatment for the orb.
   // brightness = how visible/luminous the orb is.
@@ -68,7 +68,7 @@ export default function IntroSpringboard({ onStart }) {
 
   // Passed into SolIntroText.
   // Controls when SolIntroText begins its internal type sequence.
-  const TYPE_DELAY = 1.0;
+  const TYPE_DELAY = 1.3;
 
   // Passed into SolIntroText.
   // Controls character stagger speed for the running sentence.
@@ -149,7 +149,7 @@ export default function IntroSpringboard({ onStart }) {
                 opacity: 1,
                 scale: ORB_FINAL_SCALE,
                 y: ORB_END_Y,
-                filter: 'blur(1px)',
+                filter: 'blur(0px)',
               }
             : {}
         }
@@ -209,7 +209,7 @@ export default function IntroSpringboard({ onStart }) {
             width: `calc(${ORB_SIZE} * 1.45)`,
             height: `calc(${ORB_SIZE} * 1.45)`,
             background:
-              'radial-gradient(circle, rgba(198,166,124,0.34) 0%, rgba(198,166,124,0.16) 58%, rgba(198,166,124,0.04) 72%, rgba(0,0,0,0) 88%)',
+              'radial-gradient(circle, rgba(198,166,124,0.34) 0%, rgba(198,166,124,0.16) 48%, rgba(198,166,124,0.04) 62%, rgba(0,0,0,0) 78%)',
           }}
         />
 
@@ -242,7 +242,7 @@ export default function IntroSpringboard({ onStart }) {
       */}
       {showContent && (
         <div className="absolute inset-0 z-30 flex items-center justify-center px-6 pointer-events-none">
-          <div className="relative w-full max-w-lg flex items-center justify-center translate-y-[2vh] sm:translate-y-[6vh]">
+          <div className="relative w-full max-w-lg flex items-center justify-center translate-y-[3vh] sm:translate-y-[6vh]">
             {/* 
               Local text readability shadow:
               Small and attached to the text area.
