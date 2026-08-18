@@ -41,13 +41,13 @@ export default function EmotionalPulseWavesBackground() {
         <div
           className="
             absolute left-1/2 top-[3%]
-            w-[29vw] h-[16vw]
+            w-[39vw] h-[24vw]
             left-[45%]
             sm:left-[65%] sm:top-[3%] sm:w-[18vw] sm:h-[16vw]
             -translate-x-1/2
             bg-[#FFC542]
             opacity-90 sm:opacity-30
-            blur-[45px]
+            blur-[75px]
             rounded-[100%/90%]
             blob1-anim
           "
