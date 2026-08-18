@@ -73,7 +73,7 @@ export default function MovieResultCard({
   }, [title, year]);
 
   useEffect(() => {
-    if (!tmdbId) return;
+    if (!featured || !tmdbId) return;
 
     let active = true;
 
@@ -123,23 +123,23 @@ export default function MovieResultCard({
     return () => {
       active = false;
     };
-  }, [tmdbId]);
+  }, [tmdbId, featured]);
 
   const cardClassName = featured
     ? "relative flex flex-col sm:flex-row bg-[rgba(255,197,66,0.07)] border border-[#FFC542]/30 rounded-2xl shadow-xl p-5 sm:p-6 gap-5 sm:gap-6 items-start"
-    : "relative flex bg-gray-800/80 rounded-xl shadow-lg p-4 gap-4 sm:gap-5 items-start";
+    : "relative flex items-start gap-4 py-5 border-b border-white/10";
 
   const posterClassName = featured
-    ? "w-full max-w-[220px] sm:w-36 aspect-[2/3] self-center rounded-lg object-cover shadow-xl"
-    : "w-20 sm:w-24 aspect-[2/3] rounded-md object-cover";
+    ? "w-full max-w-[190px] sm:w-36 aspect-[2/3] self-center rounded-lg object-cover shadow-xl"
+    : "w-16 sm:w-20 aspect-[2/3] rounded-md object-cover shrink-0";
 
   const contentClassName = featured
     ? "flex flex-col space-y-3 text-left w-full sm:flex-1"
-    : "flex flex-col space-y-2 text-left max-w-[calc(100%-6rem)]";
+    : "flex flex-col gap-2 text-left flex-1 min-w-0";
 
   const titleClassName = featured
     ? "text-xl sm:text-2xl font-semibold text-warm-white hover:underline leading-snug"
-    : "text-lg sm:text-xl font-semibold text-warm-white hover:underline leading-snug";
+    : "text-base sm:text-lg font-medium text-warm-white hover:text-[#FFC542] transition-colors leading-snug";
 
   return (
     <div className={cardClassName}>
@@ -149,13 +149,15 @@ export default function MovieResultCard({
         className={posterClassName}
       />
 
-      <div className="absolute top-2 right-2 flex items-center bg-black/70 px-1 py-0.5 rounded-md">
-        <img
-          src="/images/imdb_logo.png"
-          alt="IMDb"
-          className="w-5 h-4 object-contain"
-        />
-      </div>
+      {featured && (
+        <div className="absolute top-2 right-2 flex items-center bg-black/70 px-1 py-0.5 rounded-md">
+          <img
+            src="/images/imdb_logo.png"
+            alt="IMDb"
+            className="w-5 h-4 object-contain"
+          />
+        </div>
+      )}
 
       <div className={contentClassName}>
         {imdbId ? (
@@ -174,48 +176,63 @@ export default function MovieResultCard({
         )}
 
         {tone && (
-          <p className="text-xs sm:text-sm text-mist-blue leading-tight">
-            <span className="font-medium text-bright-amber">
-              Tone:
-            </span>{" "}
+          <p
+            className={
+              featured
+                ? "text-xs sm:text-sm text-mist-blue leading-tight"
+                : "text-xs sm:text-sm text-mist-blue/80 leading-relaxed"
+            }
+          >
+            {featured && (
+              <>
+                <span className="font-medium text-bright-amber">
+                  Tone:
+                </span>{" "}
+              </>
+            )}
+
             {tone}
           </p>
         )}
 
-        {matchedComment && (
+        {featured && matchedComment && (
           <p className="text-xs sm:text-sm italic text-[#FFC542] mt-1">
             💬 {matchedComment}
           </p>
         )}
 
-        {summary && (
+        {featured && summary && (
           <p className="text-xs sm:text-sm text-gray-300 leading-snug">
             {summary}
           </p>
         )}
 
-        {providers.length > 0 ? (
-          <div className="flex flex-row gap-2 mt-2">
-            {providers.map((provider) => (
-              <a
-                key={provider.provider_id}
-                href={provider.movieLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                title={provider.provider_name}
-              >
-                <img
-                  src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
-                  alt={provider.provider_name}
-                  className="w-8 h-8 rounded"
-                />
-              </a>
-            ))}
-          </div>
-        ) : (
-          <p className="text-sm italic text-blue-300 mt-2">
-            Not available for streaming.
-          </p>
+        {featured && (
+          <>
+            {providers.length > 0 ? (
+              <div className="flex flex-row gap-2 mt-2">
+                {providers.map((provider) => (
+                  <a
+                    key={provider.provider_id}
+                    href={provider.movieLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title={provider.provider_name}
+                  >
+                    <img
+                      src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
+                      alt={provider.provider_name}
+                      className="w-8 h-8 rounded"
+                    />
+                  </a>
+                ))}
+              </div>
+            ) : (
+              <p className="text-sm italic text-blue-300 mt-2">
+                Not available for streaming.
+              </p>
+            )}
+          </>
         )}
       </div>
     </div>
