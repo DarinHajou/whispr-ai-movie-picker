@@ -33,7 +33,7 @@ export default function IntroSpringboard({ onStart }) {
   // Overall size of the Sol orb.
   // 60vmin = smaller / calmer.
   // 70vmin = more cinematic / present.
-  const ORB_SIZE = "28vmin";
+  const ORB_SIZE = "38vmin";
 
   // Video treatment for the orb.
   // brightness = how visible/luminous the orb is.
