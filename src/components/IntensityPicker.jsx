@@ -206,55 +206,55 @@ const handleMouseDragEnd = (event) => {
           Confirm
         </button>
       </div>
-{/* Three-step intensity selector */}
-<div className="relative z-10 w-full max-w-md px-5 mb-5">
-  <div className="relative">
-    {/* Connecting line */}
-    <div className="absolute left-[16.66%] right-[16.66%] top-[35px] h-px bg-white/20" />
+      {/* Three-step intensity selector */}
+      <div className="relative z-10 w-full max-w-md px-5 mb-5">
+        <div className="relative">
+          {/* Connecting line */}
+          <div className="absolute left-[16.66%] right-[16.66%] top-[35px] h-px bg-white/20" />
 
-    <div className="relative grid grid-cols-3">
-      {INTENSITY_OPTIONS.map((option) => {
-        const isSelected = intensityLabel === option.label;
+          <div className="relative grid grid-cols-3">
+            {INTENSITY_OPTIONS.map((option) => {
+              const isSelected = intensityLabel === option.label;
 
-        return (
-          <button
-            key={option.label}
-            type="button"
-            onClick={() => handleIntensitySelect(option)}
-            aria-pressed={isSelected}
-            className="flex flex-col items-center gap-3 text-center"
-          >
-            <span
-              className={`text-xs sm:text-sm transition-colors duration-300 ${
-                isSelected
-                  ? "text-warm-white"
-                  : "text-warm-white/40 hover:text-warm-white/70"
-              }`}
-            >
-              {option.shortLabel}
-            </span>
+              return (
+                <button
+                  key={option.label}
+                  type="button"
+                  onClick={() => handleIntensitySelect(option)}
+                  aria-pressed={isSelected}
+                  className="flex flex-col items-center gap-3 text-center"
+                >
+                  <span
+                    className={`text-xs sm:text-sm transition-colors duration-300 ${
+                      isSelected
+                        ? "text-warm-white"
+                        : "text-warm-white/40 hover:text-warm-white/70"
+                    }`}
+                  >
+                    {option.shortLabel}
+                  </span>
 
-            <span
-              className="relative z-10 h-3.5 w-3.5 rounded-full border transition-all duration-300"
-              style={
-                isSelected
-                  ? {
-                      backgroundColor: emotion.color,
-                      borderColor: emotion.color,
-                      boxShadow: `0 0 14px ${emotion.color}`,
+                  <span
+                    className="relative z-10 h-3.5 w-3.5 rounded-full border transition-all duration-300"
+                    style={
+                      isSelected
+                        ? {
+                            backgroundColor: emotion.color,
+                            borderColor: emotion.color,
+                            boxShadow: `0 0 14px ${emotion.color}`,
+                          }
+                        : {
+                            backgroundColor: "#121212",
+                            borderColor: "rgba(255,255,255,0.35)",
+                          }
                     }
-                  : {
-                      backgroundColor: "#121212",
-                      borderColor: "rgba(255,255,255,0.35)",
-                    }
-              }
-            />
-          </button>
-        );
-      })}
-    </div>
-  </div>
-</div>
+                  />
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </div>
     </motion.div>
   );
 }
